@@ -6,3 +6,4 @@ Run `npm run geography:psgc -- --input .cache/geography/PSGC-2Q-2026.xlsx --sour
 
 PSGC is an identity and hierarchy source, not a boundary source. Until a separately validated Philippine government geometry is imported, each unit is marked `boundaryStatus: "unavailable"`; navigation extents are explicitly approximate and are not used as legal boundaries.
 
+As retrieved on 10 October 2026, the Geoportal Philippines inventory labels its provincial and municipal boundary layers **APPROXIMATE** and **conditional downloading**. No approved geometry files are bundled in this repository. The generated boundary manifest therefore reports every level as unavailable and the application must show that status instead of drawing a substitute polygon. An operator with approved government GeoJSON can run `npm run geography:boundaries` with the documented provenance arguments to validate PSGC ancestry, hash the inputs, and generate browser/server assets.

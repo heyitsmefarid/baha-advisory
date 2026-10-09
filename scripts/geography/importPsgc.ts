@@ -14,17 +14,7 @@ export interface PsgcSourceRow {
 
 interface SourceManifest {
   catalogVersion: "Q2_2026";
-  sources: Array<{
-    id: "psgc";
-    agency: "Philippine Statistics Authority";
-    publicationDate: "2026-06-30";
-    sourceUrl: string;
-    publicationPage: string;
-    retrievedAt: string;
-    sha256: string;
-    localCachePath: string;
-    licenseNote: string;
-  }>;
+  sources: Array<Record<string, unknown>>;
 }
 
 const REGION_CODE = "1700000000";
@@ -82,7 +72,8 @@ function boundingBoxFor(code: string, level: GeographicLevel): [[number, number]
   }
   const owner = level === "barangay" ? municipalityCodeFor(code) : code;
   const [lat, lng] = centers.get(owner) ?? [13.02, 120.93];
-  return [[lat - 0.12, lng - 0.12], [lat + 0.12, lng + 0.12]];
+  const rounded = (value: number) => Number(value.toFixed(6));
+  return [[rounded(lat - 0.12), rounded(lng - 0.12)], [rounded(lat + 0.12), rounded(lng + 0.12)]];
 }
 
 function parentFor(row: PsgcSourceRow): string | null {
@@ -218,8 +209,9 @@ async function main(): Promise<void> {
     existingManifest = null;
   }
 
-  const input = path.resolve(String(args.input ?? existingManifest?.sources[0]?.localCachePath ?? DEFAULT_INPUT));
-  const sourceUrl = String(args["source-url"] ?? existingManifest?.sources[0]?.sourceUrl ?? DEFAULT_SOURCE_URL);
+  const existingPsgc = existingManifest?.sources.find((source) => source.id === "psgc");
+  const input = path.resolve(String(args.input ?? existingPsgc?.localCachePath ?? DEFAULT_INPUT));
+  const sourceUrl = String(args["source-url"] ?? existingPsgc?.sourceUrl ?? DEFAULT_SOURCE_URL);
   const version = String(args.version ?? existingManifest?.catalogVersion ?? "Q2_2026");
   if (version !== "Q2_2026") throw new Error(`Unsupported catalog version: ${version}`);
 
@@ -228,23 +220,22 @@ async function main(): Promise<void> {
   const catalog = buildMindoroCatalog(rows, version);
   const rendered = renderCatalog(catalog);
   const retrievedAt = String(
-    args["retrieved-at"] ?? existingManifest?.sources[0]?.retrievedAt ?? new Date().toISOString(),
+    args["retrieved-at"] ?? existingPsgc?.retrievedAt ?? new Date().toISOString(),
   );
+  const psgcSource = {
+    id: "psgc",
+    agency: "Philippine Statistics Authority",
+    publicationDate: "2026-06-30",
+    sourceUrl,
+    publicationPage: "https://psa.gov.ph/classification/psgc",
+    retrievedAt,
+    sha256: createHash("sha256").update(inputBytes).digest("hex"),
+    localCachePath: path.relative(process.cwd(), input).replaceAll("\\", "/"),
+    licenseNote: "PSA attribution required; identity data only. Boundary geometry is sourced separately.",
+  };
   const manifest: SourceManifest = {
     catalogVersion: version,
-    sources: [
-      {
-        id: "psgc",
-        agency: "Philippine Statistics Authority",
-        publicationDate: "2026-06-30",
-        sourceUrl,
-        publicationPage: "https://psa.gov.ph/classification/psgc",
-        retrievedAt,
-        sha256: createHash("sha256").update(inputBytes).digest("hex"),
-        localCachePath: path.relative(process.cwd(), input).replaceAll("\\", "/"),
-        licenseNote: "PSA attribution required; identity data only. Boundary geometry is sourced separately.",
-      },
-    ],
+    sources: [psgcSource, ...(existingManifest?.sources.filter((source) => source.id !== "psgc") ?? [])],
   };
   const renderedManifest = `${JSON.stringify(manifest, null, 2)}\n`;
 

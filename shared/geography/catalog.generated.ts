@@ -94,8 +94,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.277429000000001,
-        120.60368299999999
+        13.277429,
+        120.603683
       ],
       [
         13.517429,
@@ -124,8 +124,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         120.877555
       ],
       [
-        12.747148999999999,
-        121.11755500000001
+        12.747149,
+        121.117555
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -146,7 +146,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.624979000000002,
+        13.624979,
         120.154361
       ],
       [
@@ -172,8 +172,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.691398000000001,
-        120.01845999999999
+        13.691398,
+        120.01846
       ],
       [
         13.931398,
@@ -198,8 +198,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.216759000000001,
-        121.06816099999999
+        12.216759,
+        121.068161
       ],
       [
         12.456759,
@@ -225,7 +225,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.12113,
-        120.56111399999999
+        120.561114
       ],
       [
         13.36113,
@@ -254,7 +254,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         120.354886
       ],
       [
-        13.535317999999998,
+        13.535318,
         120.594886
       ]
     ],
@@ -276,12 +276,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.436765000000001,
+        12.436765,
         120.944524
       ],
       [
         12.676765,
-        121.18452400000001
+        121.184524
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -302,12 +302,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -332,7 +332,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -354,7 +354,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.995809000000001,
+        12.995809,
         120.722202
       ],
       [
@@ -381,10 +381,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -406,12 +406,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.708525000000002,
+        12.708525,
         121.305937
       ],
       [
         12.948525,
-        121.54593700000001
+        121.545937
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -432,7 +432,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -459,10 +459,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.25262,
-        121.19467399999999
+        121.194674
       ],
       [
-        12.492619999999999,
+        12.49262,
         121.434674
       ]
     ],
@@ -484,7 +484,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -510,12 +510,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -566,7 +566,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -589,10 +589,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -619,7 +619,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -640,7 +640,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.355597000000001,
+        13.355597,
         120.82731
       ],
       [
@@ -666,7 +666,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.499870000000001,
+        12.49987,
         121.331419
       ],
       [
@@ -692,12 +692,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.263694000000001,
+        13.263694,
         120.823853
       ],
       [
         13.503694,
-        121.06385300000001
+        121.063853
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -718,12 +718,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -744,12 +744,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -770,8 +770,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.277429000000001,
-        120.60368299999999
+        13.277429,
+        120.603683
       ],
       [
         13.517429,
@@ -796,8 +796,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.277429000000001,
-        120.60368299999999
+        13.277429,
+        120.603683
       ],
       [
         13.517429,
@@ -822,8 +822,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.277429000000001,
-        120.60368299999999
+        13.277429,
+        120.603683
       ],
       [
         13.517429,
@@ -848,8 +848,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.277429000000001,
-        120.60368299999999
+        13.277429,
+        120.603683
       ],
       [
         13.517429,
@@ -874,8 +874,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.277429000000001,
-        120.60368299999999
+        13.277429,
+        120.603683
       ],
       [
         13.517429,
@@ -900,8 +900,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.277429000000001,
-        120.60368299999999
+        13.277429,
+        120.603683
       ],
       [
         13.517429,
@@ -926,8 +926,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.277429000000001,
-        120.60368299999999
+        13.277429,
+        120.603683
       ],
       [
         13.517429,
@@ -952,8 +952,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.277429000000001,
-        120.60368299999999
+        13.277429,
+        120.603683
       ],
       [
         13.517429,
@@ -978,8 +978,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.277429000000001,
-        120.60368299999999
+        13.277429,
+        120.603683
       ],
       [
         13.517429,
@@ -1004,8 +1004,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.277429000000001,
-        120.60368299999999
+        13.277429,
+        120.603683
       ],
       [
         13.517429,
@@ -1034,8 +1034,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         120.877555
       ],
       [
-        12.747148999999999,
-        121.11755500000001
+        12.747149,
+        121.117555
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -1060,8 +1060,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         120.877555
       ],
       [
-        12.747148999999999,
-        121.11755500000001
+        12.747149,
+        121.117555
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -1086,8 +1086,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         120.877555
       ],
       [
-        12.747148999999999,
-        121.11755500000001
+        12.747149,
+        121.117555
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -1112,8 +1112,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         120.877555
       ],
       [
-        12.747148999999999,
-        121.11755500000001
+        12.747149,
+        121.117555
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -1138,8 +1138,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         120.877555
       ],
       [
-        12.747148999999999,
-        121.11755500000001
+        12.747149,
+        121.117555
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -1164,8 +1164,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         120.877555
       ],
       [
-        12.747148999999999,
-        121.11755500000001
+        12.747149,
+        121.117555
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -1190,8 +1190,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         120.877555
       ],
       [
-        12.747148999999999,
-        121.11755500000001
+        12.747149,
+        121.117555
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -1212,7 +1212,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.624979000000002,
+        13.624979,
         120.154361
       ],
       [
@@ -1238,7 +1238,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.624979000000002,
+        13.624979,
         120.154361
       ],
       [
@@ -1264,7 +1264,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.624979000000002,
+        13.624979,
         120.154361
       ],
       [
@@ -1290,7 +1290,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.624979000000002,
+        13.624979,
         120.154361
       ],
       [
@@ -1316,7 +1316,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.624979000000002,
+        13.624979,
         120.154361
       ],
       [
@@ -1342,7 +1342,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.624979000000002,
+        13.624979,
         120.154361
       ],
       [
@@ -1368,7 +1368,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.624979000000002,
+        13.624979,
         120.154361
       ],
       [
@@ -1394,7 +1394,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.624979000000002,
+        13.624979,
         120.154361
       ],
       [
@@ -1420,7 +1420,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.624979000000002,
+        13.624979,
         120.154361
       ],
       [
@@ -1446,8 +1446,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.691398000000001,
-        120.01845999999999
+        13.691398,
+        120.01846
       ],
       [
         13.931398,
@@ -1472,8 +1472,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.691398000000001,
-        120.01845999999999
+        13.691398,
+        120.01846
       ],
       [
         13.931398,
@@ -1498,8 +1498,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.691398000000001,
-        120.01845999999999
+        13.691398,
+        120.01846
       ],
       [
         13.931398,
@@ -1524,8 +1524,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.691398000000001,
-        120.01845999999999
+        13.691398,
+        120.01846
       ],
       [
         13.931398,
@@ -1550,8 +1550,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.691398000000001,
-        120.01845999999999
+        13.691398,
+        120.01846
       ],
       [
         13.931398,
@@ -1576,8 +1576,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.691398000000001,
-        120.01845999999999
+        13.691398,
+        120.01846
       ],
       [
         13.931398,
@@ -1602,8 +1602,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.691398000000001,
-        120.01845999999999
+        13.691398,
+        120.01846
       ],
       [
         13.931398,
@@ -1628,8 +1628,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.691398000000001,
-        120.01845999999999
+        13.691398,
+        120.01846
       ],
       [
         13.931398,
@@ -1654,8 +1654,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.691398000000001,
-        120.01845999999999
+        13.691398,
+        120.01846
       ],
       [
         13.931398,
@@ -1680,8 +1680,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.691398000000001,
-        120.01845999999999
+        13.691398,
+        120.01846
       ],
       [
         13.931398,
@@ -1706,8 +1706,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.691398000000001,
-        120.01845999999999
+        13.691398,
+        120.01846
       ],
       [
         13.931398,
@@ -1732,8 +1732,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.691398000000001,
-        120.01845999999999
+        13.691398,
+        120.01846
       ],
       [
         13.931398,
@@ -1758,8 +1758,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.691398000000001,
-        120.01845999999999
+        13.691398,
+        120.01846
       ],
       [
         13.931398,
@@ -1784,8 +1784,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.691398000000001,
-        120.01845999999999
+        13.691398,
+        120.01846
       ],
       [
         13.931398,
@@ -1810,8 +1810,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.691398000000001,
-        120.01845999999999
+        13.691398,
+        120.01846
       ],
       [
         13.931398,
@@ -1836,8 +1836,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.691398000000001,
-        120.01845999999999
+        13.691398,
+        120.01846
       ],
       [
         13.931398,
@@ -1862,8 +1862,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.216759000000001,
-        121.06816099999999
+        12.216759,
+        121.068161
       ],
       [
         12.456759,
@@ -1888,8 +1888,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.216759000000001,
-        121.06816099999999
+        12.216759,
+        121.068161
       ],
       [
         12.456759,
@@ -1914,8 +1914,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.216759000000001,
-        121.06816099999999
+        12.216759,
+        121.068161
       ],
       [
         12.456759,
@@ -1940,8 +1940,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.216759000000001,
-        121.06816099999999
+        12.216759,
+        121.068161
       ],
       [
         12.456759,
@@ -1966,8 +1966,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.216759000000001,
-        121.06816099999999
+        12.216759,
+        121.068161
       ],
       [
         12.456759,
@@ -1992,8 +1992,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.216759000000001,
-        121.06816099999999
+        12.216759,
+        121.068161
       ],
       [
         12.456759,
@@ -2018,8 +2018,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.216759000000001,
-        121.06816099999999
+        12.216759,
+        121.068161
       ],
       [
         12.456759,
@@ -2044,8 +2044,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.216759000000001,
-        121.06816099999999
+        12.216759,
+        121.068161
       ],
       [
         12.456759,
@@ -2070,8 +2070,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.216759000000001,
-        121.06816099999999
+        12.216759,
+        121.068161
       ],
       [
         12.456759,
@@ -2096,8 +2096,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.216759000000001,
-        121.06816099999999
+        12.216759,
+        121.068161
       ],
       [
         12.456759,
@@ -2122,8 +2122,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.216759000000001,
-        121.06816099999999
+        12.216759,
+        121.068161
       ],
       [
         12.456759,
@@ -2148,8 +2148,8 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.216759000000001,
-        121.06816099999999
+        12.216759,
+        121.068161
       ],
       [
         12.456759,
@@ -2175,7 +2175,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.12113,
-        120.56111399999999
+        120.561114
       ],
       [
         13.36113,
@@ -2201,7 +2201,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.12113,
-        120.56111399999999
+        120.561114
       ],
       [
         13.36113,
@@ -2227,7 +2227,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.12113,
-        120.56111399999999
+        120.561114
       ],
       [
         13.36113,
@@ -2253,7 +2253,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.12113,
-        120.56111399999999
+        120.561114
       ],
       [
         13.36113,
@@ -2279,7 +2279,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.12113,
-        120.56111399999999
+        120.561114
       ],
       [
         13.36113,
@@ -2305,7 +2305,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.12113,
-        120.56111399999999
+        120.561114
       ],
       [
         13.36113,
@@ -2331,7 +2331,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.12113,
-        120.56111399999999
+        120.561114
       ],
       [
         13.36113,
@@ -2357,7 +2357,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.12113,
-        120.56111399999999
+        120.561114
       ],
       [
         13.36113,
@@ -2383,7 +2383,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.12113,
-        120.56111399999999
+        120.561114
       ],
       [
         13.36113,
@@ -2409,7 +2409,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.12113,
-        120.56111399999999
+        120.561114
       ],
       [
         13.36113,
@@ -2435,7 +2435,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.12113,
-        120.56111399999999
+        120.561114
       ],
       [
         13.36113,
@@ -2461,7 +2461,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.12113,
-        120.56111399999999
+        120.561114
       ],
       [
         13.36113,
@@ -2487,7 +2487,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.12113,
-        120.56111399999999
+        120.561114
       ],
       [
         13.36113,
@@ -2513,7 +2513,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.12113,
-        120.56111399999999
+        120.561114
       ],
       [
         13.36113,
@@ -2539,7 +2539,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.12113,
-        120.56111399999999
+        120.561114
       ],
       [
         13.36113,
@@ -2568,7 +2568,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         120.354886
       ],
       [
-        13.535317999999998,
+        13.535318,
         120.594886
       ]
     ],
@@ -2594,7 +2594,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         120.354886
       ],
       [
-        13.535317999999998,
+        13.535318,
         120.594886
       ]
     ],
@@ -2620,7 +2620,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         120.354886
       ],
       [
-        13.535317999999998,
+        13.535318,
         120.594886
       ]
     ],
@@ -2646,7 +2646,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         120.354886
       ],
       [
-        13.535317999999998,
+        13.535318,
         120.594886
       ]
     ],
@@ -2672,7 +2672,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         120.354886
       ],
       [
-        13.535317999999998,
+        13.535318,
         120.594886
       ]
     ],
@@ -2698,7 +2698,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         120.354886
       ],
       [
-        13.535317999999998,
+        13.535318,
         120.594886
       ]
     ],
@@ -2724,7 +2724,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         120.354886
       ],
       [
-        13.535317999999998,
+        13.535318,
         120.594886
       ]
     ],
@@ -2750,7 +2750,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         120.354886
       ],
       [
-        13.535317999999998,
+        13.535318,
         120.594886
       ]
     ],
@@ -2776,7 +2776,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         120.354886
       ],
       [
-        13.535317999999998,
+        13.535318,
         120.594886
       ]
     ],
@@ -2802,7 +2802,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         120.354886
       ],
       [
-        13.535317999999998,
+        13.535318,
         120.594886
       ]
     ],
@@ -2828,7 +2828,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         120.354886
       ],
       [
-        13.535317999999998,
+        13.535318,
         120.594886
       ]
     ],
@@ -2854,7 +2854,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         120.354886
       ],
       [
-        13.535317999999998,
+        13.535318,
         120.594886
       ]
     ],
@@ -2876,12 +2876,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.436765000000001,
+        12.436765,
         120.944524
       ],
       [
         12.676765,
-        121.18452400000001
+        121.184524
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -2902,12 +2902,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.436765000000001,
+        12.436765,
         120.944524
       ],
       [
         12.676765,
-        121.18452400000001
+        121.184524
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -2928,12 +2928,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.436765000000001,
+        12.436765,
         120.944524
       ],
       [
         12.676765,
-        121.18452400000001
+        121.184524
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -2954,12 +2954,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.436765000000001,
+        12.436765,
         120.944524
       ],
       [
         12.676765,
-        121.18452400000001
+        121.184524
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -2980,12 +2980,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.436765000000001,
+        12.436765,
         120.944524
       ],
       [
         12.676765,
-        121.18452400000001
+        121.184524
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3006,12 +3006,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.436765000000001,
+        12.436765,
         120.944524
       ],
       [
         12.676765,
-        121.18452400000001
+        121.184524
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3032,12 +3032,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.436765000000001,
+        12.436765,
         120.944524
       ],
       [
         12.676765,
-        121.18452400000001
+        121.184524
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3058,12 +3058,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.436765000000001,
+        12.436765,
         120.944524
       ],
       [
         12.676765,
-        121.18452400000001
+        121.184524
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3084,12 +3084,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.436765000000001,
+        12.436765,
         120.944524
       ],
       [
         12.676765,
-        121.18452400000001
+        121.184524
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3110,12 +3110,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.436765000000001,
+        12.436765,
         120.944524
       ],
       [
         12.676765,
-        121.18452400000001
+        121.184524
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3136,12 +3136,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.436765000000001,
+        12.436765,
         120.944524
       ],
       [
         12.676765,
-        121.18452400000001
+        121.184524
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3162,12 +3162,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3188,12 +3188,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3214,12 +3214,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3240,12 +3240,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3266,12 +3266,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3292,12 +3292,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3318,12 +3318,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3344,12 +3344,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3370,12 +3370,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3396,12 +3396,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3422,12 +3422,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3448,12 +3448,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3474,12 +3474,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3500,12 +3500,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3526,12 +3526,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3552,12 +3552,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3578,12 +3578,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3604,12 +3604,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3630,12 +3630,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3656,12 +3656,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3682,12 +3682,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3708,12 +3708,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.769153000000001,
+        12.769153,
         120.912475
       ],
       [
         13.009153,
-        121.15247500000001
+        121.152475
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -3738,7 +3738,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -3764,7 +3764,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -3790,7 +3790,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -3816,7 +3816,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -3842,7 +3842,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -3868,7 +3868,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -3894,7 +3894,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -3920,7 +3920,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -3946,7 +3946,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -3972,7 +3972,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -3998,7 +3998,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4024,7 +4024,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4050,7 +4050,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4076,7 +4076,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4102,7 +4102,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4128,7 +4128,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4154,7 +4154,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4180,7 +4180,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4206,7 +4206,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4232,7 +4232,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4258,7 +4258,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4284,7 +4284,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4310,7 +4310,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4336,7 +4336,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4362,7 +4362,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4388,7 +4388,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4414,7 +4414,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4440,7 +4440,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4466,7 +4466,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4492,7 +4492,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4518,7 +4518,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4544,7 +4544,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4570,7 +4570,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4596,7 +4596,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4622,7 +4622,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4648,7 +4648,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4674,7 +4674,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4700,7 +4700,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4726,7 +4726,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.013504
       ],
       [
-        12.574781999999999,
+        12.574782,
         121.253504
       ]
     ],
@@ -4748,7 +4748,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.995809000000001,
+        12.995809,
         120.722202
       ],
       [
@@ -4774,7 +4774,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.995809000000001,
+        12.995809,
         120.722202
       ],
       [
@@ -4800,7 +4800,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.995809000000001,
+        12.995809,
         120.722202
       ],
       [
@@ -4826,7 +4826,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.995809000000001,
+        12.995809,
         120.722202
       ],
       [
@@ -4852,7 +4852,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.995809000000001,
+        12.995809,
         120.722202
       ],
       [
@@ -4878,7 +4878,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.995809000000001,
+        12.995809,
         120.722202
       ],
       [
@@ -4904,7 +4904,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.995809000000001,
+        12.995809,
         120.722202
       ],
       [
@@ -4930,7 +4930,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.995809000000001,
+        12.995809,
         120.722202
       ],
       [
@@ -4956,7 +4956,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.995809000000001,
+        12.995809,
         120.722202
       ],
       [
@@ -4982,7 +4982,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.995809000000001,
+        12.995809,
         120.722202
       ],
       [
@@ -5008,7 +5008,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.995809000000001,
+        12.995809,
         120.722202
       ],
       [
@@ -5035,10 +5035,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5061,10 +5061,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5087,10 +5087,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5113,10 +5113,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5139,10 +5139,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5165,10 +5165,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5191,10 +5191,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5217,10 +5217,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5243,10 +5243,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5269,10 +5269,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5295,10 +5295,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5321,10 +5321,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5347,10 +5347,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5373,10 +5373,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5399,10 +5399,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5425,10 +5425,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5451,10 +5451,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5477,10 +5477,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5503,10 +5503,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5529,10 +5529,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5555,10 +5555,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5581,10 +5581,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5607,10 +5607,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5633,10 +5633,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5659,10 +5659,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5685,10 +5685,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5711,10 +5711,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         13.229331,
-        120.95213199999999
+        120.952132
       ],
       [
-        13.469330999999999,
+        13.469331,
         121.192132
       ]
     ],
@@ -5736,12 +5736,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.708525000000002,
+        12.708525,
         121.305937
       ],
       [
         12.948525,
-        121.54593700000001
+        121.545937
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -5762,12 +5762,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.708525000000002,
+        12.708525,
         121.305937
       ],
       [
         12.948525,
-        121.54593700000001
+        121.545937
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -5788,12 +5788,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.708525000000002,
+        12.708525,
         121.305937
       ],
       [
         12.948525,
-        121.54593700000001
+        121.545937
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -5814,12 +5814,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.708525000000002,
+        12.708525,
         121.305937
       ],
       [
         12.948525,
-        121.54593700000001
+        121.545937
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -5840,12 +5840,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.708525000000002,
+        12.708525,
         121.305937
       ],
       [
         12.948525,
-        121.54593700000001
+        121.545937
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -5866,12 +5866,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.708525000000002,
+        12.708525,
         121.305937
       ],
       [
         12.948525,
-        121.54593700000001
+        121.545937
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -5892,12 +5892,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.708525000000002,
+        12.708525,
         121.305937
       ],
       [
         12.948525,
-        121.54593700000001
+        121.545937
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -5918,12 +5918,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.708525000000002,
+        12.708525,
         121.305937
       ],
       [
         12.948525,
-        121.54593700000001
+        121.545937
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -5944,12 +5944,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.708525000000002,
+        12.708525,
         121.305937
       ],
       [
         12.948525,
-        121.54593700000001
+        121.545937
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -5970,12 +5970,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.708525000000002,
+        12.708525,
         121.305937
       ],
       [
         12.948525,
-        121.54593700000001
+        121.545937
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -5996,12 +5996,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.708525000000002,
+        12.708525,
         121.305937
       ],
       [
         12.948525,
-        121.54593700000001
+        121.545937
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -6022,12 +6022,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.708525000000002,
+        12.708525,
         121.305937
       ],
       [
         12.948525,
-        121.54593700000001
+        121.545937
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -6048,12 +6048,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.708525000000002,
+        12.708525,
         121.305937
       ],
       [
         12.948525,
-        121.54593700000001
+        121.545937
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -6074,7 +6074,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6100,7 +6100,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6126,7 +6126,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6152,7 +6152,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6178,7 +6178,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6204,7 +6204,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6230,7 +6230,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6256,7 +6256,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6282,7 +6282,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6308,7 +6308,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6334,7 +6334,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6360,7 +6360,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6386,7 +6386,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6412,7 +6412,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6438,7 +6438,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6464,7 +6464,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6490,7 +6490,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6516,7 +6516,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6542,7 +6542,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6568,7 +6568,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6594,7 +6594,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6620,7 +6620,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6646,7 +6646,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6672,7 +6672,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6698,7 +6698,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6724,7 +6724,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6750,7 +6750,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6776,7 +6776,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6802,7 +6802,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6828,7 +6828,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6854,7 +6854,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6880,7 +6880,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6906,7 +6906,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6932,7 +6932,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6958,7 +6958,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -6984,7 +6984,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.586087000000001,
+        12.586087,
         121.312165
       ],
       [
@@ -7011,10 +7011,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.25262,
-        121.19467399999999
+        121.194674
       ],
       [
-        12.492619999999999,
+        12.49262,
         121.434674
       ]
     ],
@@ -7037,10 +7037,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.25262,
-        121.19467399999999
+        121.194674
       ],
       [
-        12.492619999999999,
+        12.49262,
         121.434674
       ]
     ],
@@ -7063,10 +7063,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.25262,
-        121.19467399999999
+        121.194674
       ],
       [
-        12.492619999999999,
+        12.49262,
         121.434674
       ]
     ],
@@ -7089,10 +7089,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.25262,
-        121.19467399999999
+        121.194674
       ],
       [
-        12.492619999999999,
+        12.49262,
         121.434674
       ]
     ],
@@ -7115,10 +7115,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.25262,
-        121.19467399999999
+        121.194674
       ],
       [
-        12.492619999999999,
+        12.49262,
         121.434674
       ]
     ],
@@ -7141,10 +7141,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.25262,
-        121.19467399999999
+        121.194674
       ],
       [
-        12.492619999999999,
+        12.49262,
         121.434674
       ]
     ],
@@ -7167,10 +7167,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.25262,
-        121.19467399999999
+        121.194674
       ],
       [
-        12.492619999999999,
+        12.49262,
         121.434674
       ]
     ],
@@ -7193,10 +7193,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.25262,
-        121.19467399999999
+        121.194674
       ],
       [
-        12.492619999999999,
+        12.49262,
         121.434674
       ]
     ],
@@ -7219,10 +7219,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.25262,
-        121.19467399999999
+        121.194674
       ],
       [
-        12.492619999999999,
+        12.49262,
         121.434674
       ]
     ],
@@ -7245,10 +7245,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.25262,
-        121.19467399999999
+        121.194674
       ],
       [
-        12.492619999999999,
+        12.49262,
         121.434674
       ]
     ],
@@ -7271,10 +7271,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.25262,
-        121.19467399999999
+        121.194674
       ],
       [
-        12.492619999999999,
+        12.49262,
         121.434674
       ]
     ],
@@ -7297,10 +7297,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.25262,
-        121.19467399999999
+        121.194674
       ],
       [
-        12.492619999999999,
+        12.49262,
         121.434674
       ]
     ],
@@ -7323,10 +7323,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.25262,
-        121.19467399999999
+        121.194674
       ],
       [
-        12.492619999999999,
+        12.49262,
         121.434674
       ]
     ],
@@ -7349,10 +7349,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.25262,
-        121.19467399999999
+        121.194674
       ],
       [
-        12.492619999999999,
+        12.49262,
         121.434674
       ]
     ],
@@ -7375,10 +7375,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.25262,
-        121.19467399999999
+        121.194674
       ],
       [
-        12.492619999999999,
+        12.49262,
         121.434674
       ]
     ],
@@ -7400,7 +7400,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7426,7 +7426,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7452,7 +7452,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7478,7 +7478,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7504,7 +7504,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7530,7 +7530,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7556,7 +7556,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7582,7 +7582,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7608,7 +7608,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7634,7 +7634,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7660,7 +7660,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7686,7 +7686,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7712,7 +7712,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7738,7 +7738,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7764,7 +7764,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7790,7 +7790,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7816,7 +7816,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7842,7 +7842,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7868,7 +7868,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7894,7 +7894,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7920,7 +7920,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7946,7 +7946,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7972,7 +7972,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -7998,7 +7998,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8024,7 +8024,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8050,7 +8050,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8076,7 +8076,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8102,7 +8102,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8128,7 +8128,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8154,7 +8154,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8180,7 +8180,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8206,7 +8206,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8232,7 +8232,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8258,7 +8258,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8284,7 +8284,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8310,7 +8310,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8336,7 +8336,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8362,7 +8362,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8388,7 +8388,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8414,7 +8414,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8440,7 +8440,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8466,7 +8466,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8492,7 +8492,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8518,7 +8518,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8544,7 +8544,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8570,7 +8570,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8596,7 +8596,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8622,7 +8622,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8648,7 +8648,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8674,7 +8674,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8700,7 +8700,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8726,7 +8726,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8752,7 +8752,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8778,7 +8778,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8804,7 +8804,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8830,7 +8830,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8856,7 +8856,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8882,7 +8882,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8908,7 +8908,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8934,7 +8934,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8960,7 +8960,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -8986,7 +8986,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.234354000000002,
+        13.234354,
         121.067022
       ],
       [
@@ -9012,12 +9012,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9038,12 +9038,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9064,12 +9064,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9090,12 +9090,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9116,12 +9116,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9142,12 +9142,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9168,12 +9168,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9194,12 +9194,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9220,12 +9220,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9246,12 +9246,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9272,12 +9272,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9298,12 +9298,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9324,12 +9324,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9350,12 +9350,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9376,12 +9376,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9402,12 +9402,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9428,12 +9428,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9454,12 +9454,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9480,12 +9480,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9506,12 +9506,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9532,12 +9532,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9558,12 +9558,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9584,12 +9584,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9610,12 +9610,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9636,12 +9636,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9662,12 +9662,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -9688,12 +9688,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.810768000000001,
+        12.810768,
         121.297433
       ],
       [
         13.050768,
-        121.53743300000001
+        121.537433
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -10160,7 +10160,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10186,7 +10186,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10212,7 +10212,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10238,7 +10238,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10264,7 +10264,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10290,7 +10290,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10316,7 +10316,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10342,7 +10342,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10368,7 +10368,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10394,7 +10394,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10420,7 +10420,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10446,7 +10446,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10472,7 +10472,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10498,7 +10498,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10524,7 +10524,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10550,7 +10550,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10576,7 +10576,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10602,7 +10602,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10628,7 +10628,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10654,7 +10654,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10680,7 +10680,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10706,7 +10706,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10732,7 +10732,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10758,7 +10758,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10784,7 +10784,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10810,7 +10810,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10836,7 +10836,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10862,7 +10862,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10888,7 +10888,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10914,7 +10914,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10940,7 +10940,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10966,7 +10966,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -10992,7 +10992,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11018,7 +11018,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11044,7 +11044,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11070,7 +11070,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11096,7 +11096,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11122,7 +11122,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11148,7 +11148,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11174,7 +11174,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11200,7 +11200,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11226,7 +11226,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11252,7 +11252,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11278,7 +11278,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11304,7 +11304,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11330,7 +11330,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11356,7 +11356,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11382,7 +11382,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11408,7 +11408,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11434,7 +11434,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11460,7 +11460,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11486,7 +11486,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11512,7 +11512,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11538,7 +11538,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11564,7 +11564,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11590,7 +11590,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11616,7 +11616,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11642,7 +11642,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11668,7 +11668,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11694,7 +11694,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11720,7 +11720,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11746,7 +11746,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11772,7 +11772,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11798,7 +11798,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11824,7 +11824,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11850,7 +11850,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11876,7 +11876,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11902,7 +11902,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11928,7 +11928,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11954,7 +11954,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
         121.10341
       ],
       [
-        13.363836999999998,
+        13.363837,
         121.34341
       ]
     ],
@@ -11977,10 +11977,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12003,10 +12003,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12029,10 +12029,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12055,10 +12055,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12081,10 +12081,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12107,10 +12107,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12133,10 +12133,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12159,10 +12159,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12185,10 +12185,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12211,10 +12211,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12237,10 +12237,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12263,10 +12263,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12289,10 +12289,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12315,10 +12315,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12341,10 +12341,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12367,10 +12367,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12393,10 +12393,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12419,10 +12419,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12445,10 +12445,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12471,10 +12471,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12497,10 +12497,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12523,10 +12523,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12549,10 +12549,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12575,10 +12575,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12601,10 +12601,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12627,10 +12627,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12653,10 +12653,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12679,10 +12679,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12705,10 +12705,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12731,10 +12731,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12757,10 +12757,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12783,10 +12783,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12809,10 +12809,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12835,10 +12835,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12861,10 +12861,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12887,10 +12887,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12913,10 +12913,10 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     "boundingBox": [
       [
         12.904887,
-        121.32491999999999
+        121.32492
       ],
       [
-        13.144886999999999,
+        13.144887,
         121.56492
       ]
     ],
@@ -12943,7 +12943,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -12969,7 +12969,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -12995,7 +12995,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -13021,7 +13021,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -13047,7 +13047,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -13073,7 +13073,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -13099,7 +13099,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -13125,7 +13125,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -13151,7 +13151,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -13177,7 +13177,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -13203,7 +13203,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -13229,7 +13229,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -13255,7 +13255,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -13281,7 +13281,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -13307,7 +13307,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -13333,7 +13333,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -13359,7 +13359,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -13385,7 +13385,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -13411,7 +13411,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -13437,7 +13437,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -13463,7 +13463,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -13489,7 +13489,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -13515,7 +13515,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
       ],
       [
         13.261026,
-        121.54741700000001
+        121.547417
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -13536,7 +13536,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.355597000000001,
+        13.355597,
         120.82731
       ],
       [
@@ -13562,7 +13562,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.355597000000001,
+        13.355597,
         120.82731
       ],
       [
@@ -13588,7 +13588,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.355597000000001,
+        13.355597,
         120.82731
       ],
       [
@@ -13614,7 +13614,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.355597000000001,
+        13.355597,
         120.82731
       ],
       [
@@ -13640,7 +13640,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.355597000000001,
+        13.355597,
         120.82731
       ],
       [
@@ -13666,7 +13666,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.355597000000001,
+        13.355597,
         120.82731
       ],
       [
@@ -13692,7 +13692,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.355597000000001,
+        13.355597,
         120.82731
       ],
       [
@@ -13718,7 +13718,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.355597000000001,
+        13.355597,
         120.82731
       ],
       [
@@ -13744,7 +13744,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.355597000000001,
+        13.355597,
         120.82731
       ],
       [
@@ -13770,7 +13770,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.355597000000001,
+        13.355597,
         120.82731
       ],
       [
@@ -13796,7 +13796,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.355597000000001,
+        13.355597,
         120.82731
       ],
       [
@@ -13822,7 +13822,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.355597000000001,
+        13.355597,
         120.82731
       ],
       [
@@ -13848,7 +13848,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.355597000000001,
+        13.355597,
         120.82731
       ],
       [
@@ -13874,7 +13874,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.499870000000001,
+        12.49987,
         121.331419
       ],
       [
@@ -13900,7 +13900,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.499870000000001,
+        12.49987,
         121.331419
       ],
       [
@@ -13926,7 +13926,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.499870000000001,
+        12.49987,
         121.331419
       ],
       [
@@ -13952,7 +13952,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.499870000000001,
+        12.49987,
         121.331419
       ],
       [
@@ -13978,7 +13978,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.499870000000001,
+        12.49987,
         121.331419
       ],
       [
@@ -14004,7 +14004,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.499870000000001,
+        12.49987,
         121.331419
       ],
       [
@@ -14030,7 +14030,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.499870000000001,
+        12.49987,
         121.331419
       ],
       [
@@ -14056,7 +14056,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.499870000000001,
+        12.49987,
         121.331419
       ],
       [
@@ -14082,7 +14082,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.499870000000001,
+        12.49987,
         121.331419
       ],
       [
@@ -14108,7 +14108,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.499870000000001,
+        12.49987,
         121.331419
       ],
       [
@@ -14134,7 +14134,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.499870000000001,
+        12.49987,
         121.331419
       ],
       [
@@ -14160,7 +14160,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.499870000000001,
+        12.49987,
         121.331419
       ],
       [
@@ -14186,7 +14186,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.499870000000001,
+        12.49987,
         121.331419
       ],
       [
@@ -14212,7 +14212,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.499870000000001,
+        12.49987,
         121.331419
       ],
       [
@@ -14238,7 +14238,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.499870000000001,
+        12.49987,
         121.331419
       ],
       [
@@ -14264,7 +14264,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.499870000000001,
+        12.49987,
         121.331419
       ],
       [
@@ -14290,7 +14290,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.499870000000001,
+        12.49987,
         121.331419
       ],
       [
@@ -14316,7 +14316,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.499870000000001,
+        12.49987,
         121.331419
       ],
       [
@@ -14342,7 +14342,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.499870000000001,
+        12.49987,
         121.331419
       ],
       [
@@ -14368,7 +14368,7 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.499870000000001,
+        12.49987,
         121.331419
       ],
       [
@@ -14394,12 +14394,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.263694000000001,
+        13.263694,
         120.823853
       ],
       [
         13.503694,
-        121.06385300000001
+        121.063853
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14420,12 +14420,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.263694000000001,
+        13.263694,
         120.823853
       ],
       [
         13.503694,
-        121.06385300000001
+        121.063853
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14446,12 +14446,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.263694000000001,
+        13.263694,
         120.823853
       ],
       [
         13.503694,
-        121.06385300000001
+        121.063853
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14472,12 +14472,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.263694000000001,
+        13.263694,
         120.823853
       ],
       [
         13.503694,
-        121.06385300000001
+        121.063853
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14498,12 +14498,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.263694000000001,
+        13.263694,
         120.823853
       ],
       [
         13.503694,
-        121.06385300000001
+        121.063853
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14524,12 +14524,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.263694000000001,
+        13.263694,
         120.823853
       ],
       [
         13.503694,
-        121.06385300000001
+        121.063853
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14550,12 +14550,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.263694000000001,
+        13.263694,
         120.823853
       ],
       [
         13.503694,
-        121.06385300000001
+        121.063853
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14576,12 +14576,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.263694000000001,
+        13.263694,
         120.823853
       ],
       [
         13.503694,
-        121.06385300000001
+        121.063853
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14602,12 +14602,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14628,12 +14628,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14654,12 +14654,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14680,12 +14680,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14706,12 +14706,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14732,12 +14732,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14758,12 +14758,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14784,12 +14784,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14810,12 +14810,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14836,12 +14836,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14862,12 +14862,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14888,12 +14888,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14914,12 +14914,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14940,12 +14940,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14966,12 +14966,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -14992,12 +14992,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15018,12 +15018,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15044,12 +15044,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15070,12 +15070,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15096,12 +15096,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15122,12 +15122,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15148,12 +15148,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15174,12 +15174,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15200,12 +15200,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15226,12 +15226,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15252,12 +15252,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        12.938056000000001,
+        12.938056,
         121.230282
       ],
       [
         13.178056,
-        121.47028200000001
+        121.470282
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15278,12 +15278,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15304,12 +15304,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15330,12 +15330,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15356,12 +15356,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15382,12 +15382,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15408,12 +15408,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15434,12 +15434,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15460,12 +15460,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15486,12 +15486,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15512,12 +15512,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15538,12 +15538,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15564,12 +15564,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15590,12 +15590,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15616,12 +15616,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15642,12 +15642,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15668,12 +15668,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15694,12 +15694,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15720,12 +15720,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15746,12 +15746,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15772,12 +15772,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15798,12 +15798,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15824,12 +15824,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15850,12 +15850,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15876,12 +15876,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15902,12 +15902,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15928,12 +15928,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15954,12 +15954,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -15980,12 +15980,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -16006,12 +16006,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -16032,12 +16032,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -16058,12 +16058,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
@@ -16084,12 +16084,12 @@ export const MINDORO_CATALOG: GeographicUnit[] = [
     ],
     "boundingBox": [
       [
-        13.038886000000002,
+        13.038886,
         121.129671
       ],
       [
         13.278886,
-        121.36967100000001
+        121.369671
       ]
     ],
     "boundaryStatus": "unavailable",
