@@ -18,6 +18,7 @@
     "import-firestore": "tsx scripts/importFirestore.ts",
     "geography:psgc": "tsx scripts/geography/importPsgc.ts",
     "geography:boundaries": "tsx scripts/geography/importBoundaries.ts",
+    "migrate-geography": "tsx scripts/migrateGeography.ts",
     "test:emulator:attached": "vitest run -c vitest.emulator.config.ts",
     "test:e2e": "node tests/e2e/demo-flow.e2e.mjs",
     "test:e2e:offline": "node tests/e2e/offline-pwa.e2e.mjs"

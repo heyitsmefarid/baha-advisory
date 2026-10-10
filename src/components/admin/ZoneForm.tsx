@@ -12,6 +12,8 @@ import {
 } from "../../types";
 import { suggestPassability, suggestRoadPassability } from "../../utils/passability";
 import { DEFAULT_CENTER, DEFAULT_ZOOM, ORIENTAL_MINDORO_BOUNDS } from "../../firebase";
+import { useGeographicScope } from "../../contexts/GeographicScopeContext";
+import { legacyAreaToMunicipality, MINDORO_REGION_PSGC } from "../../../shared/geography";
 
 interface Props {
   initial?: FloodZone | null;
@@ -23,6 +25,7 @@ interface Props {
 const emptyGeometry: [number, number][] = [];
 
 export default function ZoneForm({ initial, area, onSubmit, onCancel }: Props) {
+  const geographic = useGeographicScope();
   const [name, setName] = useState(initial?.name ?? "");
   const [coords, setCoords] = useState<[number, number][]>(
     initial?.geometry.type === "polygon" ? initial.geometry.coordinates : emptyGeometry
@@ -61,6 +64,8 @@ export default function ZoneForm({ initial, area, onSubmit, onCancel }: Props) {
     setFormError(null);
     if (!name.trim()) return setFormError("Zone name is required.");
     if (coords.length < 3) return setFormError("Draw a polygon or drop a pin on the map.");
+    const municipality = geographic.municipality ?? legacyAreaToMunicipality(area);
+    if (!municipality?.provincePsgcCode) return setFormError("Select a supported municipality or city before publishing.");
 
     setSubmitting(true);
     try {
@@ -75,6 +80,17 @@ export default function ZoneForm({ initial, area, onSubmit, onCancel }: Props) {
         notes: notes.trim(),
         status: "active",
         area,
+        regionPsgcCode: MINDORO_REGION_PSGC,
+        provincePsgcCode: municipality.provincePsgcCode,
+        municipalityPsgcCode: municipality.psgcCode,
+        barangayPsgcCode: geographic.barangay?.municipalityPsgcCode === municipality.psgcCode ? geographic.barangay.psgcCode : null,
+        locationAssignment: {
+          method: geographic.municipality ? "manual" : "migrated",
+          confidence: geographic.barangay ? "high" : "medium",
+          sourceVersion: municipality.sourceVersion,
+          assignedAt: Date.now(),
+          assignedBy: "lgu-form",
+        },
       });
     } catch (err) {
       console.error("Zone save failed:", err);
