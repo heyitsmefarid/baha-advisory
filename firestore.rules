@@ -1,84 +1,561 @@
 rules_version = '2';
 
+// =============================================================================
+// Bahadvisory — Firestore security rules
+//
+// Principles
+//  - Default deny. Every collection is listed explicitly below.
+//  - Roles/tenancy come ONLY from Firebase Auth custom claims (`role`,
+//    `orgId`, `assignedArea`, `areas`) which are set server-side by the
+//    Admin SDK. Client-writable fields are never trusted for authorization.
+//  - Approved public-safety information (official zones, road conditions,
+//    verified reports, published advisories, alerts, verified evacuation
+//    centers, risk predictions) is readable by anyone, signed in or not,
+//    regardless of subscription status.
+//  - Tenant-private data carries `orgId` and is readable only by members
+//    of that organization (and the platform Super Admin).
+//  - Billing, AI quota and payment records are server-written only.
+//  - Original roles `drrm_editor` / `admin` keep working (backward compat).
+// =============================================================================
+
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Default deny everything not explicitly allowed below.
     match /{document=**} {
       allow read, write: if false;
     }
 
-    function isSignedIn() {
-      return request.auth != null;
+    // ---- identity helpers -----------------------------------------------------
+    function signedIn() { return request.auth != null; }
+    function uid() { return request.auth.uid; }
+    function token() { return request.auth.token; }
+    function role() { return signedIn() ? token().get('role', 'citizen') : null; }
+    function isAnon() {
+      return signedIn() && token().get('firebase', {}).get('sign_in_provider', '') == 'anonymous';
     }
+    function isRegistered() { return signedIn() && !isAnon(); }
+    function myOrg() { return signedIn() ? token().get('orgId', null) : null; }
+    function myArea() { return signedIn() ? token().get('assignedArea', null) : null; }
+    function myAreas() { return signedIn() ? token().get('areas', []) : []; }
 
-    // Role/area come from custom claims — set ONLY server-side via the
-    // Admin SDK (see functions/createDrrmAccount). Never trust a
-    // client-writable field for authorization decisions.
-    function role() {
-      return request.auth.token.role;
-    }
-
-    function assignedArea() {
-      return request.auth.token.assignedArea;
-    }
-
-    function isAdmin() {
-      return isSignedIn() && role() == 'admin';
-    }
-
-    function isDrrmEditor() {
-      return isSignedIn() && (role() == 'drrm_editor' || role() == 'admin');
-    }
+    function isSuper() { return role() == 'super_admin'; }
+    // Original province-wide DRRM admin — may edit every area.
+    function isLegacyAdmin() { return role() == 'admin'; }
+    function isLguStaff() { return role() in ['lgu_staff', 'lgu_admin', 'drrm_editor', 'admin']; }
+    function isLguAdmin() { return role() in ['lgu_admin', 'admin']; }
+    // Kept for backward compatibility with the original rules.
+    function isDrrmEditor() { return isLguStaff() || isSuper(); }
+    function isAdmin() { return isLegacyAdmin() || isSuper(); }
 
     function ownsArea(area) {
-      return isAdmin() || assignedArea() == area;
+      return isSuper() || isLegacyAdmin()
+        || (isLguStaff() && area != null
+            && (myArea() == area || (isLguAdmin() && area in myAreas())));
     }
 
-    // ---- floodZones ----------------------------------------------------
-    // Public reads (no auth) power the live map. Writes require a signed-in
-    // DRRM editor/admin scoped to the zone's area, and validate the shape
-    // DRRM staff are expected to submit.
+    function validPsgcCode(code) {
+      return code is string && code.matches('^[0-9]{10}$');
+    }
+    function isValidHierarchy(record) {
+      return record.get('regionPsgcCode', null) == '1700000000'
+        && validPsgcCode(record.get('provincePsgcCode', null))
+        && validPsgcCode(record.get('municipalityPsgcCode', null))
+        && (record.get('barangayPsgcCode', null) == null || validPsgcCode(record.barangayPsgcCode));
+    }
+    function hasGrant(code) {
+      return code != null && myOrg() != null
+        && exists(/databases/$(database)/documents/organizations/$(myOrg())/jurisdiction_grants/$(code));
+    }
+    function grantCovers(code, record) {
+      let grant = get(/databases/$(database)/documents/organizations/$(myOrg())/jurisdiction_grants/$(code)).data;
+      return hasGrant(code) && grant.get('active', false) == true && grant.orgId == myOrg()
+        && ((grant.level == 'province' && grant.psgcCode == record.provincePsgcCode)
+          || (grant.level == 'municipality' && grant.psgcCode == record.municipalityPsgcCode
+            && grant.provincePsgcCode == record.provincePsgcCode)
+          || (grant.level == 'barangay' && grant.psgcCode == record.barangayPsgcCode
+            && grant.municipalityPsgcCode == record.municipalityPsgcCode
+            && grant.provincePsgcCode == record.provincePsgcCode));
+    }
+    function ownsGeography(record) {
+      return isSuper() || isLegacyAdmin()
+        || (isLguStaff() && isValidHierarchy(record)
+          && ((record.get('barangayPsgcCode', null) != null && grantCovers(record.barangayPsgcCode, record))
+            || grantCovers(record.municipalityPsgcCode, record)
+            || grantCovers(record.provincePsgcCode, record)));
+    }
+    function ownsRecord(record) {
+      return ownsGeography(record)
+        || (record.get('regionPsgcCode', null) == null && ownsArea(record.get('area', null)));
+    }
+
+    function isOrgMember(orgId) { return signedIn() && orgId != null && myOrg() == orgId; }
+    function isOrgAdmin(orgId) {
+      return isOrgMember(orgId) && role() in ['lgu_admin', 'business_admin', 'enterprise_admin'];
+    }
+    function orgDoc(orgId) {
+      return get(/databases/$(database)/documents/organizations/$(orgId)).data;
+    }
+    // Paid features are checked against the server-maintained entitlement
+    // map — clients can never write organizations/*.
+    function orgEntitled(orgId, feature) {
+      return orgDoc(orgId).get('entitlements', {}).get(feature, false) == true;
+    }
+
+    // ---- value helpers -----------------------------------------------------------
+    function data() { return request.resource.data; }
+    function unchanged(key) {
+      return data().get(key, null) == resource.data.get(key, null);
+    }
+    function onlyKeys(keys) {
+      return data().diff(resource.data).affectedKeys().hasOnly(keys);
+    }
+    function isLatLng(p) {
+      return p is map && p.lat is number && p.lng is number
+        && p.lat >= -90 && p.lat <= 90 && p.lng >= -180 && p.lng <= 180;
+    }
+    function inServiceArea(p) {
+      return isLatLng(p) && p.lat >= 12.1 && p.lat <= 13.95 && p.lng >= 120.02 && p.lng <= 121.7;
+    }
+    function shortString(v, max) { return v is string && v.size() <= max; }
+    function notSimulatedByClient() {
+      return data().get('simulated', false) == false;
+    }
+    function simulatedUnchanged() {
+      return data().get('simulated', false) == resource.data.get('simulated', false);
+    }
+
+    // =========================================================================
+    // Official flood data (original collections)
+    // =========================================================================
+
+    // ---- floodZones -------------------------------------------------------------
+    // Public reads power the live map. Writes: DRRM staff scoped to the
+    // zone's area, with server-side shape validation.
+    function validZone() {
+      return data().name is string && data().name.size() > 0 && data().name.size() <= 160
+        && data().waterLevelM is number && data().waterLevelM >= 0 && data().waterLevelM <= 15
+        && data().trend in ['rising', 'falling', 'steady']
+        && data().roadPassability in ['passable', 'caution', 'not_passable', 'closed']
+        && data().status in ['active', 'cleared']
+        && data().area is string
+        && data().updatedBy == uid();
+    }
+
     match /floodZones/{zoneId} {
       allow read: if true;
-
-      allow create: if isDrrmEditor()
-        && ownsArea(request.resource.data.area)
-        && request.resource.data.name is string
-        && request.resource.data.waterLevelM is number
-        && request.resource.data.waterLevelM >= 0
-        && request.resource.data.trend in ['rising', 'falling', 'steady']
-        && request.resource.data.roadPassability in
-             ['passable', 'caution', 'not_passable', 'closed']
-        && request.resource.data.status in ['active', 'cleared']
-        && request.resource.data.updatedBy == request.auth.uid;
-
+      allow create: if isDrrmEditor() && ownsRecord(data()) && validZone() && notSimulatedByClient();
       allow update: if isDrrmEditor()
-        && ownsArea(resource.data.area)
-        && ownsArea(request.resource.data.area)
-        && request.resource.data.updatedBy == request.auth.uid;
-
-      allow delete: if isDrrmEditor() && ownsArea(resource.data.area);
+        && ownsRecord(resource.data)
+        && ownsRecord(data())
+        && validZone()
+        && simulatedUnchanged();
+      allow delete: if isDrrmEditor() && ownsRecord(resource.data);
     }
 
-    // ---- zoneHistory -----------------------------------------------------
-    // Public reads power the Recent Advisories feed. Writes are restricted
-    // to signed-in DRRM roles. Hardening note: a production rollout could
-    // move writes into a Cloud Function trigger on floodZones changes so
-    // history can never be skipped or forged by a client — but that
-    // requires the Blaze plan, so this project deliberately keeps writes
-    // client-side (still gated by these rules) to stay on Spark.
+    // ---- zoneHistory --------------------------------------------------------------
+    // Public advisory feed; append-only.
     match /zoneHistory/{zoneId}/updates/{updateId} {
       allow read: if true;
-      allow create: if isDrrmEditor() && request.resource.data.editorUid == request.auth.uid;
-      allow update, delete: if false; // history is append-only
+      allow create: if isDrrmEditor() && data().editorUid == uid();
+      allow update, delete: if false;
+    }
+    // Required for the collectionGroup('updates') query used by the
+    // Recent Advisories page and Audit Logs (only zoneHistory uses the
+    // `updates` subcollection name — incidents use `timeline`).
+    match /{path=**}/updates/{updateId} {
+      allow read: if true;
     }
 
-    // ---- users (DRRM staff directory) -------------------------------------
-    // Readable/writable only by admins; a user may read their own doc.
-    match /users/{uid} {
-      allow read: if isAdmin() || (isSignedIn() && request.auth.uid == uid);
-      allow write: if isAdmin();
+    // ---- road_conditions ------------------------------------------------------------
+    function validRoadCondition() {
+      return data().name is string && data().name.size() > 0 && data().name.size() <= 160
+        && data().path is list && data().path.size() >= 2 && data().path.size() <= 500
+        && data().status in ['open', 'caution', 'closed']
+        && data().passability is map
+        && data().area is string
+        && data().active is bool
+        && data().updatedBy == uid()
+        && shortString(data().get('reason', ''), 500);
     }
+
+    match /road_conditions/{id} {
+      allow read: if true;
+      allow create: if isDrrmEditor() && ownsRecord(data()) && validRoadCondition() && notSimulatedByClient();
+      allow update: if isDrrmEditor() && ownsRecord(resource.data) && ownsRecord(data())
+        && validRoadCondition() && simulatedUnchanged();
+      allow delete: if isDrrmEditor() && ownsRecord(resource.data);
+    }
+
+    // ---- water level stations & readings ----------------------------------------------
+    match /water_level_stations/{stationId} {
+      allow read: if true;
+      allow create: if isDrrmEditor() && ownsRecord(data())
+        && data().name is string && isLatLng(data().location)
+        && data().thresholds is map && notSimulatedByClient();
+      allow update: if isDrrmEditor() && ownsRecord(resource.data) && ownsRecord(data())
+        && simulatedUnchanged();
+      allow delete: if isDrrmEditor() && ownsRecord(resource.data);
+
+      match /readings/{readingId} {
+        allow read: if true;
+        allow create: if isDrrmEditor()
+          && ownsRecord(get(/databases/$(database)/documents/water_level_stations/$(stationId)).data)
+          && data().levelM is number && data().levelM >= 0 && data().levelM <= 30
+          && data().source == 'manual'
+          && data().enteredBy == uid()
+          && notSimulatedByClient();
+        allow update, delete: if isSuper();
+      }
+    }
+
+    // =========================================================================
+    // Community reporting (writes go through the backend: image validation,
+    // AI analysis, duplicate detection and rate limiting happen there)
+    // =========================================================================
+
+    match /community_reports/{reportId} {
+      allow read: if resource.data.status == 'verified'
+        || (signedIn() && resource.data.reporterUid == uid())
+        || isLguStaff() || isSuper();
+      allow create, update: if false;
+      // A reporter may withdraw their own report while it is still pending.
+      allow delete: if signedIn() && resource.data.reporterUid == uid() && resource.data.status == 'pending';
+
+      match /verifications/{vid} {
+        allow read: if isLguStaff() || isSuper();
+        allow write: if false;
+      }
+    }
+
+    match /report_media/{reportId} {
+      allow read: if resource.data.status == 'verified'
+        || (signedIn() && resource.data.reporterUid == uid())
+        || isLguStaff() || isSuper();
+      allow write: if false;
+    }
+
+    // =========================================================================
+    // LGU operations
+    // =========================================================================
+
+    // ---- incidents (tenant-private, paid: incidentManagement) --------------------
+    function validIncident() {
+      return data().title is string && data().title.size() > 0 && data().title.size() <= 200
+        && data().type in ['flood', 'road_closure', 'rescue', 'landslide', 'evacuation', 'other']
+        && data().severity in ['info', 'moderate', 'high', 'critical']
+        && data().status in ['open', 'responding', 'monitoring', 'resolved']
+        && data().area is string
+        && shortString(data().get('description', ''), 4000);
+    }
+
+    match /incidents/{incidentId} {
+      allow read: if (isLguStaff() && isOrgMember(resource.data.orgId)) || isSuper();
+      allow create: if isLguStaff() && isOrgMember(data().orgId)
+        && ownsRecord(data())
+        && orgEntitled(data().orgId, 'incidentManagement')
+        && data().createdBy == uid()
+        && validIncident() && notSimulatedByClient();
+      allow update: if isLguStaff() && isOrgMember(resource.data.orgId)
+        && ownsRecord(resource.data) && ownsRecord(data())
+        && unchanged('orgId') && unchanged('createdBy')
+        && orgEntitled(resource.data.orgId, 'incidentManagement')
+        && validIncident() && simulatedUnchanged();
+      allow delete: if isOrgAdmin(resource.data.orgId) || isSuper();
+
+      match /timeline/{entryId} {
+        allow read: if isSuper() || (isLguStaff()
+          && isOrgMember(get(/databases/$(database)/documents/incidents/$(incidentId)).data.orgId));
+        allow create: if isLguStaff()
+          && isOrgMember(get(/databases/$(database)/documents/incidents/$(incidentId)).data.orgId)
+          && data().orgId == myOrg()
+          && data().byUid == uid()
+          && shortString(data().note, 4000);
+        allow update, delete: if false;
+      }
+    }
+
+    // ---- advisories ----------------------------------------------------------------
+    // Clients manage drafts; publishing goes through the backend so the
+    // matching public alert + push notifications are always sent.
+    function advisoryAreasAllowed() {
+      return isSuper() || isLegacyAdmin()
+        || (data().areaPsgcCodes is list && data().areaPsgcCodes.size() > 0
+          && data().areaPsgcCodes.size() <= 30 && hasGrant(data().areaPsgcCodes[0]));
+    }
+    function validAdvisory() {
+      return data().title is string && data().title.size() > 0 && data().title.size() <= 200
+        && data().body is string && data().body.size() <= 8000
+        && data().severity in ['info', 'moderate', 'high', 'critical']
+        && data().areas is list && data().areas.size() <= 30
+        && data().status in ['draft', 'archived'];
+    }
+
+    match /advisories/{advisoryId} {
+      allow read: if resource.data.status == 'published'
+        || (isLguStaff() && isOrgMember(resource.data.orgId)) || isSuper();
+      allow create: if isLguStaff() && (isOrgMember(data().orgId) || isSuper() || isLegacyAdmin())
+        && data().createdBy == uid() && validAdvisory() && advisoryAreasAllowed()
+        && notSimulatedByClient();
+      allow update: if isLguStaff() && (isOrgMember(resource.data.orgId) || isSuper() || isLegacyAdmin())
+        && unchanged('orgId') && unchanged('createdBy')
+        && validAdvisory() && advisoryAreasAllowed() && simulatedUnchanged();
+      allow delete: if (isLguStaff() && isOrgMember(resource.data.orgId) && resource.data.status == 'draft')
+        || isSuper();
+    }
+
+    // ---- alerts (public, always free; issued by the backend) ---------------------
+    match /alerts/{alertId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // ---- evacuation centers --------------------------------------------------------
+    function validCenter() {
+      return data().name is string && data().name.size() > 0 && data().name.size() <= 160
+        && inServiceArea(data().location)
+        && data().area is string
+        && data().status in ['open', 'full', 'standby', 'closed']
+        && (data().capacity == null || (data().capacity is int && data().capacity >= 0 && data().capacity <= 100000))
+        && (data().occupancy == null || (data().occupancy is int && data().occupancy >= 0))
+        && (data().capacity == null || data().occupancy == null || data().occupancy <= data().capacity)
+        && data().occupancyVerified is bool
+        && data().verified is bool
+        && data().facilities is list && data().facilities.size() <= 20
+        && data().updatedBy == uid();
+    }
+
+    match /evacuation_centers/{centerId} {
+      allow read: if resource.data.verified == true || isLguStaff() || isSuper();
+      allow create: if isLguStaff() && ownsRecord(data())
+        && (isOrgMember(data().orgId) || isLegacyAdmin() || isSuper())
+        && validCenter() && notSimulatedByClient();
+      allow update: if isLguStaff() && ownsRecord(resource.data) && ownsRecord(data())
+        && (isOrgMember(resource.data.orgId) || isLegacyAdmin() || isSuper())
+        && validCenter() && simulatedUnchanged();
+      allow delete: if (isLguAdmin() && isOrgMember(resource.data.orgId)) || isSuper() || isLegacyAdmin();
+
+      match /status_updates/{updateId} {
+        allow read: if isLguStaff() || isSuper();
+        allow create: if isLguStaff() && data().byUid == uid()
+          && data().status in ['open', 'full', 'standby', 'closed'];
+        allow update, delete: if false;
+      }
+    }
+
+    // ---- SOS requests ----------------------------------------------------------------
+    // Anyone signed in (anonymous included) can raise one. Only LGU staff can
+    // acknowledge — "responder confirmation" is never self-reported.
+    match /sos_requests/{sosId} {
+      allow read: if (signedIn() && resource.data.uid == uid()) || isLguStaff() || isSuper();
+      allow create: if signedIn() && data().uid == uid()
+        && data().status == 'open'
+        && inServiceArea(data().location)
+        && shortString(data().message, 1000)
+        && data().get('acknowledgedBy', null) == null
+        && notSimulatedByClient();
+      allow update: if
+        (signedIn() && resource.data.uid == uid()
+          && data().status == 'cancelled' && onlyKeys(['status', 'updatedAt']))
+        || (isLguStaff() && ownsRecord(resource.data)
+          && data().status in ['acknowledged', 'resolved']
+          && data().acknowledgedBy == uid()
+          && onlyKeys(['status', 'acknowledgedBy', 'acknowledgedByName', 'responderNote', 'updatedAt']));
+      allow delete: if false;
+    }
+
+    // =========================================================================
+    // Users (profile, preferences, personal data)
+    // =========================================================================
+
+    match /users/{userId} {
+      allow read: if isAdmin() || (signedIn() && uid() == userId);
+      // Self-registration may only create a profile that mirrors the
+      // verified claims — a client can never self-assign a role or org.
+      allow create: if isAdmin()
+        || (isRegistered() && uid() == userId
+            && data().role == role()
+            && data().get('orgId', null) == myOrg()
+            && data().active == true);
+      allow update: if isAdmin()
+        || (signedIn() && uid() == userId
+            && onlyKeys(['name', 'alertPrefs', 'fcmTokens', 'alertLocation', 'updatedAt']));
+      allow delete: if isAdmin();
+
+      match /saved_locations/{locId} {
+        allow read, delete: if signedIn() && uid() == userId;
+        allow create, update: if isRegistered() && uid() == userId
+          && data().label in ['home', 'school', 'work', 'other']
+          && shortString(data().name, 80)
+          && isLatLng(data().location)
+          && data().alertRadiusM is number && data().alertRadiusM >= 100 && data().alertRadiusM <= 50000;
+      }
+
+      match /emergency_contacts/{contactId} {
+        allow read, delete: if signedIn() && uid() == userId;
+        allow create, update: if isRegistered() && uid() == userId
+          && shortString(data().name, 80)
+          && shortString(data().get('phone', ''), 30)
+          && shortString(data().get('email', ''), 120);
+      }
+
+      match /notifications/{notificationId} {
+        allow read, delete: if signedIn() && uid() == userId;
+        // The client records alerts it surfaced (in-app alert history).
+        allow create: if signedIn() && uid() == userId
+          && data().kind == 'alert' && data().read == false
+          && shortString(data().title, 200) && shortString(data().body, 2000);
+        allow update: if signedIn() && uid() == userId && onlyKeys(['read']);
+      }
+    }
+
+    match /ai_chat_history/{userId}/messages/{messageId} {
+      allow read, delete: if signedIn() && uid() == userId;
+      allow create, update: if false;
+    }
+
+    // =========================================================================
+    // Organizations & tenancy (server-managed)
+    // =========================================================================
+
+    match /organizations/{orgId} {
+      allow read: if isOrgMember(orgId) || isSuper();
+      allow write: if false;
+
+      match /members/{memberUid} {
+        allow read: if isOrgAdmin(orgId) || (signedIn() && uid() == memberUid) || isSuper();
+        allow write: if false;
+      }
+
+      match /jurisdiction_grants/{psgcCode} {
+        allow read: if isOrgMember(orgId) || isSuper();
+        allow write: if false;
+      }
+
+      // Business fleet features (paid: fleetMonitoring)
+      match /saved_routes/{routeId} {
+        allow read: if (isOrgMember(orgId) && orgEntitled(orgId, 'fleetMonitoring')) || isSuper();
+        allow create: if isOrgMember(orgId) && orgEntitled(orgId, 'fleetMonitoring')
+          && data().orgId == orgId && data().createdBy == uid()
+          && shortString(data().name, 120)
+          && data().vehicle in ['motorcycle', 'car', 'suv', 'truck', 'bicycle']
+          && data().stops is list && data().stops.size() >= 2 && data().stops.size() <= 25;
+        allow update: if isOrgMember(orgId) && orgEntitled(orgId, 'fleetMonitoring')
+          && unchanged('orgId') && unchanged('createdBy')
+          && data().stops is list && data().stops.size() >= 2 && data().stops.size() <= 25;
+        allow delete: if isOrgMember(orgId)
+          && (resource.data.createdBy == uid() || isOrgAdmin(orgId));
+      }
+
+      match /route_disruptions/{disruptionId} {
+        allow read: if (isOrgMember(orgId) && orgEntitled(orgId, 'fleetMonitoring')) || isSuper();
+        allow write: if false;
+      }
+
+      match /route_history/{historyId} {
+        allow read: if (isOrgMember(orgId) && orgEntitled(orgId, 'fleetMonitoring')) || isSuper();
+        allow create: if isOrgMember(orgId) && orgEntitled(orgId, 'fleetMonitoring')
+          && data().orgId == orgId && data().checkedBy == uid();
+        allow update, delete: if false;
+      }
+
+      match /api_keys/{keyId} {
+        allow read: if isOrgAdmin(orgId) || isSuper();
+        allow write: if false;
+      }
+    }
+
+    match /org_applications/{appId} {
+      allow read: if (signedIn() && resource.data.applicantUid == uid()) || isSuper();
+      allow create: if isRegistered()
+        && data().applicantUid == uid()
+        && data().status == 'pending'
+        && data().type in ['lgu', 'enterprise']
+        && shortString(data().orgName, 160)
+        && data().jurisdictionAreas is list && data().jurisdictionAreas.size() <= 30;
+      allow update, delete: if false;
+    }
+
+    // =========================================================================
+    // Billing (server-written only; readable by org admins + Super Admin)
+    // =========================================================================
+
+    match /subscription_plans/{planId} {
+      allow read: if true;
+      // Edited through the backend (validatePlan + audit log), never directly.
+      allow write: if false;
+    }
+
+    match /subscriptions/{subId} {
+      allow read: if isOrgAdmin(resource.data.orgId) || isSuper();
+      allow write: if false;
+    }
+
+    match /payment_transactions/{txId} {
+      allow read: if isOrgAdmin(resource.data.orgId) || isSuper();
+      allow write: if false;
+    }
+
+    match /billing_invoices/{invoiceId} {
+      allow read: if isOrgAdmin(resource.data.orgId) || isSuper();
+      allow write: if false;
+    }
+
+    match /revenue_records/{monthId} {
+      allow read: if isSuper();
+      allow write: if false;
+    }
+
+    // =========================================================================
+    // AI (server-written only)
+    // =========================================================================
+
+    // Counter ids are `user_<uid>_<period>` / `org_<orgId>_<period>`. Rules
+    // match on the id (not resource.data) so a not-yet-created counter can
+    // be listened to without a permission error.
+    match /ai_usage_records/{counterId} {
+      allow read: if isSuper()
+        || (signedIn() && counterId.matches('user_' + uid() + '_.*'))
+        || (myOrg() != null && isOrgAdmin(myOrg()) && counterId.matches('org_' + myOrg() + '_.*'));
+      allow write: if false;
+    }
+
+    match /ai_analysis_results/{analysisId} {
+      allow read: if isLguStaff() || isSuper() || (signedIn() && resource.data.requestedBy == uid());
+      allow write: if false;
+    }
+
+    match /ai_usage_log/{entryId} {
+      allow read: if isSuper();
+      allow write: if false;
+    }
+
+    // =========================================================================
+    // Prediction, platform & audit
+    // =========================================================================
+
+    match /flood_risk_predictions/{areaKey} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /weather_observations/{obsId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /platform_settings/{docId} {
+      allow read: if docId in ['general', 'features'] || isSuper();
+      allow write: if false;
+    }
+
+    match /audit_logs/{logId} {
+      allow read: if isSuper() || (resource.data.orgId != null && isOrgAdmin(resource.data.orgId));
+      allow write: if false;
+    }
+
+    // Server-only ledgers: webhook idempotency, rate limits, AI cache.
+    match /webhook_events/{id} { allow read, write: if false; }
+    match /rate_limits/{id} { allow read, write: if false; }
+    match /ai_cache/{id} { allow read, write: if false; }
   }
 }

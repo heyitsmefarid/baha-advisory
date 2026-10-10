@@ -15,6 +15,7 @@ import type { AppRole, ClaimRole, OrgType } from "./roles";
 import type { PlanId, Entitlements } from "./plans";
 import type { RoadPassability, VehiclePassability } from "./flood";
 import type { GeographicReference } from "./geography";
+export type { GovernmentLevel, JurisdictionGrant } from "./geography";
 
 export type TS = unknown;
 

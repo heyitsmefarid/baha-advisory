@@ -13,7 +13,7 @@ import { analyzeFloodImage, notAnalyzed, type FloodImageAnalysis } from "../ai/i
 import { asObject, bool, geographicReference, latLng, oneOf, optNum, optStr, str, ValidationError } from "../../shared/validation";
 import { findDuplicateCandidates, suspiciousFlags, depthMeters, type RecentReport } from "../../shared/reports";
 import { assignGeography, displayArea, geographicReferenceFrom, migrateRecord } from "../lib/geography";
-import { canManageArea } from "../../shared/roles";
+import { requireRecordJurisdiction } from "../lib/jurisdiction";
 import { suggestPassability, suggestRoadPassability } from "../../shared/passability";
 import { circleToPolygon, toPt } from "../../shared/geo";
 import { tuplesToFirestore } from "../../shared/geoFirestore";
@@ -217,9 +217,7 @@ export async function verifyReport(req: Request, ctx: RouteCtx): Promise<Respons
   const snap = await ref.get();
   if (!snap.exists) throw notFound("Report not found.");
   const report = { id: snap.id, ...(snap.data() as Omit<CommunityReport, "id">) };
-  if (!canManageArea(auth.claims, report.area)) {
-    throw forbidden(`Only DRRM staff responsible for ${report.area} can moderate this report.`);
-  }
+  await requireRecordJurisdiction(auth, report as unknown as Record<string, unknown>);
   if (report.status === "verified" || report.status === "rejected" || report.status === "duplicate") {
     throw new HttpError(409, `This report was already ${report.status}.`, "already_moderated");
   }
@@ -279,7 +277,7 @@ export async function verifyReport(req: Request, ctx: RouteCtx): Promise<Respons
         const zSnap = await zRef.get();
         if (!zSnap.exists) throw notFound("Zone to update not found.");
         const zone = zoneFromDoc(zSnap.id, zSnap.data()!);
-        if (!canManageArea(auth.claims, zone.area)) throw forbidden(`You can't edit zones in ${zone.area}.`);
+        await requireRecordJurisdiction(auth, zone as unknown as Record<string, unknown>);
         const patch = {
           waterLevelM,
           roadPassability,

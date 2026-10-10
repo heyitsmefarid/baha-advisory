@@ -28,7 +28,7 @@ const { suggestPassability, suggestRoadPassability } = await import("../shared/p
 const { circleToPolygon, destinationPoint } = await import("../shared/geo");
 const { addPeriod, invoiceNumber, monthlyEquivalent, toMinor } = await import("../shared/billing");
 const { DEFAULT_ALERT_PREFERENCES } = await import("../shared/types");
-const { legacyAreaToMunicipality, MINDORO_REGION_PSGC } = await import("../shared/geography");
+const { grantForUnit, legacyAreaToMunicipality, MINDORO_REGION_PSGC } = await import("../shared/geography");
 
 type Pt = [number, number];
 const db = getDb();
@@ -247,6 +247,13 @@ async function seedOrgs() {
       createdBy: "seed",
       isDemo: true,
     });
+    for (const area of o.jurisdictionAreas) {
+      const municipality = legacyAreaToMunicipality(area);
+      if (!municipality) throw new Error(`Unsupported seed jurisdiction: ${area}`);
+      await db.doc(`organizations/${o.id}/jurisdiction_grants/${municipality.psgcCode}`).set(
+        grantForUnit(municipality.psgcCode, o.id, "seed", ts(NOW - 120 * D)),
+      );
+    }
   }
   console.log("✓ demo organizations");
 }
@@ -304,8 +311,6 @@ async function seedAccounts() {
     const claims: Record<string, unknown> = {};
     if (a.role !== "citizen") claims.role = a.role;
     if (a.orgId) claims.orgId = a.orgId;
-    if (a.assignedArea) claims.assignedArea = a.assignedArea;
-    if (a.areas) claims.areas = a.areas;
     await auth.setCustomUserClaims(uid, claims);
     await db.doc(`users/${uid}`).set({
       name: a.name,

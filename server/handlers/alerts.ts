@@ -5,7 +5,7 @@ import { requireAuth, requireRole } from "../lib/auth";
 import { audit } from "../lib/audit";
 import { publishAlert } from "../lib/alerts";
 import { asObject, bool, geographicReference, latLng, oneOf, optNum, str } from "../../shared/validation";
-import { canManageArea } from "../../shared/roles";
+import { requireJurisdiction, requireRecordJurisdiction } from "../lib/jurisdiction";
 import { ORIENTAL_MINDORO_AREAS } from "../../shared/areas";
 import { displayArea, referenceForMunicipality } from "../lib/geography";
 import { legacyAreaToMunicipality } from "../../shared/geography";
@@ -30,7 +30,11 @@ export async function publishAdvisory(req: Request, ctx: RouteCtx): Promise<Resp
   if (!snap.exists) throw notFound("Advisory not found.");
   const adv = { id: snap.id, ...(snap.data() as Omit<Advisory, "id">) };
   if (auth.role !== "super_admin" && adv.orgId !== auth.orgId) throw forbidden("This advisory belongs to another organization.");
-  for (const a of adv.areas) if (!canManageArea(auth.claims, a)) throw forbidden(`You can't publish advisories for ${a}.`);
+  for (const areaName of adv.areas) {
+    const municipality = legacyAreaToMunicipality(areaName);
+    if (!municipality) throw forbidden(`Unsupported advisory area: ${areaName}.`);
+    await requireJurisdiction(auth, referenceForMunicipality(municipality.psgcCode, auth.uid, "migrated"));
+  }
   if (adv.status === "published") throw new HttpError(409, "Already published.", "already_published");
 
   await ref.update({ status: "published", publishedAt: FieldValue.serverTimestamp(), publishedBy: auth.uid });
@@ -73,7 +77,7 @@ export async function createAlert(req: Request, _ctx: RouteCtx): Promise<Respons
   const center = latLng(body, "center", { requireServiceArea: true });
   const geography = geographicReference(body);
   const area = displayArea(geography);
-  if (!canManageArea(auth.claims, area)) throw forbidden(`You can't issue alerts for ${area}.`);
+  await requireJurisdiction(auth, geography);
   const result = await publishAlert({
     type: oneOf(body, "type", ["flood", "road_closure", "evacuation", "advisory"] as const),
     severity: oneOf(body, "severity", ["info", "moderate", "high", "critical"] as const),
@@ -100,7 +104,7 @@ export async function deactivateAlert(req: Request, ctx: RouteCtx): Promise<Resp
   const ref = getDb().doc(`alerts/${ctx.params.id}`);
   const snap = await ref.get();
   if (!snap.exists) throw notFound("Alert not found.");
-  if (!canManageArea(auth.claims, snap.get("area"))) throw forbidden();
+  await requireRecordJurisdiction(auth, snap.data() as Record<string, unknown>);
   await ref.update({ active: false });
   await audit(auth, "alert.deactivate", "alert", snap.id, {}, auth.orgId);
   return json({ ok: true });
