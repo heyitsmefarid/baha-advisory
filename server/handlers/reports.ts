@@ -21,6 +21,7 @@ import { toMillis } from "../../shared/time";
 import type { CommunityReport, DepthLabel, ReportAiSummary } from "../../shared/types";
 import type { VehiclePassability, RoadPassability } from "../../shared/flood";
 import type { RouteCtx } from "../router";
+import { invalidateGeographicSummary } from "../lib/geographicSummary";
 
 const DEPTHS = ["none", "ankle", "gutter", "half_knee", "knee", "waist", "chest_or_higher", "unknown"] as const;
 const HOUR = 3600_000;
@@ -347,6 +348,7 @@ export async function verifyReport(req: Request, ctx: RouteCtx): Promise<Respons
   };
   await notifyUser(report.reporterUid, { kind: "report", title: `Report ${status.replace("_", " ")}`, body: messages[action], refPath: `community_reports/${report.id}` });
   await audit(auth, `report.${action}`, "community_report", report.id, { linkedZoneId, area: report.area, alert: alertResult?.alertId ?? null }, auth.orgId);
+  if (reportGeography) await invalidateGeographicSummary(reportGeography);
 
   return json({ ok: true, status, linkedZoneId, alert: alertResult });
 }

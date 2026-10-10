@@ -11,6 +11,8 @@ import { displayArea, referenceForMunicipality } from "../lib/geography";
 import { legacyAreaToMunicipality } from "../../shared/geography";
 import type { Advisory } from "../../shared/types";
 import type { RouteCtx } from "../router";
+import { geographicReferenceFrom } from "../lib/geography";
+import { invalidateGeographicSummary } from "../lib/geographicSummary";
 
 const LGU = ["lgu_staff", "lgu_admin", "super_admin"] as const;
 
@@ -106,6 +108,8 @@ export async function deactivateAlert(req: Request, ctx: RouteCtx): Promise<Resp
   if (!snap.exists) throw notFound("Alert not found.");
   await requireRecordJurisdiction(auth, snap.data() as Record<string, unknown>);
   await ref.update({ active: false });
+  const geography = geographicReferenceFrom(snap.data() as Record<string, unknown>);
+  if (geography) await invalidateGeographicSummary(geography);
   await audit(auth, "alert.deactivate", "alert", snap.id, {}, auth.orgId);
   return json({ ok: true });
 }

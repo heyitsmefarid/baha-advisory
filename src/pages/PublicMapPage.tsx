@@ -24,6 +24,8 @@ import { FloodZone } from "../types";
 import { DEFAULT_ZOOM, MINDORO_SERVICE_BOUNDS } from "../firebase";
 import { OSM_ATTRIBUTION, OSM_TILES } from "../components/map/BaseMap";
 import { toMillis } from "../../shared/time";
+import { useGeographicOverview } from "../hooks/useScopedPublicData";
+import { useGeographicScope } from "../contexts/GeographicScopeContext";
 
 type Layer = "water" | "flooded" | "passability";
 type Overlay = "roads" | "reports" | "centers" | "stations";
@@ -99,6 +101,8 @@ export default function PublicMapPage() {
   const reports = useVerifiedReports();
   const centers = useVerifiedCenters();
   const stations = useStations();
+  const overview = useGeographicOverview();
+  const { scope: geographicScope } = useGeographicScope();
   const { status, position, locate } = useGeolocation();
   const [selected, setSelected] = useState<FloodZone | null>(null);
   const [activeLayers] = useState<Record<Layer, boolean>>({
@@ -168,12 +172,17 @@ export default function PublicMapPage() {
   }, [zones, official.roads, centers.data]);
 
   const criticalAlert = alerts.data.find((a) => a.severity === "critical" || a.severity === "high");
+  const islandOverview = !geographicScope.provincePsgcCode ? overview.data : null;
 
   return (
     <AppShell fullBleed>
       <div className="public-map-page__body">
         <div className="map-wrap">
           {error && <div className="map-error">{error}</div>}
+          {official.displayState === "stale_previous_scope" && (
+            <div className="map-error">Unable to refresh â€” showing previous scope.</div>
+          )}
+          {overview.error && <div className="map-error">{overview.data ? "Unable to refresh â€” showing previous scope." : "Island overview is temporarily unavailable."}</div>}
           <MapContainer
             center={position}
             zoom={DEFAULT_ZOOM}
@@ -217,13 +226,13 @@ export default function PublicMapPage() {
           {/* Situation strip — live counts, gauge-style, with data freshness. */}
           <div className="situation-strip" role="status" aria-label="Current flood situation">
             <Readout
-              value={count(zones.length, official)}
+              value={!geographicScope.provincePsgcCode ? islandOverview?.counts.floodZones ?? "â€”" : count(zones.length, official)}
               label="Active flood zones"
               tone={zones.length ? "caution" : isUnknown(0, official) ? "neutral" : "safe"}
               hint={situation.rising ? `${situation.rising} rising` : unknownHint(zones.length, official)}
             />
-            <Readout value={count(situation.closedRoads, official)} label="Closed roads" tone={situation.closedRoads ? "closed" : "neutral"} hint={unknownHint(situation.closedRoads, official)} />
-            <Readout value={count(situation.openCenters, centers)} label="Open centers" tone="tide" hint={unknownHint(situation.openCenters, centers)} />
+            <Readout value={!geographicScope.provincePsgcCode ? islandOverview?.counts.roadConditions ?? "â€”" : count(situation.closedRoads, official)} label={islandOverview ? "Road conditions" : "Closed roads"} tone={situation.closedRoads ? "closed" : "neutral"} hint={unknownHint(situation.closedRoads, official)} />
+            <Readout value={!geographicScope.provincePsgcCode ? islandOverview?.counts.evacuationCenters ?? "â€”" : count(situation.openCenters, centers)} label="Open centers" tone="tide" hint={unknownHint(situation.openCenters, centers)} />
             <Readout value={count(alerts.data.length, alerts)} label="Active alerts" tone={alerts.data.length ? "danger" : "neutral"} hint={unknownHint(alerts.data.length, alerts)} />
             <div className="situation-strip__meta">
               {situation.newest ? <Freshness at={situation.newest} prefix="DRRM update" /> : <span className="freshness">No active updates</span>}

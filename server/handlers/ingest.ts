@@ -7,6 +7,8 @@ import { memoryRateLimit } from "../lib/rateLimit";
 import { invalidateHazardCache } from "../lib/hazards";
 import { asObject, num, optNum, str } from "../../shared/validation";
 import type { RouteCtx } from "../router";
+import { geographicReferenceFrom } from "../lib/geography";
+import { invalidateGeographicSummary } from "../lib/geographicSummary";
 
 function tokenOk(given: string | null): boolean {
   const expected = env("SENSOR_INGEST_TOKEN");
@@ -40,6 +42,8 @@ export async function ingestWaterLevel(req: Request, ctx: RouteCtx): Promise<Res
   if (!last || recordedAtMs >= last.toMillis()) {
     await ref.update({ lastLevelM: levelM, lastReadingAt: Timestamp.fromMillis(recordedAtMs), source: "sensor" });
   }
+  const geography = geographicReferenceFrom(snap.data() as Record<string, unknown>);
+  if (geography) await invalidateGeographicSummary(geography);
   invalidateHazardCache();
   const t = snap.get("thresholds") as { alertM: number; alarmM: number; criticalM: number };
   const stage = levelM >= t.criticalM ? "critical" : levelM >= t.alarmM ? "alarm" : levelM >= t.alertM ? "alert" : "normal";

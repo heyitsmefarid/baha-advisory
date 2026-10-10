@@ -4,6 +4,7 @@ import { appBaseUrl } from "./env";
 import { haversineM, toPt } from "../../shared/geo";
 import { ALERT_SEVERITY_ORDER, type AlertSeverity, type AlertType, type LatLng, type UserProfile } from "../../shared/types";
 import type { GeographicReference } from "../../shared/geography";
+import { invalidateGeographicSummary } from "./geographicSummary";
 
 export interface NewAlert {
   type: AlertType;
@@ -65,6 +66,7 @@ export async function publishAlert(a: NewAlert): Promise<{ alertId: string; matc
     return { matchedUsers: 0, pushSent: 0, pushNote: "Notification fan-out failed; the alert is still public." };
   });
   await ref.update({ pushSent, matchedUsers });
+  await invalidateGeographicSummary(a.geography);
   return { alertId: ref.id, matchedUsers, pushSent, pushNote };
 }
 
