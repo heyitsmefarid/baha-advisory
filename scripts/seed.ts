@@ -28,7 +28,7 @@ const { suggestPassability, suggestRoadPassability } = await import("../shared/p
 const { circleToPolygon, destinationPoint } = await import("../shared/geo");
 const { addPeriod, invoiceNumber, monthlyEquivalent, toMinor } = await import("../shared/billing");
 const { DEFAULT_ALERT_PREFERENCES } = await import("../shared/types");
-const { grantForUnit, legacyAreaToMunicipality, MINDORO_REGION_PSGC } = await import("../shared/geography");
+const { grantForUnit, legacyAreaToMunicipality, MINDORO_CATALOG, MINDORO_REGION_PSGC } = await import("../shared/geography");
 
 type Pt = [number, number];
 const db = getDb();
@@ -125,6 +125,41 @@ async function seedPlatform() {
   console.log("✓ platform settings & plans");
 }
 
+async function seedGeographyCatalog() {
+  let batch = db.batch();
+  let pending = 0;
+  for (const unit of MINDORO_CATALOG) {
+    batch.set(db.doc(`geographic_units/${unit.psgcCode}`), {
+      ...unit,
+      authoritativeIdentifiers: true,
+      source: "Philippine Statistics Authority PSGC 2Q 2026",
+      updatedAt: FieldValue.serverTimestamp(),
+    }, { merge: true });
+    pending++;
+    if (pending === 400) {
+      await batch.commit();
+      batch = db.batch();
+      pending = 0;
+    }
+  }
+  if (pending) await batch.commit();
+
+  const municipalities = MINDORO_CATALOG.filter((unit) => unit.level === "city" || unit.level === "municipality");
+  for (const unit of municipalities) {
+    await db.doc(`geographic_source_status/${unit.psgcCode}`).set({
+      psgcCode: unit.psgcCode,
+      provincePsgcCode: unit.provincePsgcCode,
+      status: unit.psgcCode === "1705205000" && SEED_DEMO ? "simulated_demo_pilot" : "no_verified_feed",
+      operationalCoverageClaimed: false,
+      note: unit.psgcCode === "1705205000" && SEED_DEMO
+        ? "Calapan hackathon pilot uses clearly labelled simulated operational data."
+        : "Geographic navigation is supported; no verified real-time operational feed is configured.",
+      updatedAt: FieldValue.serverTimestamp(),
+    }, { merge: true });
+  }
+  console.log("Geography catalog and source-status records written");
+}
+
 // =============================================================================
 // 2. Demo reset (flagged records only)
 // =============================================================================
@@ -197,6 +232,16 @@ const ORGS = {
     active: false,
     hotlines: [],
   },
+  orientalProvince: {
+    id: "org_demo_province_oriental",
+    name: "Oriental Mindoro PDRRMO (Demo)",
+    type: "lgu" as const,
+    jurisdictionAreas: [],
+    jurisdictionPsgcCode: "1705200000",
+    planId: "lgu_pro",
+    active: true,
+    hotlines: [],
+  },
   express: {
     id: "org_demo_biz_express",
     name: "Mindoro Express Logistics (Demo)",
@@ -228,6 +273,7 @@ const ORGS = {
 };
 
 async function seedOrgs() {
+  const grantedMunicipalities = new Set<string>();
   for (const o of Object.values(ORGS)) {
     const plan = o.planId ? DEFAULT_PLAN_BY_ID[o.planId] : null;
     await db.doc(`organizations/${o.id}`).set({
@@ -253,7 +299,39 @@ async function seedOrgs() {
       await db.doc(`organizations/${o.id}/jurisdiction_grants/${municipality.psgcCode}`).set(
         grantForUnit(municipality.psgcCode, o.id, "seed", ts(NOW - 120 * D)),
       );
+      grantedMunicipalities.add(municipality.psgcCode);
     }
+    const jurisdictionPsgcCode = (o as { jurisdictionPsgcCode?: string }).jurisdictionPsgcCode;
+    if (jurisdictionPsgcCode) {
+      await db.doc(`organizations/${o.id}/jurisdiction_grants/${jurisdictionPsgcCode}`).set(
+        grantForUnit(jurisdictionPsgcCode, o.id, "seed", ts(NOW - 120 * D)),
+      );
+    }
+  }
+  for (const unit of MINDORO_CATALOG.filter((candidate) => candidate.level === "city" || candidate.level === "municipality")) {
+    if (grantedMunicipalities.has(unit.psgcCode)) continue;
+    const orgId = `org_demo_lgu_${unit.psgcCode}`;
+    await db.doc(`organizations/${orgId}`).set({
+      name: `${unit.name} DRRMO (Demo coverage placeholder)`,
+      type: "lgu",
+      status: "active",
+      jurisdictionAreas: [unit.name],
+      parentOrgId: null,
+      planId: null,
+      subscriptionId: null,
+      subscriptionStatus: "none",
+      entitlements: computeEntitlements(null, { subscriptionActive: false }),
+      addOns: [],
+      hotlines: [],
+      contactEmail: `contact@${DEMO_DOMAIN}`,
+      dataStatus: "no_verified_feed",
+      createdAt: ts(NOW - 120 * D),
+      createdBy: "seed",
+      isDemo: true,
+    }, { merge: true });
+    await db.doc(`organizations/${orgId}/jurisdiction_grants/${unit.psgcCode}`).set(
+      grantForUnit(unit.psgcCode, orgId, "seed", ts(NOW - 120 * D)),
+    );
   }
   console.log("✓ demo organizations");
 }
@@ -282,6 +360,10 @@ const ACCOUNTS: DemoAccount[] = [
   {
     key: "naujanAdmin", email: `naujan.admin@${DEMO_DOMAIN}`, name: "Liza Mendoza (Demo)", role: "lgu_admin",
     orgId: ORGS.naujan.id, assignedArea: "Naujan", areas: ["Naujan"],
+  },
+  {
+    key: "provincialAdmin", email: `oriental.province@${DEMO_DOMAIN}`, name: "Oriental Mindoro PDRRMO (Demo)", role: "lgu_admin",
+    orgId: ORGS.orientalProvince.id, assignedArea: "Oriental Mindoro", areas: [],
   },
   { key: "bizAdmin", email: `business.admin@${DEMO_DOMAIN}`, name: "Carlo Tan (Demo)", role: "business_admin", orgId: ORGS.express.id },
   { key: "bizStaff", email: `business.staff@${DEMO_DOMAIN}`, name: "Joy Ramos (Demo)", role: "business_staff", orgId: ORGS.express.id },
@@ -627,18 +709,28 @@ async function seedOperations() {
 async function seedBilling() {
   const subs = [
     { id: "sub_demo_lgu_calapan", orgId: ORGS.calapan.id, orgName: ORGS.calapan.name, planId: "lgu_pro", cycle: "monthly" as const, amount: 5000, startAgo: 12 * D, status: "active", created: 70 * D },
+    { id: "sub_demo_province_oriental", orgId: ORGS.orientalProvince.id, orgName: ORGS.orientalProvince.name, planId: "lgu_pro", cycle: "monthly" as const, amount: 5000, startAgo: 10 * D, status: "active", created: 70 * D },
     { id: "sub_demo_biz_express", orgId: ORGS.express.id, orgName: ORGS.express.name, planId: "business_pro", cycle: "annual" as const, amount: 21600, startAgo: 40 * D, status: "active", created: 40 * D },
     { id: "sub_demo_enterprise_isla", orgId: ORGS.isla.id, orgName: ORGS.isla.name, planId: "enterprise", cycle: "monthly" as const, amount: 15000, startAgo: 5 * D, status: "active", created: 95 * D },
     { id: "sub_demo_lgu_naujan", orgId: ORGS.naujan.id, orgName: ORGS.naujan.name, planId: "lgu_pro", cycle: "monthly" as const, amount: 5000, startAgo: 50 * D, status: "canceled", created: 80 * D },
   ];
   let seq = 1;
   for (const s of subs) {
+    const coverageScopes = s.orgId === ORGS.calapan.id
+      ? ORGS.calapan.jurisdictionAreas.map((area) => ({ level: "municipality" as const, psgcCode: legacyAreaToMunicipality(area)!.psgcCode }))
+      : s.orgId === ORGS.orientalProvince.id
+        ? [{ level: "province" as const, psgcCode: "1705200000" }]
+      : s.orgId === ORGS.naujan.id
+        ? [{ level: "municipality" as const, psgcCode: legacyAreaToMunicipality("Naujan")!.psgcCode }]
+        : s.orgId === ORGS.express.id
+          ? [{ level: "province" as const, psgcCode: "1705200000" }]
+          : [{ level: "province" as const, psgcCode: "1705100000" }, { level: "province" as const, psgcCode: "1705200000" }];
     const start = NOW - s.startAgo;
     const end = addPeriod(start, s.cycle);
     await db.doc(`subscriptions/${s.id}`).set({
       orgId: s.orgId, planId: s.planId, status: s.status, billingCycle: s.cycle,
       currentPeriodStart: ts(start), currentPeriodEnd: ts(end), cancelAtPeriodEnd: s.status === "canceled",
-      pendingPlanId: null, pendingBillingCycle: null, provider: "demo", isDemo: true, livemode: false,
+      pendingPlanId: null, pendingBillingCycle: null, provider: "demo", isDemo: true, livemode: false, coverageScopes,
       mrrPhp: monthlyEquivalent(s.amount, s.cycle), createdAt: ts(NOW - s.created), updatedAt: ts(start),
       canceledAt: s.status === "canceled" ? ts(NOW - 20 * D) : null, lastReminderAt: null,
     });
@@ -650,7 +742,7 @@ async function seedBilling() {
       await db.doc(`payment_transactions/${txId}`).set({
         orgId: s.orgId, kind: "subscription", planId: s.planId, billingCycle: s.cycle, feeId: null,
         description: `${plan.name} — ${s.cycle} (demo sandbox)`, amountPhp: s.amount, amountMinor: toMinor(s.amount), currency: "PHP",
-        provider: "demo", providerRef: `demo_${txId}`, checkoutUrl: null, status: "paid", livemode: false, isDemo: true,
+        provider: "demo", providerRef: `demo_${txId}`, checkoutUrl: null, status: "paid", livemode: false, isDemo: true, coverageScopes,
         createdBy: "seed", createdAt: ts(t), paidAt: ts(t + 5 * 60_000), invoiceId: invId, failureReason: null,
       });
       await db.doc(`billing_invoices/${invId}`).set({
@@ -693,6 +785,7 @@ async function seedBilling() {
   for (const r of routes) {
     await db.doc(`organizations/${ORGS.express.id}/saved_routes/${r.id}`).set({
       orgId: ORGS.express.id, name: r.name, vehicle: r.vehicle,
+      coveragePsgcCode: legacyAreaToMunicipality(r.id.includes("naujan") ? "Naujan" : r.id.includes("baco") ? "Baco" : "Calapan City")!.psgcCode,
       stops: r.stops.map(([label, p]) => ({ label, location: ll(p as unknown as Pt) })),
       createdBy: uids.bizAdmin, createdAt: ts(NOW - 20 * D), lastCheckedAt: null, lastStatus: "unknown",
       lastDistanceM: null, lastDurationS: null, activeDisruptions: 0,
@@ -707,6 +800,7 @@ async function seedBilling() {
 
 try {
   await seedPlatform();
+  await seedGeographyCatalog();
   if (SEED_DEMO) {
     if (ctx.flag("--reset-demo")) await resetDemo();
     await seedOrgs();

@@ -21,7 +21,8 @@
     "migrate-geography": "tsx scripts/migrateGeography.ts",
     "test:emulator:attached": "vitest run -c vitest.emulator.config.ts",
     "test:e2e": "node tests/e2e/demo-flow.e2e.mjs",
-    "test:e2e:offline": "node tests/e2e/offline-pwa.e2e.mjs"
+    "test:e2e:offline": "node tests/e2e/offline-pwa.e2e.mjs",
+    "test:e2e:geography": "node tests/e2e/geographic-expansion.e2e.mjs"
   },
   "dependencies": {
     "@types/leaflet": "^1.9.12",
