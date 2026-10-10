@@ -93,7 +93,7 @@ describe("business onboarding & subscription enforcement", () => {
     expect((await call("POST", "/api/billing/checkout", { token: tokens.owner, body: { orgId: ids.ownerOrg, planId: "lgu_pro" } })).status).toBe(400);
     const enterprise = await call("POST", "/api/billing/checkout", { token: tokens.owner, body: { orgId: ids.ownerOrg, planId: "enterprise" } });
     expect(enterprise.status).toBe(400);
-    const ok = await call<{ txId: string; checkoutUrl: string; isDemo: boolean }>("POST", "/api/billing/checkout", { token: tokens.owner, body: { orgId: ids.ownerOrg, planId: "business_pro", billingCycle: "monthly" } });
+    const ok = await call<{ txId: string; checkoutUrl: string; isDemo: boolean }>("POST", "/api/billing/checkout", { token: tokens.owner, body: { orgId: ids.ownerOrg, planId: "business_pro", billingCycle: "monthly", coverageScopes: [{ level: "municipality", psgcCode: "1705205000" }] } });
     expect(ok.status).toBe(201);
     expect(ok.body.checkoutUrl).toBe(`/checkout/demo/${ok.body.txId}`);
     expect(ok.body.isDemo).toBe(true);
@@ -115,13 +115,22 @@ describe("business onboarding & subscription enforcement", () => {
     const invoices = await db.collection("billing_invoices").where("orgId", "==", ids.ownerOrg).get();
     expect(invoices.size).toBe(1);
     const sub = (await db.doc(`subscriptions/${org.subscriptionId}`).get()).data()!;
-    expect(sub).toMatchObject({ planId: "business_pro", isDemo: true, mrrPhp: 2000, status: "active" });
+    expect(sub).toMatchObject({ planId: "business_pro", isDemo: true, mrrPhp: 2000, status: "active", coverageScopes: [{ level: "municipality", psgcCode: "1705205000" }] });
   });
 
   it("paid features work once subscribed", async () => {
-    const res = await call<{ checked: number }>("POST", "/api/fleet/check", { token: tokens.owner, body: { orgId: ids.ownerOrg } });
+    const res = await call<{ checked: number }>("POST", "/api/fleet/check", { token: tokens.owner, body: { orgId: ids.ownerOrg, coveragePsgcCode: "1705205000" } });
     expect(res.status).toBe(200);
     expect(res.body.checked).toBe(0);
+    await admin.getDb().doc(`organizations/${ids.ownerOrg}/saved_routes/outside`).set({
+      orgId: ids.ownerOrg, name: "Naujan route", vehicle: "car", coveragePsgcCode: "1705208000",
+      stops: [{ label: "A", location: { lat: 13.2, lng: 121.3 } }, { label: "B", location: { lat: 13.25, lng: 121.35 } }],
+      createdBy: ids.owner, createdAt: new Date(),
+    });
+    const outside = await call("POST", "/api/fleet/check", { token: tokens.owner, body: { orgId: ids.ownerOrg, routeId: "outside" } });
+    expect(outside.status).toBe(403);
+    expect((outside.body as { error: { code: string } }).error.code).toBe("coverage_denied");
+    expect((await call("GET", "/api/geography/overview?municipality=1705208000")).status).toBe(200);
   });
 });
 
@@ -132,6 +141,7 @@ describe("PayMongo webhooks", () => {
       orgId: "org_other", kind: "subscription", planId: "business_pro", billingCycle: "monthly", feeId: null, description: "Business Pro — monthly",
       amountPhp, amountMinor: amountPhp * 100, currency: "PHP", provider: "paymongo", providerRef: `cs_${id}`, checkoutUrl: null, status: "pending",
       livemode: false, isDemo: false, createdBy: ids.otherAdmin, createdAt: new Date(), paidAt: null, invoiceId: null, failureReason: null,
+      coverageScopes: [{ level: "municipality", psgcCode: "1705205000" }],
     });
   }
   async function send(eventId: string, txId: string, amountMinor: number, opts: { live?: boolean; sign?: boolean } = {}) {
@@ -190,10 +200,12 @@ describe("API keys & data API", () => {
     expect(created.body.key).toMatch(/^ba_live_/);
     const stored = (await admin.getDb().doc(`organizations/org_other/api_keys/${created.body.id}`).get()).data()!;
     expect(JSON.stringify(stored)).not.toContain(created.body.key);
-    expect((await call("GET", "/api/v1/flood-zones", { headers: { "x-api-key": created.body.key } })).status).toBe(200);
-    expect((await call("GET", "/api/v1/flood-zones", { headers: { "x-api-key": "ba_live_" + "x".repeat(30) } })).status).toBe(401);
+    expect((await call("GET", "/api/v1/flood-zones?psgcCode=1705205000", { headers: { "x-api-key": created.body.key } })).status).toBe(200);
+    const outside = await call("GET", "/api/v1/flood-zones?psgcCode=1705208000", { headers: { "x-api-key": created.body.key } });
+    expect(outside.status).toBe(403);
+    expect((await call("GET", "/api/v1/flood-zones?psgcCode=1705205000", { headers: { "x-api-key": "ba_live_" + "x".repeat(30) } })).status).toBe(401);
     await call("DELETE", `/api/orgs/org_other/api-keys/${created.body.id}`, { token: tokens.otherAdmin });
-    expect((await call("GET", "/api/v1/flood-zones", { headers: { "x-api-key": created.body.key } })).status).toBe(401);
+    expect((await call("GET", "/api/v1/flood-zones?psgcCode=1705205000", { headers: { "x-api-key": created.body.key } })).status).toBe(401);
   });
 });
 

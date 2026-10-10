@@ -16,6 +16,8 @@ import { AREA_NAMES } from "../../../shared/areas";
 import { effectiveStatus } from "../../../shared/billing";
 import { formatPhp, PAID_FEATURE_LABELS, PAID_FEATURES, validatePlan, type FeatureAvailability, type SubscriptionPlan } from "../../../shared/plans";
 import type { AuditLogEntry, Organization, OrgApplication, PaymentTransaction, PlatformAiSettings, PlatformGeneralSettings, Subscription, UserProfile } from "../../../shared/types";
+import type { CoverageScope } from "../../../shared/geography";
+import CoverageScopeSelector from "../../components/geography/CoverageScopeSelector";
 
 const pct = (r: number) => `${(r * 100).toFixed(1)}%`;
 const usd = (v: number) => `$${v.toFixed(v < 1 ? 4 : 2)}`;
@@ -141,12 +143,13 @@ function ManualSubscriptionModal({ org, onClose }: { org: Organization | null; o
   const [amount, setAmount] = useState(5000);
   const [isDemo, setIsDemo] = useState(true);
   const [reference, setReference] = useState("");
+  const [coverageScopes, setCoverageScopes] = useState<CoverageScope[]>([]);
   const [busy, setBusy] = useState(false);
   const submit = async () => {
     if (!org) return;
     setBusy(true);
     try {
-      const res = await api<{ outcome: string }>(`/admin/orgs/${org.id}/manual-subscription`, { body: { planId, billingCycle: cycle, amountPhp: amount, isDemo, reference } });
+      const res = await api<{ outcome: string }>(`/admin/orgs/${org.id}/manual-subscription`, { body: { planId, billingCycle: cycle, amountPhp: amount, isDemo, reference, coverageScopes } });
       toast(`Recorded — ${res.outcome}.`, "safe");
       onClose();
     } catch (err) {
@@ -156,7 +159,7 @@ function ManualSubscriptionModal({ org, onClose }: { org: Organization | null; o
     }
   };
   return (
-    <Modal open={!!org} title={`Record a contract — ${org?.name ?? ""}`} onClose={onClose} footer={<><button className="btn-secondary" onClick={onClose}>Cancel</button><button onClick={submit} disabled={busy}>{busy ? <Spinner /> : "Record payment"}</button></>}>
+    <Modal open={!!org} title={`Record a contract — ${org?.name ?? ""}`} onClose={onClose} footer={<><button className="btn-secondary" onClick={onClose}>Cancel</button><button onClick={submit} disabled={busy || Boolean(org && org.type !== "lgu" && coverageScopes.length === 0)}>{busy ? <Spinner /> : "Record payment"}</button></>}>
       <p className="small">For contracts paid outside online checkout (e.g. an LGU purchase order paid by bank transfer). Mark demonstration contracts as demo so they never count as real revenue.</p>
       <div className="field-row">
         <Field label="Plan"><select value={planId} onChange={(e) => setPlanId(e.target.value)}>{plans.filter((p) => p.segment !== "citizen").map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}</select></Field>
@@ -164,6 +167,7 @@ function ManualSubscriptionModal({ org, onClose }: { org: Organization | null; o
         <Field label="Amount paid (₱)"><input type="number" min={1} value={amount} onChange={(e) => setAmount(Number(e.target.value))} /></Field>
       </div>
       <Field label="Reference (PO / OR number)"><input value={reference} onChange={(e) => setReference(e.target.value)} maxLength={120} /></Field>
+      <CoverageScopeSelector value={coverageScopes} onChange={setCoverageScopes} disabled={org?.type === "lgu"} />
       <label className="check-row"><input type="checkbox" checked={isDemo} onChange={(e) => setIsDemo(e.target.checked)} /> Demo / not real money</label>
     </Modal>
   );

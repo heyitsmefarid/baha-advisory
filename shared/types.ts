@@ -14,7 +14,7 @@
 import type { AppRole, ClaimRole, OrgType } from "./roles";
 import type { PlanId, Entitlements } from "./plans";
 import type { RoadPassability, VehiclePassability } from "./flood";
-import type { GeographicReference } from "./geography";
+import type { CoverageScope, GeographicReference } from "./geography";
 export type { GovernmentLevel, JurisdictionGrant } from "./geography";
 
 export type TS = unknown;
@@ -498,6 +498,8 @@ export interface SavedRoute {
   name: string;
   vehicle: VehicleType;
   stops: { label: string; location: LatLng }[];
+  /** Explicit user-selected PSGC service area; never inferred without verified boundaries. */
+  coveragePsgcCode: string;
   createdBy: string;
   createdAt: TS;
   lastCheckedAt?: TS | null;
@@ -685,6 +687,8 @@ export interface Subscription {
   updatedAt: TS;
   canceledAt?: TS | null;
   lastReminderAt?: TS | null;
+  /** Immutable paid service area copied from the verified payment transaction. */
+  coverageScopes: CoverageScope[];
 }
 
 export type TransactionKind = "subscription" | "one_time_fee";
@@ -714,6 +718,8 @@ export interface PaymentTransaction {
   paidAt?: TS | null;
   invoiceId?: string | null;
   failureReason?: string | null;
+  /** Normalized at checkout and copied to the subscription only after verified payment. */
+  coverageScopes?: CoverageScope[];
 }
 
 /** billing_invoices/{invoiceId} */
