@@ -16,7 +16,7 @@ import {
 import { firestoreErrorMessage } from "../utils/errors";
 import type { GeographicScope } from "../../shared/geography";
 import { api } from "../lib/api";
-import type { GeographicOverview } from "../../server/lib/geographicSummary";
+import type { GeographicOverview } from "../../shared/geography/overview";
 
 export function geographicScopeKey(scope: GeographicScope): string {
   if (scope.barangayPsgcCode) return `barangay:${scope.barangayPsgcCode}`;

@@ -1020,3 +1020,24 @@ label > input, label > select, label > textarea { margin-top: 0.35em; }
 @media (prefers-reduced-motion: reduce) {
   .tutorial-highlight, .tutorial-highlight--secondary, .tutorial-card { animation: none !important; }
 }
+.geo-overview { display: grid; gap: 1rem; margin-top: 1rem; min-width: 0; width: 100%; }
+.geo-overview > *, .geo-overview__chart .viz { min-width: 0; max-width: 100%; }
+.geo-overview__provinces { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.geo-overview__province { border-top: 4px solid var(--tide); }
+.geo-overview__province h2 { margin: 0; }
+.geo-overview__province dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; margin: 1rem 0; }
+.geo-overview__province dl div { padding: .7rem; border-radius: .6rem; background: var(--surface-2); }
+.geo-overview__province dt { color: var(--text-muted); font-size: .75rem; }
+.geo-overview__province dd { margin: .2rem 0 0; font-size: 1.4rem; font-weight: 750; }
+.geo-overview__table-wrap { overflow-x: auto; max-width: 100%; }
+.geo-overview__table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+.geo-overview__table th, .geo-overview__table td { padding: .7rem .6rem; border-bottom: 1px solid var(--border); text-align: left; vertical-align: middle; white-space: nowrap; }
+.geo-overview__table th[scope="row"] { white-space: normal; min-width: 9rem; }
+.geo-overview__table th[scope="row"] span { display: block; color: var(--text-muted); font-size: .72rem; font-weight: 400; }
+.geo-overview__note { margin-bottom: 0; }
+.geo-admin-panel { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+@media (max-width: 720px) {
+  .geo-overview__provinces { grid-template-columns: 1fr; }
+  .geo-overview__province dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .geo-admin-panel { align-items: flex-start; flex-direction: column; }
+}

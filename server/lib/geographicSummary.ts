@@ -9,30 +9,7 @@ import {
   type GeographicScope,
 } from "../../shared/geography";
 import { toMillis } from "../../shared/time";
-
-export interface GeographicCounts {
-  floodZones: number;
-  roadConditions: number;
-  verifiedReports: number;
-  evacuationCenters: number;
-  activeAlerts: number;
-}
-
-export interface MunicipalityOverview extends GeographicCounts {
-  psgcCode: string;
-  name: string;
-  provincePsgcCode: string;
-  freshestAt: number | null;
-}
-
-export interface GeographicOverview {
-  scope: GeographicScope;
-  scopeKey: string;
-  generatedAt: number;
-  sourceMaxUpdatedAt: number | null;
-  counts: GeographicCounts;
-  municipalities: MunicipalityOverview[];
-}
+import type { GeographicCounts, GeographicOverview, MunicipalityOverview } from "../../shared/geography/overview";
 
 const EMPTY_COUNTS = (): GeographicCounts => ({ floodZones: 0, roadConditions: 0, verifiedReports: 0, evacuationCenters: 0, activeAlerts: 0 });
 
@@ -74,7 +51,18 @@ export async function computeGeographicOverview(inputScope: GeographicScope): Pr
   const municipalityRows = new Map<string, MunicipalityOverview>();
   for (const code of municipalityCodes) {
     const unit = getUnit(code)!;
-    municipalityRows.set(code, { psgcCode: code, name: unit.name, provincePsgcCode: unit.provincePsgcCode!, freshestAt: null, ...EMPTY_COUNTS() });
+    municipalityRows.set(code, {
+      psgcCode: code,
+      name: unit.name,
+      provincePsgcCode: unit.provincePsgcCode!,
+      freshestAt: null,
+      verifiedSources: 0,
+      verifiedFloodZones: 0,
+      simulatedFloodZones: 0,
+      verifiedCounts: EMPTY_COUNTS(),
+      simulatedCounts: EMPTY_COUNTS(),
+      ...EMPTY_COUNTS(),
+    });
   }
 
   const counts = EMPTY_COUNTS();
@@ -86,7 +74,17 @@ export async function computeGeographicOverview(inputScope: GeographicScope): Pr
       const data = document.data();
       const code = municipalityFor(data);
       const row = code ? municipalityRows.get(code) : null;
-      if (row) row[spec.key] += 1;
+      if (row) {
+        row[spec.key] += 1;
+        if (document.get("simulated") === true) {
+          row.simulatedCounts![spec.key] += 1;
+          if (spec.key === "floodZones") row.simulatedFloodZones = (row.simulatedFloodZones ?? 0) + 1;
+        } else {
+          row.verifiedCounts![spec.key] += 1;
+          row.verifiedSources = (row.verifiedSources ?? 0) + 1;
+          if (spec.key === "floodZones") row.verifiedFloodZones = (row.verifiedFloodZones ?? 0) + 1;
+        }
+      }
       const at = toMillis(data[spec.time]);
       if (at != null) {
         sourceMaxUpdatedAt = Math.max(sourceMaxUpdatedAt ?? 0, at);

@@ -14,6 +14,7 @@ import { useOfflineSnapshot } from "./hooks/useOfflineSnapshot";
 // Public map is eager (it's the landing page); everything else is split
 // into its own chunk so the first paint on a slow connection stays small.
 const AdvisoriesPage = lazy(() => import("./pages/AdvisoriesPage"));
+const IslandOverviewPage = lazy(() => import("./pages/IslandOverviewPage"));
 const NavigatePage = lazy(() => import("./pages/NavigatePage"));
 const ReportPage = lazy(() => import("./pages/ReportPage"));
 const EvacuationPage = lazy(() => import("./pages/EvacuationPage"));
@@ -43,6 +44,7 @@ const RoutePlannerPage = lazy(() => import("./pages/business/RoutePlannerPage"))
 const BusinessModelPage = lazy(() => import("./pages/BusinessModelPage"));
 const DemoGuidePage = lazy(() => import("./pages/DemoGuidePage"));
 const AnalyticsPage = lazy(() => import("./pages/admin/AnalyticsPage"));
+const ProvincialOverviewPage = lazy(() => import("./pages/admin/ProvincialOverviewPage"));
 const SuperOverviewPage = lazy(() => import("./pages/super/SuperPages").then((m) => ({ default: m.SuperOverviewPage })));
 const RevenuePage = lazy(() => import("./pages/super/SuperPages").then((m) => ({ default: m.RevenuePage })));
 const OrganizationsPage = lazy(() => import("./pages/super/SuperPages").then((m) => ({ default: m.OrganizationsPage })));
@@ -95,14 +97,15 @@ export default function App() {
       <AuthProvider>
         <PlatformProvider>
           <ToastProvider>
-            <BackgroundSync />
             <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
               <GeographicScopeProvider>
+                <BackgroundSync />
                 <Suspense fallback={<PageFallback />}>
                   <Routes>
                   {/* Public — no login required. Public-safety features are never gated. */}
                   <Route path="/" element={<PublicMapPage />} />
                   <Route path="/advisories" element={<AdvisoriesPage />} />
+                  <Route path="/overview" element={<IslandOverviewPage />} />
                   <Route path="/navigate" element={<NavigatePage />} />
                   <Route path="/report" element={<ReportPage />} />
                   <Route path="/evacuation" element={<EvacuationPage />} />
@@ -134,6 +137,7 @@ export default function App() {
                   <Route path="/admin/advisories" element={<RequireRole allow={[...LGU]}><AdvisoriesAdminPage /></RequireRole>} />
                   <Route path="/admin/water-levels" element={<RequireRole allow={[...LGU]}><WaterLevelsPage /></RequireRole>} />
                   <Route path="/admin/analytics" element={<RequireRole allow={[...LGU]}><AnalyticsPage /></RequireRole>} />
+                  <Route path="/admin/geography" element={<RequireRole allow={[...LGU]}><ProvincialOverviewPage /></RequireRole>} />
                   <Route path="/admin/staff" element={<RequireRole allow={["lgu_admin"]}><OrgStaffPage kind="lgu" /></RequireRole>} />
                   <Route path="/admin/billing" element={<RequireRole allow={["lgu_admin"]}><OrgBillingPage kind="lgu" /></RequireRole>} />
 
