@@ -86,6 +86,22 @@ try {
     headers: { authorization: `Bearer ${provincialToken}` },
   });
   if (crossProvince.status() !== 403) throw new Error(`Cross-province refresh should be denied, got HTTP ${crossProvince.status()}.`);
+  const deniedMutation = await page.request.post(`${BASE}/api/alerts`, {
+    headers: { authorization: `Bearer ${provincialToken}` },
+    data: {
+      center: { lat: 12.3528, lng: 121.0676 },
+      type: "flood",
+      severity: "info",
+      title: "E2E cross-province denial",
+      body: "This request must be rejected before any alert is written.",
+      regionPsgcCode: "1700000000",
+      provincePsgcCode: "1705100000",
+      municipalityPsgcCode: "1705110000",
+      barangayPsgcCode: null,
+      locationAssignment: { method: "manual", confidence: "medium", sourceVersion: "Q2_2026", assignedAt: Date.now(), assignedBy: "geography-e2e" },
+    },
+  });
+  if (deniedMutation.status() !== 403) throw new Error(`Cross-province alert mutation should be denied, got HTTP ${deniedMutation.status()}.`);
   await page.goto(`${BASE}/admin/geography`, { waitUntil: "domcontentloaded" });
   await page.getByRole("heading", { name: "Geographic operations" }).waitFor();
   if (await page.locator(".geo-overview__table tbody tr").count() !== 15) throw new Error("Oriental provincial dashboard did not show its 15 LGUs.");

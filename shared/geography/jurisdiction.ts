@@ -1,5 +1,5 @@
-import { getUnit, isValidHierarchy } from "./catalog";
-import type { GeographicReference } from "./types";
+import { getUnit, isValidHierarchy, normalizeScope } from "./catalog";
+import type { GeographicReference, GeographicScope } from "./types";
 import type { TS } from "../types";
 
 export type GovernmentLevel = "barangay" | "municipality" | "province" | "platform";
@@ -37,6 +37,21 @@ export function scopeCoversReference(
   if (scope.level === "province") return scope.psgcCode === reference.provincePsgcCode;
   if (scope.level === "municipality") return scope.psgcCode === reference.municipalityPsgcCode;
   return scope.psgcCode === reference.barangayPsgcCode;
+}
+
+/** Authorization for aggregate/dashboard scopes, including province-only targets. */
+export function jurisdictionCoversScope(scope: JurisdictionScope, target: GeographicScope): boolean {
+  if (scope.active === false || !isValidJurisdictionScope(scope)) return false;
+  const normalized = normalizeScope(target);
+  if (
+    normalized.provincePsgcCode !== target.provincePsgcCode ||
+    normalized.municipalityPsgcCode !== target.municipalityPsgcCode ||
+    normalized.barangayPsgcCode !== target.barangayPsgcCode ||
+    !normalized.provincePsgcCode
+  ) return false;
+  if (scope.level === "province") return scope.psgcCode === normalized.provincePsgcCode;
+  if (scope.level === "municipality") return scope.psgcCode === normalized.municipalityPsgcCode;
+  return scope.psgcCode === normalized.barangayPsgcCode;
 }
 
 export function grantForUnit(
