@@ -1,0 +1,23 @@
+{
+  "name": "Bahadvisory — Flood Safety",
+  "short_name": "Bahadvisory",
+  "description": "Live DRRM flood advisories, flood-safe navigation, alerts and evacuation centers for Oriental Mindoro.",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#eef3f8",
+  "theme_color": "#0b2f5c",
+  "lang": "en-PH",
+  "categories": ["navigation", "weather", "utilities"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Report flooding", "url": "/report", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Evacuation & SOS", "url": "/evacuation", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Safe route", "url": "/navigate", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

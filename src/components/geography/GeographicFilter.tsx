@@ -65,4 +65,3 @@ export default function GeographicFilter({ className = "" }: { className?: strin
     </section>
   );
 }
-

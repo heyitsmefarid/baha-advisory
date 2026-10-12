@@ -72,8 +72,9 @@ try {
   await page.getByRole("heading", { name: "Municipalities and city" }).waitFor();
   const rows = await page.locator(".geo-overview__table tbody tr").count();
   if (rows !== 26) throw new Error(`Expected 26 LGU comparison rows, found ${rows}.`);
-  await page.getByText("Occidental Mindoro", { exact: true }).first().waitFor();
-  await page.getByText("Oriental Mindoro", { exact: true }).first().waitFor();
+  const overviewTable = page.locator(".geo-overview__table");
+  await overviewTable.getByText("Occidental Mindoro", { exact: true }).first().waitFor();
+  await overviewTable.getByText("Oriental Mindoro", { exact: true }).first().waitFor();
   await page.locator(".geo-overview__table tbody tr", { hasText: "San Jose" }).getByText("No verified feed", { exact: true }).waitFor();
 
   await login("oriental.province@demo.bahadvisory.test");
@@ -104,7 +105,7 @@ try {
   if (deniedMutation.status() !== 403) throw new Error(`Cross-province alert mutation should be denied, got HTTP ${deniedMutation.status()}.`);
   await page.goto(`${BASE}/admin/geography`, { waitUntil: "domcontentloaded" });
   await page.getByRole("heading", { name: "Geographic operations" }).waitFor();
-  if (await page.locator(".geo-overview__table tbody tr").count() !== 15) throw new Error("Oriental provincial dashboard did not show its 15 LGUs.");
+  await page.waitForFunction(() => document.querySelectorAll(".geo-overview__table tbody tr").length === 15);
 
   const disconnected = await page.request.post(`${BASE}/api/route`, {
     data: {

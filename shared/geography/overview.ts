@@ -28,6 +28,8 @@ export interface GeographicOverview {
   generatedAt: number;
   sourceMaxUpdatedAt: number | null;
   counts: GeographicCounts;
+  verifiedCounts: GeographicCounts;
+  simulatedCounts: GeographicCounts;
   municipalities: MunicipalityOverview[];
 }
 

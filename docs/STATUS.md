@@ -9,16 +9,18 @@ approval from outside the project.**
 | Check | Result |
 |---|---|
 | `npm run typecheck` (app + server/scripts/tests) | PASS, no errors |
-| `npm test` | PASS, 14 files / 104 tests |
-| `npm run build` | PASS, 250 modules; only the existing Firebase chunk-size warning |
+| `npm test` | PASS, 17 files / 112 tests |
+| `npm run build` | PASS, 254 modules; only the existing Firebase chunk-size warning |
 | PSGC generated-file check | PASS: 2 provinces, 26 LGUs, 590 barangays |
 | Boundary generated-file check | PASS: status `unavailable`, 0 features (intentional) |
 | `git diff --check` and secret-pattern scan | PASS |
-| `npm run test:emulator` | NOT RUN on this workstation: Java is absent, so Firebase Emulator Suite cannot start |
-| `npm run test:e2e`, `test:e2e:geography`, `test:e2e:offline` | AUTHORED, NOT COMPLETED here: seeded Auth/Firestore depends on that emulator. Geographic controls were exercised up to the unavailable emulator-backed overview call. |
+| `npm run test:emulator` | PASS, 3 files / 64 tests (43 Firestore rules, 19 API integration, 2 overview integration) using a workspace-local Java 21 runtime |
+| Demo seed against Auth/Firestore emulators | PASS: 2 provinces, 26 LGUs, 590 barangays and clearly labelled simulated Calapan operational data |
+| `npm run test:e2e:geography` | PASS: island navigation, provincial access isolation, 26-LGU monitoring, disconnected-island routing and Calapan demo |
+| `npm run test:e2e`, `npm run test:e2e:offline` | Authored; not rerun as part of this geographic-expansion verification pass |
 
-The last two rows are open verification work, not passes. Run them on a
-Java-enabled CI runner or workstation before production release.
+The complete legacy demo-flow and offline browser suites remain release checks;
+the feature-specific browser suite and all emulator-backed security/API tests pass.
 
 ## Geographic source status
 
@@ -40,7 +42,7 @@ Java-enabled CI runner or workstation before production release.
 | **3. AI community reporting** | ✅ Photo, GPS or manual location, depth, duplicate and suspicious flags, DRRM moderation; only verified reports change the map. ⚠️ Gemini analysis is not verified with a real key (labelled fallback verified). |
 | **4. Predictive flood risk** | ✅ Experimental, rule-based (PAGASA rainfall thresholds, gauges, verified zones, history, elevation) with stated data completeness. **No accuracy claim**; there is no labelled local data to validate it. |
 | **5. Evacuation finder** | ✅ Verified centers ranked by safe road time, LGU management, SOS queue, hotlines. Capacity is shown only when an LGU verified it. |
-| **6. Offline PWA** | Implemented: precached shell, viewed tiles, versioned/scoped offline kit, IndexedDB drafts with idempotent sync, offline banner. Current local E2E rerun is pending a Java-enabled emulator host. |
+| **6. Offline PWA** | Implemented: precached shell, viewed tiles, versioned and user-scoped offline kit, IndexedDB drafts with idempotent sync, offline banner. The feature-specific cache-isolation unit test passes; the full offline browser suite was not rerun in this pass. |
 | **AI layer** (Groq + Gemini) | ✅ Central service, quotas, refunds, cache, cost log, kill switches, labelled fallbacks. ⚠️ Live calls **not verified** (no keys in this environment); adapters tested with mocked HTTP. |
 | **SaaS plans and entitlements** | ✅ Four plans, Super Admin editing with `validatePlan()` guard, entitlements enforced in the rules and the backend. |
 | **Payments** | ✅ Sandbox checkout verified end to end. ⚠️ PayMongo and Xendit are implemented to their docs and unit-tested (signatures, idempotency, amount and live-mode checks), but **not exercised against the providers**; that needs test keys and the checklist in [PAYMENTS.md](PAYMENTS.md). |
@@ -53,7 +55,7 @@ Java-enabled CI runner or workstation before production release.
 | Item | What is needed | Current state |
 |---|---|---|
 | **Original Firebase database** | Access by the original owner | Firebase returned 403 for this account. **No records were recovered or invented.** If the owner can still open the project, run `npm run export-firestore` and `npm run import-firestore` ([DATA_MODEL.md](DATA_MODEL.md)). |
-| **New Firebase project** | The owner creates it ([SETUP.md](SETUP.md), steps 1–12) | Not created; this needs the owner's Google account. Emulator suites are authored but could not be rerun here because Java is absent. |
+| **New Firebase project** | The owner creates it ([SETUP.md](SETUP.md), steps 1–12) | Not created; this needs the owner's Google account. The local Auth/Firestore emulator suite passes and does not require a cloud project. |
 | **Hosting** (Netlify or Vercel) | An account and environment variables | Not deployed. The same router runs in the dev and preview servers, where it is tested; the Netlify and Vercel wrappers are thin adapters, not exercised on those platforms. |
 | **Groq / Gemini** | API keys | Fallbacks verified; live models not. |
 | **PayMongo / Xendit** | Test keys, then merchant verification for live payments | Unit-tested only. |

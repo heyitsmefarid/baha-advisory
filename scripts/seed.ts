@@ -129,8 +129,17 @@ async function seedGeographyCatalog() {
   let batch = db.batch();
   let pending = 0;
   for (const unit of MINDORO_CATALOG) {
+    // Firestore permits arrays, but not arrays nested directly inside arrays.
+    // Keep tuple-shaped coordinates in the generated TypeScript catalog and
+    // persist the same values as named maps in the queryable catalog.
+    const { center, boundingBox, ...catalogFields } = unit;
     batch.set(db.doc(`geographic_units/${unit.psgcCode}`), {
-      ...unit,
+      ...catalogFields,
+      center: { lat: center[0], lng: center[1] },
+      boundingBox: {
+        southWest: { lat: boundingBox[0][0], lng: boundingBox[0][1] },
+        northEast: { lat: boundingBox[1][0], lng: boundingBox[1][1] },
+      },
       authoritativeIdentifiers: true,
       source: "Philippine Statistics Authority PSGC 2Q 2026",
       updatedAt: FieldValue.serverTimestamp(),

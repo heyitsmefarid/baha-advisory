@@ -1,5 +1,6 @@
 import type { DecodedIdToken } from "firebase-admin/auth";
 import { getAdminAuth } from "./firebaseAdmin";
+import { getDb } from "./firebaseAdmin";
 import { forbidden, unauthorized } from "./http";
 import { hasLegacyAreaClaims, normalizeRole, isOrgAdminRole, type AppRole, type RoleClaims } from "../../shared/roles";
 
@@ -85,14 +86,16 @@ export function requireSuperAdmin(ctx: AuthCtx): void {
   if (ctx.role !== "super_admin") throw forbidden("Platform Super Admin only.");
 }
 
-/** Caller belongs to `orgId` (Super Admin may act on any org). */
-export function requireOrgMember(ctx: AuthCtx, orgId: string): void {
+/** Caller has a currently active membership in `orgId` (Super Admin may act on any org). */
+export async function requireOrgMember(ctx: AuthCtx, orgId: string): Promise<void> {
   if (ctx.role === "super_admin") return;
   if (!ctx.orgId || ctx.orgId !== orgId) throw forbidden("You are not a member of this organization.");
+  const member = await getDb().doc(`organizations/${orgId}/members/${ctx.uid}`).get();
+  if (!member.exists || member.get("active") !== true) throw forbidden("Your organization membership is inactive.");
 }
 
-export function requireOrgAdmin(ctx: AuthCtx, orgId: string): void {
+export async function requireOrgAdmin(ctx: AuthCtx, orgId: string): Promise<void> {
   if (ctx.role === "super_admin") return;
-  requireOrgMember(ctx, orgId);
+  await requireOrgMember(ctx, orgId);
   if (!isOrgAdminRole(ctx.role)) throw forbidden("Organization administrators only.");
 }

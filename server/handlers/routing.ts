@@ -3,7 +3,7 @@ import { memoryRateLimit } from "../lib/rateLimit";
 import { loadOfficialData, routingProviders } from "../lib/hazards";
 import { getDb } from "../lib/firebaseAdmin";
 import { asObject, latLng, oneOf, ValidationError } from "../../shared/validation";
-import { hazardSignature, planSafeRoute, TRAVEL_MODES, type Hazard, type PlanResult, type RoutingProvider, type TravelMode } from "../../shared/routing";
+import { hazardSignature, hasKnownDisconnectedLandComponents, planSafeRoute, TRAVEL_MODES, type Hazard, type PlanResult, type RoutingProvider, type TravelMode } from "../../shared/routing";
 import { haversineM, roundPt, toPt, type Pt } from "../../shared/geo";
 import type { EvacuationCenter } from "../../shared/types";
 import type { RouteCtx } from "../router";
@@ -47,6 +47,12 @@ function parseRequest(body: Record<string, unknown>) {
   let total = 0;
   for (let i = 0; i < all.length - 1; i++) total += haversineM(all[i], all[i + 1]);
   if (total > MAX_TRIP_M) throw new ValidationError(["Trips longer than 250 km are not supported."]);
+  if (hasKnownDisconnectedLandComponents(all)) {
+    throw new HttpError(422, "No verified road route exists between these land components. Ferry or sea travel is not inferred.", "no_verified_road_route", {
+      status: "no_verified_road_route",
+      routes: [],
+    });
+  }
   return {
     origin,
     destination,

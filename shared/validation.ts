@@ -140,5 +140,16 @@ export function geographicReference(o: Obj): GeographicReference {
   return value;
 }
 
+export function geographicSelection(o: Obj): Omit<GeographicReference, "locationAssignment"> {
+  const value = {
+    regionPsgcCode: str(o, "regionPsgcCode", { max: 10, pattern: /^\d{10}$/ }),
+    provincePsgcCode: str(o, "provincePsgcCode", { max: 10, pattern: /^\d{10}$/ }),
+    municipalityPsgcCode: str(o, "municipalityPsgcCode", { max: 10, pattern: /^\d{10}$/ }),
+    barangayPsgcCode: optStr(o, "barangayPsgcCode", 10),
+  };
+  if (!isValidHierarchy(value)) throw new ValidationError(["Geographic PSGC hierarchy is invalid."]);
+  return value;
+}
+
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 export const PH_PHONE_RE = /^[0-9+()\-\s]{3,20}$/;

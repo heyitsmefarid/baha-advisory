@@ -15,6 +15,7 @@ export type GeographicReferenceInput = Pick<
   GeographicReference,
   "regionPsgcCode" | "provincePsgcCode" | "municipalityPsgcCode" | "barangayPsgcCode" | "locationAssignment"
 >;
+export type GeographicSelectionInput = Omit<GeographicReferenceInput, "locationAssignment">;
 
 export function validateGeographicReference(reference: GeographicReferenceInput): GeographicReference {
   if (!reference || !isValidHierarchy(reference)) {
@@ -31,7 +32,19 @@ export function validateGeographicReference(reference: GeographicReferenceInput)
   ) {
     throw new ValidationError(["locationAssignment is invalid."]);
   }
-  return { ...reference };
+  return {
+    regionPsgcCode: reference.regionPsgcCode,
+    provincePsgcCode: reference.provincePsgcCode,
+    municipalityPsgcCode: reference.municipalityPsgcCode,
+    barangayPsgcCode: reference.barangayPsgcCode,
+    locationAssignment: {
+      method: assignment.method,
+      confidence: assignment.confidence,
+      sourceVersion: assignment.sourceVersion,
+      assignedAt: assignment.assignedAt,
+      assignedBy: assignment.assignedBy,
+    },
+  };
 }
 
 export function geographicReferenceFrom(value: Record<string, unknown>): GeographicReference | null {
@@ -45,10 +58,24 @@ export function geographicReferenceFrom(value: Record<string, unknown>): Geograp
 /** Resolve from verified boundaries, or validate an explicit staff/citizen selection. */
 export function assignGeography(
   location: LatLng,
-  supplied?: GeographicReferenceInput | null,
+  supplied?: GeographicSelectionInput | null,
+  assignedBy = "system",
+  assignedAt = Date.now(),
 ): GeographicReference | null {
-  if (supplied) return validateGeographicReference(supplied);
-  return resolvePoint([location.lat, location.lng]);
+  const resolved = resolvePoint([location.lat, location.lng]);
+  if (resolved) return resolved;
+  if (!supplied || !isValidHierarchy(supplied)) return null;
+  const municipality = getUnit(supplied.municipalityPsgcCode);
+  return validateGeographicReference({
+    ...supplied,
+    locationAssignment: {
+      method: "manual",
+      confidence: "review_required",
+      sourceVersion: municipality?.sourceVersion ?? "unknown",
+      assignedAt,
+      assignedBy,
+    },
+  });
 }
 
 export type MigrationAction = "migrate" | "unchanged" | "review_required";

@@ -2,15 +2,17 @@ import { getAuthCtx } from "../lib/auth";
 import { getDb } from "../lib/firebaseAdmin";
 import { getGeographicOverview } from "../lib/geographicSummary";
 import { badRequest, forbidden, json } from "../lib/http";
-import { jurisdictionCoversScope, normalizeScope, type GeographicScope, type JurisdictionGrant } from "../../shared/geography";
+import { getUnit, jurisdictionCoversScope, normalizeScope, type GeographicScope, type JurisdictionGrant } from "../../shared/geography";
 import type { RouteCtx } from "../router";
 
 function scopeFromUrl(url: URL): GeographicScope {
-  const raw: GeographicScope = {
-    provincePsgcCode: url.searchParams.get("province"),
-    municipalityPsgcCode: url.searchParams.get("municipality"),
-    barangayPsgcCode: url.searchParams.get("barangay"),
-  };
+  const barangayPsgcCode = url.searchParams.get("barangay");
+  const municipalityPsgcCode = url.searchParams.get("municipality") ?? getUnit(barangayPsgcCode)?.municipalityPsgcCode ?? null;
+  const provincePsgcCode = url.searchParams.get("province")
+    ?? getUnit(barangayPsgcCode)?.provincePsgcCode
+    ?? getUnit(municipalityPsgcCode)?.provincePsgcCode
+    ?? null;
+  const raw: GeographicScope = { provincePsgcCode, municipalityPsgcCode, barangayPsgcCode };
   const scope = normalizeScope(raw);
   if (
     raw.provincePsgcCode !== scope.provincePsgcCode ||

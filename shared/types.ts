@@ -145,6 +145,7 @@ export interface OrgApplication {
   orgName: string;
   type: OrgType;
   jurisdictionAreas: string[];
+  jurisdictionScopes?: CoverageScope[];
   applicantUid: string;
   applicantEmail: string;
   applicantName: string;

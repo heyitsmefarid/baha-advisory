@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "strict": true,
+    "types": ["node"],
+    "jsx": "react-jsx"
+  },
+  "include": ["server", "shared", "netlify", "api", "scripts/**/*.ts", "tests", "vite.config.ts", "vitest.config.ts", "vitest.emulator.config.ts"]
+}

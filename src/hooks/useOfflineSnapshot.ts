@@ -1,19 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { collection, limit, orderBy, query, where } from "firebase/firestore";
 import { db } from "../firebase";
-import { idbGet, idbPut } from "../lib/idb";
+import { idbDelete, idbGet, idbPut } from "../lib/idb";
 import { useActiveAlerts } from "./useAlerts";
 import { useEmergencyContacts } from "./useUserData";
 import { useFirestoreCollection } from "./useFirestoreCollection";
 import { usePlatform } from "../contexts/PlatformContext";
 import { useGeographicScope } from "../contexts/GeographicScopeContext";
+import { useAuth } from "../contexts/AuthContext";
+import { privateOfflineSnapshotKey, PUBLIC_OFFLINE_SNAPSHOT_KEY } from "../lib/offlineSnapshotKeys";
 import { useScopedPublicData } from "./useScopedPublicData";
 import { toMillis } from "../../shared/time";
 import { MINDORO_CATALOG, type GeographicScope } from "../../shared/geography";
 import type { Advisory, EmergencyContact, EvacuationCenter, PublicAlert } from "../../shared/types";
 
 export interface OfflineSnapshot {
-  schemaVersion: 2;
+  schemaVersion: 3;
   catalogVersion: string;
   savedAt: number;
   scope: GeographicScope;
@@ -28,12 +30,21 @@ export interface OfflineSnapshot {
   })[];
 }
 
-const KEY = "offline_snapshot_v2";
 export const GEOGRAPHIC_CATALOG_VERSION = MINDORO_CATALOG[0]?.sourceVersion ?? "unknown";
 const VERIFIED_CENTER_CONSTRAINTS = [where("verified", "==", true)];
 
-export function loadOfflineSnapshot(): Promise<OfflineSnapshot | undefined> {
-  return idbGet<OfflineSnapshot>("kv", KEY).catch(() => undefined);
+interface PrivateOfflineSnapshot {
+  schemaVersion: 3;
+  uid: string;
+  contacts: EmergencyContact[];
+}
+
+export async function loadOfflineSnapshot(uid?: string | null): Promise<OfflineSnapshot | undefined> {
+  const publicSnapshot = await idbGet<OfflineSnapshot>("kv", PUBLIC_OFFLINE_SNAPSHOT_KEY).catch(() => undefined);
+  if (!publicSnapshot) return undefined;
+  if (!uid) return { ...publicSnapshot, contacts: [] };
+  const privateSnapshot = await idbGet<PrivateOfflineSnapshot>("kv", privateOfflineSnapshotKey(uid)).catch(() => undefined);
+  return { ...publicSnapshot, contacts: privateSnapshot?.uid === uid ? privateSnapshot.contacts : [] };
 }
 
 /**
@@ -44,6 +55,9 @@ export function loadOfflineSnapshot(): Promise<OfflineSnapshot | undefined> {
  * reads. Mounted once at the app root.
  */
 export function useOfflineSnapshot() {
+  const { currentUser } = useAuth();
+  const uid = currentUser?.uid ?? null;
+  const previousUid = useRef<string | null>(null);
   const platform = usePlatform();
   const geographic = useGeographicScope();
   const contacts = useEmergencyContacts();
@@ -62,10 +76,16 @@ export function useOfflineSnapshot() {
   });
 
   useEffect(() => {
+    const previous = previousUid.current;
+    if (previous && previous !== uid) idbDelete("kv", privateOfflineSnapshotKey(previous)).catch(() => undefined);
+    previousUid.current = uid;
+  }, [uid]);
+
+  useEffect(() => {
     const live = !alerts.fromCache && !advisories.fromCache && !centers.fromCache;
     if (!live || alerts.loading || advisories.loading || centers.loading || !navigator.onLine) return;
     const snap: OfflineSnapshot = {
-      schemaVersion: 2,
+      schemaVersion: 3,
       catalogVersion: GEOGRAPHIC_CATALOG_VERSION,
       savedAt: Date.now(),
       scope: geographic.scope,
@@ -75,7 +95,7 @@ export function useOfflineSnapshot() {
         barangay: geographic.barangay?.name ?? null,
       },
       hotlines: platform.emergencyHotlines,
-      contacts: contacts.data,
+      contacts: [],
       alerts: alerts.data.map(({ createdAt, expiresAt, ...a }) => ({ ...a, createdAtMs: toMillis(createdAt), expiresAtMs: toMillis(expiresAt) })),
       advisories: advisories.data.map((a) => ({ id: a.id, title: a.title, body: a.body, bodyFil: a.bodyFil, severity: a.severity, areas: a.areas, simulated: a.simulated, publishedAtMs: toMillis(a.publishedAt) })),
       centers: centers.data.map((c) => ({
@@ -84,19 +104,25 @@ export function useOfflineSnapshot() {
         location: c.location, updatedAtMs: toMillis(c.updatedAt),
       })),
     };
-    idbPut("kv", snap, KEY).catch(() => undefined);
-  }, [alerts.data, advisories.data, centers.data, contacts.data, platform.emergencyHotlines, alerts.fromCache, advisories.fromCache, centers.fromCache, alerts.loading, advisories.loading, centers.loading, geographic.scope, geographic.province?.name, geographic.municipality?.name, geographic.barangay?.name]);
+    idbPut("kv", snap, PUBLIC_OFFLINE_SNAPSHOT_KEY).catch(() => undefined);
+    if (uid) {
+      const privateSnapshot: PrivateOfflineSnapshot = { schemaVersion: 3, uid, contacts: contacts.data };
+      idbPut("kv", privateSnapshot, privateOfflineSnapshotKey(uid)).catch(() => undefined);
+    }
+  }, [alerts.data, advisories.data, centers.data, contacts.data, platform.emergencyHotlines, alerts.fromCache, advisories.fromCache, centers.fromCache, alerts.loading, advisories.loading, centers.loading, geographic.scope, geographic.province?.name, geographic.municipality?.name, geographic.barangay?.name, uid]);
 }
 
 export function useStoredSnapshot() {
+  const { currentUser } = useAuth();
+  const uid = currentUser?.uid ?? null;
   const [snap, setSnap] = useState<OfflineSnapshot | undefined>();
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
-    loadOfflineSnapshot().then((s) => {
+    loadOfflineSnapshot(uid).then((s) => {
       setSnap(s);
       setLoaded(true);
     });
-  }, []);
+  }, [uid]);
   return {
     snap,
     loaded,

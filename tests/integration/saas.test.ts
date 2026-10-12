@@ -296,7 +296,7 @@ describe("community reports change the map only through scoped verification", ()
       },
     });
     expect(report.status).toBe(201);
-    expect(report.body.report).toMatchObject({ status: "pending", area: "Calapan City" });
+    expect(report.body.report).toMatchObject({ status: "pending", area: "City of Calapan" });
     const id = report.body.report.id;
     const zonesBefore = await admin.getDb().collection("floodZones").where("status", "==", "active").get();
 
@@ -308,7 +308,7 @@ describe("community reports change the map only through scoped verification", ()
     });
     expect(ok.status).toBe(200);
     const zone = (await admin.getDb().doc(`floodZones/${ok.body.linkedZoneId}`).get()).data()!;
-    expect(zone).toMatchObject({ status: "active", source: "community_report", area: "Calapan City", roadPassability: "caution" });
+    expect(zone).toMatchObject({ status: "active", source: "community_report", area: "City of Calapan", roadPassability: "caution" });
     const zonesAfter = await admin.getDb().collection("floodZones").where("status", "==", "active").get();
     expect(zonesAfter.size).toBe(zonesBefore.size + 1);
     expect((await call("POST", `/api/reports/${id}/verify`, { token: tokens.lguStaff, body: { action: "reject" } })).status).toBe(409);

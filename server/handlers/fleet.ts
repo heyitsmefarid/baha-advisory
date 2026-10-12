@@ -23,7 +23,7 @@ export async function checkFleet(req: Request, _ctx: RouteCtx): Promise<Response
   const auth = await requireAuth(req);
   const body = asObject(await readJson(req));
   const orgId = str(body, "orgId", { max: 120 });
-  requireOrgMember(auth, orgId);
+  await requireOrgMember(auth, orgId);
   const db = getDb();
   const org = await db.doc(`organizations/${orgId}`).get();
   if (!org.get("entitlements")?.fleetMonitoring) throw new HttpError(402, "Fleet monitoring requires Business Pro or Enterprise.", "upgrade_required");

@@ -10,7 +10,7 @@ import { audit } from "../lib/audit";
 import { notifyUser, publishAlert } from "../lib/alerts";
 import { invalidateHazardCache, zoneFromDoc } from "../lib/hazards";
 import { analyzeFloodImage, notAnalyzed, type FloodImageAnalysis } from "../ai/imageAnalysis";
-import { asObject, bool, geographicReference, latLng, oneOf, optNum, optStr, str, ValidationError } from "../../shared/validation";
+import { asObject, bool, geographicSelection, latLng, oneOf, optNum, optStr, str, ValidationError } from "../../shared/validation";
 import { findDuplicateCandidates, suspiciousFlags, depthMeters, type RecentReport } from "../../shared/reports";
 import { assignGeography, displayArea, geographicReferenceFrom, migrateRecord } from "../lib/geography";
 import { requireRecordJurisdiction } from "../lib/jurisdiction";
@@ -63,7 +63,7 @@ export async function submitReport(req: Request, ctx: RouteCtx): Promise<Respons
   await firestoreRateLimit(`report:${auth.uid}`, auth.anonymous ? 3 : 10, HOUR);
 
   const location = latLng(body, "location", { requireServiceArea: true });
-  const geography = assignGeography(location, geographicReference(body));
+  const geography = assignGeography(location, geographicSelection(body), auth.uid);
   if (!geography) throw new ValidationError(["Location is outside the supported Mindoro service area."]);
   const locationSource = oneOf(body, "locationSource", ["gps", "manual"] as const, "manual");
   const locationAccuracyM = optNum(body, "locationAccuracyM", { min: 0, max: 100_000 });
@@ -85,7 +85,7 @@ export async function submitReport(req: Request, ctx: RouteCtx): Promise<Respons
 
   // Photo storage + AI analysis run in parallel.
   const [stored, aiOutcome] = await Promise.all([
-    image ? storeReportImage(ref.id, image, { reporterUid: auth.uid }) : Promise.resolve(null),
+    image ? storeReportImage(ref.id, image, { reporterUid: auth.uid, ...geography }) : Promise.resolve(null),
     image
       ? analyzeFloodImage({ image: { mime: image.mime, base64: image.base64 }, description, depthLabel, caller }).catch((err) => {
           const reason = err instanceof HttpError && err.code === "ai_quota_exceeded" ? "AI photo-analysis quota reached" : err instanceof HttpError && err.code === "ai_disabled" ? "AI analysis is switched off" : "AI unavailable";

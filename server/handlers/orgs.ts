@@ -13,7 +13,7 @@ import { canAssignRole, isClaimRole, normalizeRole, orgTypeForRole, type AppRole
 import { computeEntitlements, PAID_FEATURES } from "../../shared/plans";
 import { DEFAULT_ALERT_PREFERENCES, type Organization, type OrgApplication } from "../../shared/types";
 import type { RouteCtx } from "../router";
-import { grantForUnit, legacyAreaToMunicipality } from "../../shared/geography";
+import { getUnit, grantForUnit, legacyAreaToMunicipality, validateCoverageScopes, type CoverageScope } from "../../shared/geography";
 
 const db = () => getDb();
 
@@ -35,15 +35,21 @@ async function setClaims(
   await db().doc(`users/${uid}`).set({ role: (clean.role as string) ?? "citizen", orgId: claims.orgId ?? null, assignedArea: claims.assignedArea ?? "" }, { merge: true });
 }
 
-async function createJurisdictionGrants(orgId: string, areas: string[], createdBy: string) {
+async function createJurisdictionGrants(orgId: string, scopes: CoverageScope[], createdBy: string) {
   const batch = db().batch();
-  for (const area of areas) {
-    const municipality = legacyAreaToMunicipality(area);
-    if (!municipality) throw badRequest(`Unsupported Mindoro LGU: ${area}.`);
-    const ref = db().doc(`organizations/${orgId}/jurisdiction_grants/${municipality.psgcCode}`);
-    batch.set(ref, grantForUnit(municipality.psgcCode, orgId, createdBy, FieldValue.serverTimestamp()));
+  for (const scope of scopes) {
+    const ref = db().doc(`organizations/${orgId}/jurisdiction_grants/${scope.psgcCode}`);
+    batch.set(ref, grantForUnit(scope.psgcCode, orgId, createdBy, FieldValue.serverTimestamp()));
   }
   await batch.commit();
+}
+
+function legacyJurisdictionScopes(areas: string[]): CoverageScope[] {
+  return areas.map((area) => {
+    const municipality = legacyAreaToMunicipality(area);
+    if (!municipality) throw badRequest(`Unsupported Mindoro LGU: ${area}.`);
+    return { level: "municipality", psgcCode: municipality.psgcCode };
+  });
 }
 
 function newOrgDoc(input: { name: string; type: Organization["type"]; jurisdictionAreas: string[]; createdBy: string; contactEmail?: string | null; parentOrgId?: string | null }) {
@@ -93,12 +99,22 @@ export async function createOrg(req: Request, _ctx: RouteCtx): Promise<Response>
   }
 
   const areas = strArray(body, "jurisdictionAreas", { maxItems: 30, maxLen: 80 });
-  if (type === "lgu" && (!areas.length || areas.some((a) => !AREA_NAMES.includes(a)))) throw badRequest("Choose the municipalities your LGU covers.");
+  const scopeValidation = type !== "lgu"
+    ? { ok: true, scopes: [] as CoverageScope[], errors: [] as string[] }
+    : body.jurisdictionScopes === undefined
+      ? { ok: areas.length > 0, scopes: legacyJurisdictionScopes(areas), errors: [] as string[] }
+      : validateCoverageScopes(body.jurisdictionScopes);
+  if (type === "lgu" && (!scopeValidation.ok || (body.jurisdictionScopes === undefined && areas.some((a) => !AREA_NAMES.includes(a))))) {
+    throw badRequest(scopeValidation.errors[0] ?? "Choose a supported province, municipality, city, or barangay jurisdiction.");
+  }
+  const jurisdictionScopes = type === "lgu" ? scopeValidation.scopes : [];
+  const jurisdictionAreas = type === "lgu" ? jurisdictionScopes.map((scope) => getUnit(scope.psgcCode)?.name ?? scope.psgcCode) : areas;
   const appRef = db().collection("org_applications").doc();
   await appRef.set({
     orgName: name,
     type,
-    jurisdictionAreas: areas,
+    jurisdictionAreas,
+    jurisdictionScopes,
     applicantUid: auth.uid,
     applicantEmail: auth.email ?? "",
     applicantName: auth.name,
@@ -107,7 +123,7 @@ export async function createOrg(req: Request, _ctx: RouteCtx): Promise<Response>
     status: "pending",
     createdAt: FieldValue.serverTimestamp(),
   });
-  await audit(auth, "org.application_submitted", "org_application", appRef.id, { type, areas });
+  await audit(auth, "org.application_submitted", "org_application", appRef.id, { type, jurisdictionScopes });
   return json({ ok: true, applicationId: appRef.id, status: "pending_approval" }, 201);
 }
 
@@ -129,8 +145,9 @@ export async function decideApplication(req: Request, ctx: RouteCtx): Promise<Re
     return json({ ok: true, status: "rejected" });
   }
   const orgRef = db().collection("organizations").doc();
+  const approvedScopes = app.type === "lgu" ? (app.jurisdictionScopes?.length ? app.jurisdictionScopes : legacyJurisdictionScopes(app.jurisdictionAreas)) : [];
   await orgRef.set(newOrgDoc({ name: app.orgName, type: app.type, jurisdictionAreas: app.jurisdictionAreas, createdBy: auth.uid, contactEmail: app.applicantEmail }));
-  if (app.type === "lgu") await createJurisdictionGrants(orgRef.id, app.jurisdictionAreas, auth.uid);
+  if (app.type === "lgu") await createJurisdictionGrants(orgRef.id, approvedScopes, auth.uid);
   const role: AppRole = app.type === "lgu" ? "lgu_admin" : "enterprise_admin";
   await orgRef.collection("members").doc(app.applicantUid).set({
     name: app.applicantName, email: app.applicantEmail, role, assignedArea: app.jurisdictionAreas[0] ?? null, active: true, addedAt: FieldValue.serverTimestamp(), addedBy: auth.uid,
@@ -145,7 +162,7 @@ export async function decideApplication(req: Request, ctx: RouteCtx): Promise<Re
 /** PATCH /api/orgs/:orgId — contact details & local hotlines (org admin). */
 export async function updateOrg(req: Request, ctx: RouteCtx): Promise<Response> {
   const auth = await requireAuth(req);
-  requireOrgAdmin(auth, ctx.params.orgId);
+  await requireOrgAdmin(auth, ctx.params.orgId);
   const body = asObject(await readJson(req));
   const patch: Record<string, unknown> = {};
   if (body.name !== undefined) patch.name = str(body, "name", { min: 3, max: 160 });
@@ -187,7 +204,7 @@ function checkMemberRole(auth: AuthCtx, org: Organization, role: AppRole, assign
 export async function inviteMember(req: Request, ctx: RouteCtx): Promise<Response> {
   const auth = await requireAuth(req);
   const orgId = ctx.params.orgId;
-  requireOrgAdmin(auth, orgId);
+  await requireOrgAdmin(auth, orgId);
   await firestoreRateLimit(`invite:${auth.uid}`, 30, 3600_000);
   const org = await orgOf(orgId);
   if (!org.entitlements?.staffManagement && auth.role !== "super_admin") {
@@ -240,7 +257,7 @@ export async function inviteMember(req: Request, ctx: RouteCtx): Promise<Respons
 export async function updateMember(req: Request, ctx: RouteCtx): Promise<Response> {
   const auth = await requireAuth(req);
   const { orgId, uid } = ctx.params;
-  requireOrgAdmin(auth, orgId);
+  await requireOrgAdmin(auth, orgId);
   if (uid === auth.uid) throw badRequest("You can't change your own role. Ask another administrator.");
   const org = await orgOf(orgId);
   const ref = db().doc(`organizations/${orgId}/members/${uid}`);
@@ -264,7 +281,7 @@ export async function updateMember(req: Request, ctx: RouteCtx): Promise<Respons
 export async function removeMember(req: Request, ctx: RouteCtx): Promise<Response> {
   const auth = await requireAuth(req);
   const { orgId, uid } = ctx.params;
-  requireOrgAdmin(auth, orgId);
+  await requireOrgAdmin(auth, orgId);
   if (uid === auth.uid) throw badRequest("You can't remove yourself.");
   const ref = db().doc(`organizations/${orgId}/members/${uid}`);
   const snap = await ref.get();
@@ -281,7 +298,7 @@ export async function removeMember(req: Request, ctx: RouteCtx): Promise<Respons
 /** GET /api/orgs/:orgId/branches — enterprise admins see their branches' status. */
 export async function listBranches(req: Request, ctx: RouteCtx): Promise<Response> {
   const auth = await requireAuth(req);
-  requireOrgMember(auth, ctx.params.orgId);
+  await requireOrgMember(auth, ctx.params.orgId);
   const snap = await db().collection("organizations").where("parentOrgId", "==", ctx.params.orgId).get();
   const branches = await Promise.all(
     snap.docs.map(async (d) => {
@@ -297,7 +314,7 @@ export async function listBranches(req: Request, ctx: RouteCtx): Promise<Respons
 export async function createBranch(req: Request, ctx: RouteCtx): Promise<Response> {
   const auth = await requireAuth(req);
   const parentId = ctx.params.orgId;
-  requireOrgAdmin(auth, parentId);
+  await requireOrgAdmin(auth, parentId);
   const parent = await orgOf(parentId);
   if (parent.type !== "enterprise" || !parent.entitlements?.multiBranch) throw new HttpError(402, "Multi-branch management requires the Enterprise plan.", "upgrade_required");
   const body = asObject(await readJson(req));
@@ -319,7 +336,7 @@ export function hashApiKey(key: string): string {
 export async function createApiKey(req: Request, ctx: RouteCtx): Promise<Response> {
   const auth = await requireAuth(req);
   const orgId = ctx.params.orgId;
-  requireOrgAdmin(auth, orgId);
+  await requireOrgAdmin(auth, orgId);
   const org = await orgOf(orgId);
   if (!org.entitlements?.apiAccess) throw new HttpError(402, "API access isn't included in your plan.", "upgrade_required");
   const body = asObject(await readJson(req));
@@ -336,7 +353,7 @@ export async function createApiKey(req: Request, ctx: RouteCtx): Promise<Respons
 /** DELETE /api/orgs/:orgId/api-keys/:keyId */
 export async function revokeApiKey(req: Request, ctx: RouteCtx): Promise<Response> {
   const auth = await requireAuth(req);
-  requireOrgAdmin(auth, ctx.params.orgId);
+  await requireOrgAdmin(auth, ctx.params.orgId);
   const ref = db().doc(`organizations/${ctx.params.orgId}/api_keys/${ctx.params.keyId}`);
   if (!(await ref.get()).exists) throw notFound("Key not found.");
   await ref.update({ revoked: true, revokedAt: FieldValue.serverTimestamp() });

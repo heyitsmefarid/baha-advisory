@@ -15,6 +15,8 @@ export async function hasJurisdiction(
 ): Promise<boolean> {
   if (auth.role === "super_admin" || hasAllAreaAccess(auth.claims)) return true;
   if (!auth.orgId || !isLguRole(auth.role)) return false;
+  const member = await getDb().doc(`organizations/${auth.orgId}/members/${auth.uid}`).get();
+  if (!member.exists || member.get("active") !== true) return false;
 
   const codes = [
     reference.barangayPsgcCode,

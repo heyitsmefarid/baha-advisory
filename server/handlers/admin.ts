@@ -225,4 +225,3 @@ export async function recomputeRevenue(req: Request, _ctx: RouteCtx): Promise<Re
   requireSuperAdmin(auth);
   return json({ months: await rollupRevenue() });
 }
-

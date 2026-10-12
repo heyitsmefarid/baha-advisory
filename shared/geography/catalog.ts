@@ -114,4 +114,3 @@ export function legacyAreaToMunicipality(area: string | null | undefined): Geogr
   if (!area) return null;
   return municipalitiesByLegacyName.get(normalizedName(area)) ?? null;
 }
-

@@ -32,7 +32,9 @@
 | `super_admin` | Platform plans, settings, organizations, roles, revenue |
 
 Legacy roles from the original app still work: `drrm_editor` maps to
-`lgu_staff`, and `admin` maps to a province-wide `lgu_admin`.
+`lgu_staff`, and `admin` maps to `lgu_admin`. Neither role receives an
+island-wide or province-wide bypass; legacy accounts remain limited to their
+validated assigned LGU until they receive explicit PSGC grants.
 
 **Nobody can self-assign a privileged role or a paid entitlement.**
 - Registration always creates a citizen.
@@ -52,6 +54,9 @@ Legacy roles from the original app still work: `drrm_editor` maps to
 - Geographic operational data (zones, roads, stations, centers, reports,
   alerts, incidents) checks PSGC ancestry against live jurisdiction grants, so
   an Oriental Mindoro grant cannot mutate Occidental Mindoro data.
+- Privileged rules also require an active organization membership document on
+  every request. Disabling a member therefore removes access even if an older
+  ID token still contains the organization claim.
 - `subscriptions.coverageScopes` is a separate paid-service boundary for data
   APIs and fleet monitoring. It never grants LGU write authority. Public
   safety reads remain free across the island.
@@ -96,6 +101,9 @@ Every privileged action is decided on the server, never by the UI.
   emulator data are gitignored. `.env.example` has no values.
 - **Demo passwords.** Demo account passwords come from
   `DEMO_ACCOUNT_PASSWORD`. They are never hard-coded, including in the tests.
+- **Offline private data.** Emergency contacts are stored in a UID-scoped
+  offline snapshot, never in the public snapshot. Signing out or changing
+  accounts removes the prior user's private cache key.
 - **`/api/health`** reports only *whether* each integration is configured.
 
 ## HTTP hardening

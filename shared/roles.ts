@@ -63,9 +63,9 @@ export function normalizeRole(role: unknown): AppRole {
   return "citizen";
 }
 
-/** Legacy `admin` was province-wide: it may edit zones in every area. */
+/** Only the platform Super Admin has island-wide access. Legacy admins must be migrated to grants. */
 export function hasAllAreaAccess(claims: RoleClaims): boolean {
-  return claims.role === "admin" || claims.role === "super_admin";
+  return claims.role === "super_admin";
 }
 
 /** Transitional signal only; new accounts authorize through Firestore grants. */

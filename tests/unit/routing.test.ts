@@ -14,6 +14,7 @@ import {
   type RouteCandidate,
   type RoutingProvider,
 } from "../../shared/routing";
+import { hasKnownDisconnectedLandComponents } from "../../shared/routing";
 import type { FloodZone } from "../../shared/flood";
 import type { RoadCondition } from "../../shared/types";
 import { suggestPassability, suggestRoadPassability } from "../../shared/passability";
@@ -188,6 +189,17 @@ describe("planSafeRoute", () => {
     const result = await planWithProvider(mainlandPoint, lubangPoint, noRouteProvider);
     expect(result).toMatchObject({ status: "no_verified_road_route", routes: [] });
     expect(result).not.toHaveProperty("geometry");
+  });
+
+  it("rejects mainland-to-Lubang before consulting a routing provider", () => {
+    expect(hasKnownDisconnectedLandComponents([
+      [13.1024, 121.1888],
+      [13.858, 120.124],
+    ])).toBe(true);
+    expect(hasKnownDisconnectedLandComponents([
+      [13.858, 120.124],
+      [13.75, 120.25],
+    ])).toBe(false);
   });
 
   it("returns the direct route when nothing is in the way", async () => {

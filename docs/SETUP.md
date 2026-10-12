@@ -164,7 +164,7 @@ watch them in the console.
 ```bash
 firebase deploy --only firestore:rules
 ```
-Before deploying any rule change, run `npm run test:emulator` (38 rule
+Before deploying any rule change, run `npm run test:emulator` (43 rule
 tests and 19 API tests).
 
 ### 7. Setting up authorized domains

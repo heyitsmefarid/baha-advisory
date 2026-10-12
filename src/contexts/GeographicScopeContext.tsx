@@ -86,4 +86,3 @@ export function useGeographicScope(): GeographicScopeValue {
   if (!value) throw new Error("useGeographicScope must be used inside GeographicScopeProvider.");
   return value;
 }
-

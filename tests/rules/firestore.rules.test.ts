@@ -77,7 +77,7 @@ const lguAdmin = (uid = "lguadmin1", orgId = "org_lgu_calapan") =>
   env.authenticatedContext(uid, { role: "lgu_admin", assignedArea: "Calapan City", areas: ["Calapan City", "Baco"], orgId }).firestore();
 const legacyEditor = (uid = "staff1", area = "Calapan City") =>
   env.authenticatedContext(uid, { role: "drrm_editor", assignedArea: area }).firestore();
-const legacyAdmin = (uid = "legacyadmin") => env.authenticatedContext(uid, { role: "admin", assignedArea: "MinSU" }).firestore();
+const legacyAdmin = (uid = "legacyadmin") => env.authenticatedContext(uid, { role: "admin", assignedArea: "Calapan City" }).firestore();
 const bizStaff = (uid = "biz1", orgId = "org_biz_express") =>
   env.authenticatedContext(uid, { role: "business_staff", orgId }).firestore();
 const bizAdmin = (uid = "bizadmin1", orgId = "org_biz_express") =>
@@ -108,6 +108,16 @@ beforeEach(async () => {
   await seed("organizations/org_lgu_unpaid", { name: "Unpaid LGU", type: "lgu", entitlements: NOT_ENTITLED });
   await seed("organizations/org_biz_express", { name: "Express Couriers", type: "business", entitlements: ENTITLED });
   await seed("organizations/org_biz_free", { name: "Free Biz", type: "business", entitlements: NOT_ENTITLED });
+  await seed("organizations/org_lgu_calapan/members/staff1", { role: "lgu_staff", active: true });
+  await seed("organizations/org_lgu_calapan/members/lguadmin1", { role: "lgu_admin", active: true });
+  await seed("organizations/org_lgu_baco/members/baco-staff", { role: "lgu_staff", active: true });
+  await seed("organizations/org_biz_express/members/biz1", { role: "business_staff", active: true });
+  await seed("organizations/org_biz_express/members/bizadmin1", { role: "business_admin", active: true });
+  await seed("geographic_units/1705200000", { level: "province", parentPsgcCode: "1700000000" });
+  await seed("geographic_units/1705100000", { level: "province", parentPsgcCode: "1700000000" });
+  await seed("geographic_units/1705205000", { level: "city", parentPsgcCode: "1705200000" });
+  await seed("geographic_units/1705201000", { level: "municipality", parentPsgcCode: "1705200000" });
+  await seed("geographic_units/1705106000", { level: "municipality", parentPsgcCode: "1705100000" });
   await seed("organizations/org_lgu_calapan/jurisdiction_grants/1705205000", grant("org_lgu_calapan", "1705205000", "1705200000", "1705205000"));
   await seed("organizations/org_lgu_calapan/jurisdiction_grants/1705201000", grant("org_lgu_calapan", "1705201000", "1705200000", "1705201000"));
   await seed("organizations/org_lgu_baco/jurisdiction_grants/1705201000", grant("org_lgu_baco", "1705201000", "1705200000", "1705201000"));
@@ -182,6 +192,14 @@ describe("official flood zones (original collection, backward compatible)", () =
       ...calapanGeography,
       provincePsgcCode: "1705100000",
     })));
+    await assertFails(setDoc(doc(lguStaff(), "floodZones/invented-descendant"), zoneData({
+      ...calapanGeography,
+      municipalityPsgcCode: "1705299999",
+    })));
+    await assertFails(setDoc(doc(lguStaff(), "floodZones/wrong-descendant"), zoneData({
+      ...calapanGeography,
+      municipalityPsgcCode: "1705106000",
+    })));
   });
 
   it("clients cannot write jurisdiction grants", async () => {
@@ -192,8 +210,9 @@ describe("official flood zones (original collection, backward compatible)", () =
     await assertSucceeds(setDoc(doc(legacyEditor(), "floodZones/z1"), zoneData()));
   });
 
-  it("legacy admin can publish in any area", async () => {
-    await assertSucceeds(setDoc(doc(legacyAdmin(), "floodZones/z1"), zoneData({ area: "Bulalacao", updatedBy: "legacyadmin" })));
+  it("legacy admin is limited to its assigned area", async () => {
+    await assertSucceeds(setDoc(doc(legacyAdmin(), "floodZones/z1"), zoneData({ updatedBy: "legacyadmin" })));
+    await assertFails(setDoc(doc(legacyAdmin(), "floodZones/z2"), zoneData({ area: "Bulalacao", updatedBy: "legacyadmin" })));
   });
 
   it("LGU staff cannot publish outside their area", async () => {
@@ -253,7 +272,7 @@ describe("users & privilege escalation", () => {
   it("users cannot read other users' profiles", async () => {
     await seed("users/cit2", { name: "Other" });
     await assertFails(getDoc(doc(citizen(), "users/cit2")));
-    await assertSucceeds(getDoc(doc(legacyAdmin(), "users/cit2")));
+    await assertFails(getDoc(doc(legacyAdmin(), "users/cit2")));
     await assertSucceeds(getDoc(doc(superAdmin(), "users/cit2")));
   });
 
@@ -391,7 +410,7 @@ describe("community reports & verification", () => {
   });
 
   it("pending reports are visible to their reporter and LGU staff only", async () => {
-    await seed("community_reports/r1", { reporterUid: "cit1", status: "pending" });
+    await seed("community_reports/r1", { ...calapanGeography, area: "Calapan City", reporterUid: "cit1", status: "pending" });
     await seed("community_reports/r2", { reporterUid: "cit2", status: "verified" });
     await assertSucceeds(getDoc(doc(citizen(), "community_reports/r1")));
     await assertFails(getDoc(doc(citizen("cit2"), "community_reports/r1")));
@@ -452,22 +471,43 @@ describe("evacuation centers, road closures, SOS", () => {
     await assertFails(getDoc(doc(citizen(), "sos_requests/s5")));
   });
 
+  it("keeps pending reports, report media, and SOS private to the authorized LGU", async () => {
+    const privateRecord = { ...calapanGeography, area: "Calapan City", reporterUid: "cit1", status: "pending" };
+    await seed("community_reports/private-report", privateRecord);
+    await seed("report_media/private-report", privateRecord);
+    await seed("sos_requests/private-sos", { ...privateRecord, uid: "cit1", status: "open", location: { lat: 13.41, lng: 121.18 } });
+    await assertSucceeds(getDoc(doc(lguStaff(), "community_reports/private-report")));
+    await assertSucceeds(getDoc(doc(lguStaff(), "report_media/private-report")));
+    await assertSucceeds(getDoc(doc(lguStaff(), "sos_requests/private-sos")));
+    const other = lguStaff("baco-staff", "Baco", "org_lgu_baco");
+    await assertFails(getDoc(doc(other, "community_reports/private-report")));
+    await assertFails(getDoc(doc(other, "report_media/private-report")));
+    await assertFails(getDoc(doc(other, "sos_requests/private-sos")));
+  });
+
+  it("rejects stale staff claims after membership deactivation", async () => {
+    await seed("organizations/org_lgu_calapan/members/staff1", { role: "lgu_staff", active: false });
+    await seed("community_reports/deactivated", { ...calapanGeography, area: "Calapan City", reporterUid: "cit1", status: "pending" });
+    await assertFails(getDoc(doc(lguStaff(), "community_reports/deactivated")));
+    await assertFails(setDoc(doc(lguStaff(), "floodZones/deactivated"), zoneData({ ...calapanGeography })));
+  });
+
   it("alerts can only be issued through the backend", async () => {
     await assertFails(addDoc(collection(lguAdmin(), "alerts"), { title: "x" }));
     await assertFails(addDoc(collection(superAdmin(), "alerts"), { title: "x" }));
   });
 
   it("advisories: staff write drafts; publishing is backend-only", async () => {
-    const adv = { orgId: "org_lgu_calapan", title: "Heavy rain", body: "Stay alert", severity: "moderate", areas: ["Calapan City"], status: "draft", aiDrafted: true, createdBy: "staff1", createdByName: "Staff" };
+    const adv = { orgId: "org_lgu_calapan", title: "Heavy rain", body: "Stay alert", severity: "moderate", areas: ["Calapan City"], areaPsgcCodes: ["1705205000"], status: "draft", aiDrafted: true, createdBy: "staff1", createdByName: "Staff" };
     await assertSucceeds(setDoc(doc(lguStaff(), "advisories/a1"), adv));
     await assertFails(setDoc(doc(lguStaff(), "advisories/a2"), { ...adv, status: "published" }));
-    await assertFails(setDoc(doc(lguStaff(), "advisories/a3"), { ...adv, areas: ["Bulalacao"] }));
+    await assertFails(setDoc(doc(lguStaff(), "advisories/a3"), { ...adv, areas: ["Bulalacao"], areaPsgcCodes: ["1705215000"] }));
     await assertFails(setDoc(doc(citizen(), "advisories/a4"), { ...adv, createdBy: "cit1" }));
   });
 
-  it("LGU applications must be pending and self-attributed", async () => {
+  it("LGU applications are backend-only", async () => {
     const app = { applicantUid: "cit1", status: "pending", type: "lgu", orgName: "Naujan MDRRMO", jurisdictionAreas: ["Naujan"] };
-    await assertSucceeds(addDoc(collection(citizen(), "org_applications"), app));
+    await assertFails(addDoc(collection(citizen(), "org_applications"), app));
     await assertFails(addDoc(collection(citizen(), "org_applications"), { ...app, status: "approved" }));
     await assertFails(addDoc(collection(citizen(), "org_applications"), { ...app, applicantUid: "other" }));
     await assertFails(addDoc(collection(guest(), "org_applications"), { ...app, applicantUid: "guest1" }));

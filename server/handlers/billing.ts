@@ -98,7 +98,7 @@ export async function checkout(req: Request, _ctx: RouteCtx): Promise<Response> 
   const auth = await requireAuth(req);
   const body = asObject(await readJson(req));
   const orgId = str(body, "orgId", { max: 120 });
-  requireOrgAdmin(auth, orgId);
+  await requireOrgAdmin(auth, orgId);
   if (auth.role === "super_admin" && auth.orgId !== orgId) throw forbidden("Organization admins pay for their own subscriptions.");
   await firestoreRateLimit(`checkout:${auth.uid}`, 10, 3600_000);
   const org = await loadOrg(orgId);
@@ -153,7 +153,7 @@ export async function demoComplete(req: Request, ctx: RouteCtx): Promise<Respons
   if (!snap.exists) throw notFound("Transaction not found.");
   const tx = snap.data() as PaymentTransaction;
   if (tx.provider !== "demo" || !tx.isDemo) throw forbidden("Only sandbox transactions can be completed here.");
-  requireOrgAdmin(auth, tx.orgId);
+  await requireOrgAdmin(auth, tx.orgId);
   const result = await processPaymentEvent({
     provider: "demo",
     eventId: `demo_${snap.id}`,
@@ -179,7 +179,7 @@ export async function cancel(req: Request, _ctx: RouteCtx): Promise<Response> {
   const auth = await requireAuth(req);
   const body = asObject(await readJson(req));
   const orgId = str(body, "orgId", { max: 120 });
-  requireOrgAdmin(auth, orgId);
+  await requireOrgAdmin(auth, orgId);
   const cancelIt = bool(body, "cancel", true);
   const org = await loadOrg(orgId);
   const { ref, sub } = await currentSubscription(org);
@@ -198,7 +198,7 @@ export async function changePlan(req: Request, ctx: RouteCtx): Promise<Response>
   const auth = await requireAuth(req);
   const body = asObject(await readJson(req));
   const orgId = str(body, "orgId", { max: 120 });
-  requireOrgAdmin(auth, orgId);
+  await requireOrgAdmin(auth, orgId);
   const org = await loadOrg(orgId);
   const planId = str(body, "planId", { max: 60 });
   const cycle = oneOf(body, "billingCycle", ["monthly", "annual"] as const, "monthly");
@@ -248,4 +248,3 @@ export async function recompute(req: Request, ctx: RouteCtx): Promise<Response> 
   await recomputeOrgEntitlements(ctx.params.orgId);
   return json({ ok: true });
 }
-

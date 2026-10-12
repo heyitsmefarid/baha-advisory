@@ -17,4 +17,4 @@ ui-debug.log
 tests/e2e/output/
 
 # Downloaded authoritative geography source files
-.cache/geography/
+.cache/

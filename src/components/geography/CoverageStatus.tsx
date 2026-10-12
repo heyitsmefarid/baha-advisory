@@ -15,4 +15,3 @@ export default function CoverageStatus({ status }: { status: BoundaryStatus }) {
     </span>
   );
 }
-

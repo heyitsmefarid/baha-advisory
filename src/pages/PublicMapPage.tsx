@@ -26,6 +26,7 @@ import { OSM_ATTRIBUTION, OSM_TILES } from "../components/map/BaseMap";
 import { toMillis } from "../../shared/time";
 import { useGeographicOverview } from "../hooks/useScopedPublicData";
 import { useGeographicScope } from "../contexts/GeographicScopeContext";
+import { deriveIslandSituation } from "../lib/islandSituation";
 
 type Layer = "water" | "flooded" | "passability";
 type Overlay = "roads" | "reports" | "centers" | "stations";
@@ -173,6 +174,7 @@ export default function PublicMapPage() {
 
   const criticalAlert = alerts.data.find((a) => a.severity === "critical" || a.severity === "high");
   const islandOverview = !geographicScope.provincePsgcCode ? overview.data : null;
+  const islandSituation = islandOverview ? deriveIslandSituation(islandOverview) : null;
 
   return (
     <AppShell fullBleed>
@@ -228,15 +230,15 @@ export default function PublicMapPage() {
             <Readout
               value={!geographicScope.provincePsgcCode ? islandOverview?.counts.floodZones ?? "â€”" : count(zones.length, official)}
               label="Active flood zones"
-              tone={zones.length ? "caution" : isUnknown(0, official) ? "neutral" : "safe"}
-              hint={situation.rising ? `${situation.rising} rising` : unknownHint(zones.length, official)}
+              tone={islandSituation ? (islandSituation.hasActiveFlooding ? "caution" : "safe") : zones.length ? "caution" : isUnknown(0, official) ? "neutral" : "safe"}
+              hint={islandSituation ? `${islandOverview?.verifiedCounts.floodZones ?? 0} verified, ${islandOverview?.simulatedCounts.floodZones ?? 0} simulated` : situation.rising ? `${situation.rising} rising` : unknownHint(zones.length, official)}
             />
             <Readout value={!geographicScope.provincePsgcCode ? islandOverview?.counts.roadConditions ?? "â€”" : count(situation.closedRoads, official)} label={islandOverview ? "Road conditions" : "Closed roads"} tone={situation.closedRoads ? "closed" : "neutral"} hint={unknownHint(situation.closedRoads, official)} />
             <Readout value={!geographicScope.provincePsgcCode ? islandOverview?.counts.evacuationCenters ?? "â€”" : count(situation.openCenters, centers)} label="Open centers" tone="tide" hint={unknownHint(situation.openCenters, centers)} />
             <Readout value={count(alerts.data.length, alerts)} label="Active alerts" tone={alerts.data.length ? "danger" : "neutral"} hint={unknownHint(alerts.data.length, alerts)} />
             <div className="situation-strip__meta">
-              {situation.newest ? <Freshness at={situation.newest} prefix="DRRM update" /> : <span className="freshness">No active updates</span>}
-              {situation.anySimulated && <span className="badge badge--sim">Includes simulated data</span>}
+              {(islandSituation?.newest ?? situation.newest) ? <Freshness at={(islandSituation?.newest ?? situation.newest)!} prefix="DRRM update" /> : <span className="freshness">No active updates</span>}
+              {(islandSituation?.anySimulated ?? situation.anySimulated) && <span className="badge badge--sim">Includes simulated data</span>}
             </div>
           </div>
 

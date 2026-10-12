@@ -2,11 +2,12 @@ import { FieldValue } from "firebase-admin/firestore";
 import { getDb } from "../lib/firebaseAdmin";
 import { forbidden, json, unauthorized } from "../lib/http";
 import { memoryRateLimit } from "../lib/rateLimit";
-import { loadOfficialData } from "../lib/hazards";
+import { zoneFromDoc } from "../lib/hazards";
 import { hashApiKey } from "./orgs";
 import { toMillis } from "../../shared/time";
-import { dataMatchesCoverage, requireSubscriptionCoverage } from "../lib/subscriptionCoverage";
+import { requireSubscriptionCoverage, type CoverageTarget } from "../lib/subscriptionCoverage";
 import type { RouteCtx } from "../router";
+import type { RoadCondition } from "../../shared/types";
 
 /**
  * Versioned data API for Business Pro (add-on) and Enterprise customers.
@@ -44,12 +45,24 @@ const meta = (extra: Record<string, unknown> = {}) => ({
   ...extra,
 });
 
+function scopedCollection(collectionName: string, target: CoverageTarget) {
+  const [field, value] = target.barangayPsgcCode
+    ? ["barangayPsgcCode", target.barangayPsgcCode]
+    : target.municipalityPsgcCode
+      ? ["municipalityPsgcCode", target.municipalityPsgcCode]
+      : ["provincePsgcCode", target.provincePsgcCode];
+  return getDb().collection(collectionName).where(field, "==", value);
+}
+
 /** GET /api/v1/flood-zones — active DRRM-verified zones + road conditions. */
 export async function v1FloodZones(req: Request, _ctx: RouteCtx): Promise<Response> {
   const { target } = await apiCoverage(req);
-  const { zones, roads } = await loadOfficialData();
-  const scopedZones = zones.filter((zone) => dataMatchesCoverage(zone as unknown as Record<string, unknown>, target));
-  const scopedRoads = roads.filter((road) => dataMatchesCoverage(road as unknown as Record<string, unknown>, target));
+  const [zoneSnapshot, roadSnapshot] = await Promise.all([
+    scopedCollection("floodZones", target).where("status", "==", "active").limit(500).get(),
+    scopedCollection("road_conditions", target).where("active", "==", true).limit(500).get(),
+  ]);
+  const scopedZones = zoneSnapshot.docs.map((document) => zoneFromDoc(document.id, document.data()));
+  const scopedRoads = roadSnapshot.docs.map((document) => ({ id: document.id, ...(document.data() as Omit<RoadCondition, "id">) }));
   return json({
     meta: meta({ count: scopedZones.length, coveragePsgcCode: target.psgcCode }),
     floodZones: scopedZones.map((z) => ({
@@ -63,11 +76,10 @@ export async function v1FloodZones(req: Request, _ctx: RouteCtx): Promise<Respon
 /** GET /api/v1/alerts — active public alerts. */
 export async function v1Alerts(req: Request, _ctx: RouteCtx): Promise<Response> {
   const { target } = await apiCoverage(req);
-  const snap = await getDb().collection("alerts").where("active", "==", true).orderBy("createdAt", "desc").limit(100).get();
+  const snap = await scopedCollection("alerts", target).where("active", "==", true).orderBy("createdAt", "desc").limit(100).get();
   const now = Date.now();
   const alerts = snap.docs
     .map((d) => ({ id: d.id, ...d.data() }))
-    .filter((record) => dataMatchesCoverage(record, target))
     .filter((a) => (toMillis((a as { expiresAt?: unknown }).expiresAt) ?? 0) > now)
     .map((a) => {
       const x = a as Record<string, unknown>;
@@ -79,10 +91,10 @@ export async function v1Alerts(req: Request, _ctx: RouteCtx): Promise<Response> 
 /** GET /api/v1/risk — experimental area risk outlook (clearly labelled). */
 export async function v1Risk(req: Request, _ctx: RouteCtx): Promise<Response> {
   const { target } = await apiCoverage(req);
-  const snap = await getDb().collection("flood_risk_predictions").get();
+  const snap = await scopedCollection("flood_risk_predictions", target).limit(100).get();
   return json({
     meta: meta({ experimental: true, disclaimer: "Experimental indicator, not an official forecast.", coveragePsgcCode: target.psgcCode }),
-    predictions: snap.docs.filter((document) => dataMatchesCoverage(document.data(), target)).map((d) => {
+    predictions: snap.docs.map((d) => {
       const p = d.data();
       return { area: p.area, score: p.score, level: p.level, computedAt: toMillis(p.computedAt), dataCompleteness: p.dataCompleteness, modelVersion: p.modelVersion, simulatedInputs: Boolean(p.simulatedInputs) };
     }),
@@ -92,8 +104,8 @@ export async function v1Risk(req: Request, _ctx: RouteCtx): Promise<Response> {
 /** GET /api/v1/evacuation-centers — verified centers (verified occupancy only). */
 export async function v1Centers(req: Request, _ctx: RouteCtx): Promise<Response> {
   const { target } = await apiCoverage(req);
-  const snap = await getDb().collection("evacuation_centers").where("verified", "==", true).get();
-  const centers = snap.docs.filter((document) => dataMatchesCoverage(document.data(), target));
+  const snap = await scopedCollection("evacuation_centers", target).where("verified", "==", true).limit(500).get();
+  const centers = snap.docs;
   return json({
     meta: meta({ count: centers.length, coveragePsgcCode: target.psgcCode }),
     centers: centers.map((d) => {

@@ -69,25 +69,36 @@ function ringContains(ring: GeoJsonPosition[], point: GeoJsonPosition): "inside"
   return inside ? "inside" : "outside";
 }
 
-function polygonContains(rings: GeoJsonPosition[][], point: GeoJsonPosition): boolean {
+type Containment = "inside" | "outside" | "edge";
+
+function polygonContainment(rings: GeoJsonPosition[][], point: GeoJsonPosition): Containment {
   const outer = ringContains(rings[0] ?? [], point);
-  if (outer === "outside") return false;
-  if (outer === "edge") return true;
+  if (outer !== "inside") return outer;
   for (const hole of rings.slice(1)) {
     const holeResult = ringContains(hole, point);
-    if (holeResult === "inside") return false;
-    if (holeResult === "edge") return true;
+    if (holeResult === "inside") return "outside";
+    if (holeResult === "edge") return "edge";
   }
-  return true;
+  return "inside";
+}
+
+function geometryContainment(geometry: SupportedGeometry, point: [number, number]): Containment {
+  const geoJsonPoint: GeoJsonPosition = [point[1], point[0]];
+  if (geometry.type === "Polygon") return polygonContainment(geometry.coordinates, geoJsonPoint);
+  if (geometry.type === "MultiPolygon") {
+    let edge = false;
+    for (const polygon of geometry.coordinates) {
+      const result = polygonContainment(polygon, geoJsonPoint);
+      if (result === "inside") return "inside";
+      if (result === "edge") edge = true;
+    }
+    return edge ? "edge" : "outside";
+  }
+  return "outside";
 }
 
 export function containsPoint(geometry: SupportedGeometry, point: [number, number]): boolean {
-  const geoJsonPoint: GeoJsonPosition = [point[1], point[0]];
-  if (geometry.type === "Polygon") return polygonContains(geometry.coordinates, geoJsonPoint);
-  if (geometry.type === "MultiPolygon") {
-    return geometry.coordinates.some((polygon) => polygonContains(polygon, geoJsonPoint));
-  }
-  return false;
+  return geometryContainment(geometry, point) !== "outside";
 }
 
 function geometryArea(geometry: SupportedGeometry): number {
@@ -110,12 +121,17 @@ function smallestMatch(
   point: [number, number],
   features: BoundaryFeature[],
   levels: BoundaryFeature["properties"]["level"][],
-): BoundaryFeature | null {
-  return (
-    features
-      .filter((feature) => levels.includes(feature.properties.level) && containsPoint(feature.geometry, point))
-      .sort((left, right) => geometryArea(left.geometry) - geometryArea(right.geometry))[0] ?? null
-  );
+): { feature: BoundaryFeature; edge: boolean } | null {
+  const matches = features
+    .filter((feature) => levels.includes(feature.properties.level))
+    .map((feature) => ({ feature, containment: geometryContainment(feature.geometry, point) }))
+    .filter((match) => match.containment !== "outside")
+    .sort((left, right) => geometryArea(left.feature.geometry) - geometryArea(right.feature.geometry));
+  if (!matches.length) return null;
+  return {
+    feature: matches[0].feature,
+    edge: matches[0].containment === "edge" || matches.length > 1,
+  };
 }
 
 export function resolvePointWith(
@@ -123,17 +139,17 @@ export function resolvePointWith(
   boundaries: BoundaryFeatureCollection,
   options: ResolveOptions,
 ): GeographicAssignment | null {
-  const municipalityFeature = smallestMatch(point, boundaries.features, ["city", "municipality"]);
-  if (!municipalityFeature) return null;
-  const municipality = getUnit(municipalityFeature.properties.psgcCode);
+  const municipalityMatch = smallestMatch(point, boundaries.features, ["city", "municipality"]);
+  if (!municipalityMatch) return null;
+  const municipality = getUnit(municipalityMatch.feature.properties.psgcCode);
   if (!municipality || !["city", "municipality"].includes(municipality.level) || !municipality.provincePsgcCode) {
     return null;
   }
 
-  const barangayFeature = options.barangayGeometryAvailable
+  const barangayMatch = options.barangayGeometryAvailable
     ? smallestMatch(point, boundaries.features, ["barangay"])
     : null;
-  const barangay = barangayFeature ? getUnit(barangayFeature.properties.psgcCode) : undefined;
+  const barangay = barangayMatch ? getUnit(barangayMatch.feature.properties.psgcCode) : undefined;
   const barangayPsgcCode =
     barangay?.level === "barangay" && barangay.municipalityPsgcCode === municipality.psgcCode
       ? barangay.psgcCode
@@ -150,7 +166,13 @@ export function resolvePointWith(
     ...reference,
     locationAssignment: {
       method: "boundary",
-      confidence: barangayPsgcCode ? "high" : options.barangayGeometryAvailable ? "medium" : "review_required",
+      confidence: municipalityMatch.edge || barangayMatch?.edge
+        ? "review_required"
+        : barangayPsgcCode
+          ? "high"
+          : options.barangayGeometryAvailable
+            ? "medium"
+            : "review_required",
       sourceVersion: options.sourceVersion ?? "mindoro-boundaries-v1",
       assignedAt: options.assignedAt ?? Date.now(),
       assignedBy: "system",
@@ -191,4 +213,3 @@ export function boundsForScope(
   const feature = boundaries.features.find((candidate) => candidate.properties.psgcCode === code);
   return feature ? geometryBounds(feature.geometry) : getUnit(code)!.boundingBox;
 }
-

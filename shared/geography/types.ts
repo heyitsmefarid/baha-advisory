@@ -38,4 +38,3 @@ export interface GeographicReference {
   barangayPsgcCode: string | null;
   locationAssignment: LocationAssignment;
 }
-
