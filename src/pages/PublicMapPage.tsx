@@ -1,19 +1,42 @@
 import React, { useMemo, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { MapContainer, TileLayer, useMap, useMapEvents } from "react-leaflet";
 import L from "leaflet";
-import { useActiveFloodZones } from "../hooks/useFloodZones";
+import AppShell from "../components/layout/AppShell";
 import { useGeolocation } from "../hooks/useGeolocation";
+import { useOfficialHazards } from "../hooks/useOfficialData";
+import { useOnlineStatus } from "../hooks/useOnlineStatus";
+import { useActiveAlerts } from "../hooks/useAlerts";
 import ZoneOverlay from "../components/map/ZoneOverlay";
 import AreaClusterMarker from "../components/map/AreaClusterMarker";
 import LocationsSidebar from "../components/map/LocationsSidebar";
 import ZoneDetailPanel from "../components/map/ZoneDetailPanel";
 import Legend from "../components/map/Legend";
 import RecenterButton from "../components/map/RecenterButton";
+import HazardLayer from "../components/map/HazardLayer";
+import AdministrativeBoundaryLayer from "../components/map/AdministrativeBoundaryLayer";
+import GeographicFilter from "../components/geography/GeographicFilter";
+import { CentersLayer, ReportsLayer, StationsLayer, useStations, useVerifiedCenters, useVerifiedReports } from "../components/map/PublicLayers";
 import TutorialOverlay from "../components/TutorialOverlay";
+import ChatPanel from "../components/chat/ChatPanel";
+import { Freshness, Readout } from "../components/ui";
 import { FloodZone } from "../types";
-import { DEFAULT_ZOOM, ORIENTAL_MINDORO_BOUNDS } from "../firebase";
+import { DEFAULT_ZOOM, MINDORO_SERVICE_BOUNDS } from "../firebase";
+import { OSM_ATTRIBUTION, OSM_TILES } from "../components/map/BaseMap";
+import { toMillis } from "../../shared/time";
+import { useGeographicOverview } from "../hooks/useScopedPublicData";
+import { useGeographicScope } from "../contexts/GeographicScopeContext";
+import { deriveIslandSituation } from "../lib/islandSituation";
 
 type Layer = "water" | "flooded" | "passability";
+type Overlay = "roads" | "reports" | "centers" | "stations";
+
+const OVERLAY_LABELS: Record<Overlay, string> = {
+  roads: "Road closures",
+  reports: "Verified reports",
+  centers: "Evacuation centers",
+  stations: "River gauges",
+};
 
 // Below this zoom, group zones into per-area badges instead of drawing
 // every individual pin/polygon — keeps the province-wide view readable.
@@ -72,17 +95,28 @@ function FitToZones({ zones, enabled }: { zones: FloodZone[]; enabled: boolean }
 }
 
 export default function PublicMapPage() {
-  const { data: zones, loading, error } = useActiveFloodZones();
+  const official = useOfficialHazards();
+  const zones = official.zones;
+  const { loading, error } = official;
+  const alerts = useActiveAlerts();
+  const reports = useVerifiedReports();
+  const centers = useVerifiedCenters();
+  const stations = useStations();
+  const overview = useGeographicOverview();
+  const { scope: geographicScope } = useGeographicScope();
   const { status, position, locate } = useGeolocation();
   const [selected, setSelected] = useState<FloodZone | null>(null);
-  const [activeLayers, setActiveLayers] = useState<Record<Layer, boolean>>({
+  const [activeLayers] = useState<Record<Layer, boolean>>({
     water: true,
     flooded: true,
     passability: true,
   });
+  const [overlays, setOverlays] = useState<Record<Overlay, boolean>>({ roads: true, reports: true, centers: true, stations: false });
+  const [layersOpen, setLayersOpen] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
   const [hasCentered, setHasCentered] = useState(false);
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(() => typeof window === "undefined" || window.innerWidth > 640);
   const [flyTarget, setFlyTarget] = useState<{ center: [number, number]; nonce: number } | null>(null);
 
   // Attempt geolocation once on first load.
@@ -96,9 +130,6 @@ export default function PublicMapPage() {
       setHasCentered(true);
     }
   }, [status, hasCentered]);
-
-  const toggleLayer = (layer: Layer) =>
-    setActiveLayers((prev) => ({ ...prev, [layer]: !prev[layer] }));
 
   const zonesByArea = useMemo(() => {
     const grouped: Record<string, FloodZone[]> = {};
@@ -123,68 +154,62 @@ export default function PublicMapPage() {
   // even when zoomed out.
   const showClusters = false;
 
-  return (
-    <div className="public-map-page">
-      <header className="topbar">
-        <div className="topbar__brand">
-          <img className="topbar__logo" src="/logo/bahadvisory_icon.png" alt="Bahadvisory icon" />
-          <img className="topbar__text-logo" src="/logo/bahadvisory_textlogo.png" alt="Bahadvisory" />
-        </div>
-        {/* <div className="topbar__layers">
-          {(["water", "flooded", "passability"] as Layer[]).map((l) => (
-            <button
-              key={l}
-              className={`layer-toggle ${activeLayers[l] ? "layer-toggle--on" : ""}`}
-              onClick={() => toggleLayer(l)}
-              title={
-                l === "water"
-                  ? "Toggle blue water-level shading on zones"
-                  : l === "flooded"
-                  ? "Show/hide flood zone markers entirely"
-                  : "Toggle orange–red road-passability coloring"
-              }
-            >
-              {l === "water" ? "Water Level" : l === "flooded" ? "Flooded Areas" : "Road Passability"}
-            </button>
-          ))}
-        </div> */}
-        <div className="topbar__meta">
-          <span className="topbar__timestamp">
-            {new Date().toLocaleString("en-PH", { hour: "2-digit", minute: "2-digit" })}
-          </span>
-        </div>
-      </header>
+  // A zero from a list that is still loading, or served offline from the
+  // device cache, may only mean nothing was saved — show it as unknown,
+  // never as "0 flood zones".
+  const online = useOnlineStatus();
+  const isUnknown = (n: number, r: { loading: boolean; fromCache: boolean }) => n === 0 && (r.loading || (!online && r.fromCache));
+  const count = (n: number, r: { loading: boolean; fromCache: boolean }) => (isUnknown(n, r) ? "—" : n);
+  const unknownHint = (n: number, r: { loading: boolean; fromCache: boolean }) =>
+    isUnknown(n, r) ? (online ? "Loading…" : "Not saved offline") : undefined;
 
+  const situation = useMemo(() => {
+    const rising = zones.filter((z) => z.trend === "rising").length;
+    const closedRoads = official.roads.filter((r) => r.status === "closed").length + zones.filter((z) => z.roadPassability === "closed").length;
+    const openCenters = centers.data.filter((c) => c.status === "open" || c.status === "standby").length;
+    const newest = Math.max(0, ...zones.map((z) => toMillis(z.updatedAt) ?? 0), ...official.roads.map((r) => toMillis(r.updatedAt) ?? 0));
+    const anySimulated = zones.some((z) => z.simulated) || official.roads.some((r) => r.simulated);
+    return { rising, closedRoads, openCenters, newest: newest || null, anySimulated };
+  }, [zones, official.roads, centers.data]);
+
+  const criticalAlert = alerts.data.find((a) => a.severity === "critical" || a.severity === "high");
+  const islandOverview = !geographicScope.provincePsgcCode ? overview.data : null;
+  const islandSituation = islandOverview ? deriveIslandSituation(islandOverview) : null;
+
+  return (
+    <AppShell fullBleed>
       <div className="public-map-page__body">
         <div className="map-wrap">
           {error && <div className="map-error">{error}</div>}
+          {official.displayState === "stale_previous_scope" && (
+            <div className="map-error">Unable to refresh â€” showing previous scope.</div>
+          )}
+          {overview.error && <div className="map-error">{overview.data ? "Unable to refresh â€” showing previous scope." : "Island overview is temporarily unavailable."}</div>}
           <MapContainer
             center={position}
             zoom={DEFAULT_ZOOM}
             minZoom={8}
-            maxBounds={ORIENTAL_MINDORO_BOUNDS}
+            maxBounds={MINDORO_SERVICE_BOUNDS}
             maxBoundsViscosity={1.0}
             className="leaflet-map"
             zoomControl={false}
           >
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
+            <TileLayer attribution={OSM_ATTRIBUTION} url={OSM_TILES} />
+            <AdministrativeBoundaryLayer />
             {status === "granted" && <FlyToPosition position={position} />}
             <FitToZones zones={zones} enabled={hasCentered && status !== "granted"} />
             <ZoomWatcher onZoomChange={setZoom} />
             <FlyToArea target={flyTarget} />
 
+            {overlays.roads && <HazardLayer zones={[]} roads={official.roads} />}
+            {overlays.centers && <CentersLayer centers={centers.data} />}
+            {overlays.reports && <ReportsLayer reports={reports.data} />}
+            {overlays.stations && <StationsLayer stations={stations.data} />}
+
             {activeLayers.flooded &&
               (showClusters
                 ? Object.entries(zonesByArea).map(([area, areaZones]) => (
-                    <AreaClusterMarker
-                      key={area}
-                      area={area}
-                      zones={areaZones}
-                      onClick={flyToArea}
-                    />
+                    <AreaClusterMarker key={area} area={area} zones={areaZones} onClick={flyToArea} />
                   ))
                 : zones.map((zone) => (
                     <ZoneOverlay
@@ -197,6 +222,65 @@ export default function PublicMapPage() {
                     />
                   )))}
           </MapContainer>
+
+          <GeographicFilter className="geographic-filter--map" />
+
+          {/* Situation strip — live counts, gauge-style, with data freshness. */}
+          <div className="situation-strip" role="status" aria-label="Current flood situation">
+            <Readout
+              value={!geographicScope.provincePsgcCode ? islandOverview?.counts.floodZones ?? "â€”" : count(zones.length, official)}
+              label="Active flood zones"
+              tone={islandSituation ? (islandSituation.hasActiveFlooding ? "caution" : "safe") : zones.length ? "caution" : isUnknown(0, official) ? "neutral" : "safe"}
+              hint={islandSituation ? `${islandOverview?.verifiedCounts.floodZones ?? 0} verified, ${islandOverview?.simulatedCounts.floodZones ?? 0} simulated` : situation.rising ? `${situation.rising} rising` : unknownHint(zones.length, official)}
+            />
+            <Readout value={!geographicScope.provincePsgcCode ? islandOverview?.counts.roadConditions ?? "â€”" : count(situation.closedRoads, official)} label={islandOverview ? "Road conditions" : "Closed roads"} tone={situation.closedRoads ? "closed" : "neutral"} hint={unknownHint(situation.closedRoads, official)} />
+            <Readout value={!geographicScope.provincePsgcCode ? islandOverview?.counts.evacuationCenters ?? "â€”" : count(situation.openCenters, centers)} label="Open centers" tone="tide" hint={unknownHint(situation.openCenters, centers)} />
+            <Readout value={count(alerts.data.length, alerts)} label="Active alerts" tone={alerts.data.length ? "danger" : "neutral"} hint={unknownHint(alerts.data.length, alerts)} />
+            <div className="situation-strip__meta">
+              {(islandSituation?.newest ?? situation.newest) ? <Freshness at={(islandSituation?.newest ?? situation.newest)!} prefix="DRRM update" /> : <span className="freshness">No active updates</span>}
+              {(islandSituation?.anySimulated ?? situation.anySimulated) && <span className="badge badge--sim">Includes simulated data</span>}
+            </div>
+          </div>
+
+          {criticalAlert && (
+            <Link to="/alerts" className={`alert-ribbon alert-ribbon--${criticalAlert.severity}`}>
+              <strong>{criticalAlert.title}</strong>
+              <span>{criticalAlert.simulated ? "Simulated · " : ""}See alerts near you</span>
+            </Link>
+          )}
+
+          <div className="map-layers">
+            <button type="button" className="chip-btn map-layers__toggle" aria-expanded={layersOpen} onClick={() => setLayersOpen((o) => !o)}>
+              Layers
+            </button>
+            {layersOpen && (
+              <div className="map-layers__panel">
+                {(Object.keys(OVERLAY_LABELS) as Overlay[]).map((k) => (
+                  <label key={k} className="check-row">
+                    <input type="checkbox" checked={overlays[k]} onChange={() => setOverlays((o) => ({ ...o, [k]: !o[k] }))} />
+                    {OVERLAY_LABELS[k]}
+                  </label>
+                ))}
+                <Link to="/risk" className="tiny">Open the flood-risk outlook</Link>
+              </div>
+            )}
+          </div>
+
+          <div className="map-fabs">
+            <Link to="/report" className="map-fab map-fab--report">Report flooding</Link>
+            <Link to="/navigate" className="map-fab">Safe route</Link>
+            <button type="button" className="map-fab" onClick={() => setChatOpen(true)}>Ask Baha AI</button>
+          </div>
+
+          {chatOpen && (
+            <aside className="chat-drawer" aria-label="Baha AI assistant">
+              <div className="spread chat-drawer__head">
+                <strong>Ask Baha AI</strong>
+                <button type="button" className="icon-btn" onClick={() => setChatOpen(false)} aria-label="Close assistant">×</button>
+              </div>
+              <ChatPanel compact />
+            </aside>
+          )}
 
           <RecenterButton onClick={locate} status={status} />
           <Legend />
@@ -225,6 +309,6 @@ export default function PublicMapPage() {
         <ZoneDetailPanel zone={selected} onClose={() => setSelected(null)} />
         <TutorialOverlay />
       </div>
-    </div>
+    </AppShell>
   );
 }

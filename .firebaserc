@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "bahadvisory"
+    "default": "bahadvisory",
+    "demo": "demo-bahadvisory"
   }
 }

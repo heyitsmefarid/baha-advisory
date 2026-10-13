@@ -1,0 +1,25 @@
+{
+  "catalogVersion": "Q2_2026",
+  "sources": [
+    {
+      "id": "psgc",
+      "agency": "Philippine Statistics Authority",
+      "publicationDate": "2026-06-30",
+      "sourceUrl": "https://psa.gov.ph/system/files/scd/PSGC-2Q-2026-Publication-Datafile.xlsx",
+      "publicationPage": "https://psa.gov.ph/classification/psgc",
+      "retrievedAt": "2026-10-10T02:32:19+08:00",
+      "sha256": "31892bc2bdde3ea0682562d9412b5bab4d45a0be5e5a5b4f6c9d7714b94bca5d",
+      "localCachePath": ".cache/geography/PSGC-2Q-2026.xlsx",
+      "licenseNote": "PSA attribution required; identity data only. Boundary geometry is sourced separately."
+    },
+    {
+      "id": "administrative-boundaries",
+      "agency": "NAMRIA",
+      "sourceUrl": "https://geoportal.gov.ph/",
+      "retrievedAt": "2026-10-10",
+      "availability": "unavailable_conditional_download",
+      "licenseNote": "Geoportal Philippines lists administrative boundaries as approximate and conditional-download; no approved source files were available for this build.",
+      "files": []
+    }
+  ]
+}
