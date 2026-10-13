@@ -9,8 +9,8 @@
  *      project root. This file is already in .gitignore — never commit it.
  *   2. npm install firebase-admin   (at the project root, not functions/)
  *
- * Usage: edit the account object at the bottom, then:
- *   node scripts/createDrrmAccount.js
+ * Usage:
+ *   node scripts/createDrrmAccount.js --name "Full Name" --email user@example.com --role drrm_editor --area "Calapan City"
  *
  * Run it once per new DRRM editor/admin. It:
  *   - creates the Firebase Auth user with a random temp password
@@ -18,7 +18,7 @@
  *     be set — the client SDK cannot set its own claims)
  *   - writes the directory doc to users/{uid} so it shows up in the
  *     admin Users page
- *   - sends a password-reset email so the person sets their own password
+ *   - prints a password-reset link to send to the person so they set their own password
  */
 
 import path from "path";
@@ -46,7 +46,7 @@ initializeApp({ credential: cert(serviceAccount) });
 const auth = getAuth();
 const firestore = getFirestore();
 
-async function createDrrmAccount({ name, email, role, assignedArea }) {
+async function createDrrmAccount({ name, email, role, assignedArea, orgId, psgcCode }) {
   if (!["drrm_editor", "admin"].includes(role)) {
     throw new Error(`role must be "drrm_editor" or "admin", got "${role}"`);
   }
@@ -59,7 +59,21 @@ async function createDrrmAccount({ name, email, role, assignedArea }) {
     displayName: name,
   });
 
-  await auth.setCustomUserClaims(userRecord.uid, { role, assignedArea });
+  await auth.setCustomUserClaims(userRecord.uid, { role, orgId });
+
+  const level = psgcCode.endsWith("00000") ? "province" : psgcCode.endsWith("000") ? "municipality" : "barangay";
+  const provincePsgcCode = level === "province" ? psgcCode : `${psgcCode.slice(0, 5)}00000`;
+  const municipalityPsgcCode = level === "barangay" ? `${psgcCode.slice(0, 7)}000` : level === "municipality" ? psgcCode : null;
+  await firestore.doc(`organizations/${orgId}/jurisdiction_grants/${psgcCode}`).set({
+    psgcCode,
+    level,
+    orgId,
+    active: true,
+    provincePsgcCode,
+    municipalityPsgcCode,
+    createdAt: new Date(),
+    createdBy: "createDrrmAccount-script",
+  }, { merge: true });
 
   await firestore.doc(`users/${userRecord.uid}`).set({
     name,
@@ -84,14 +98,34 @@ async function createDrrmAccount({ name, email, role, assignedArea }) {
 }
 
 // ---------------------------------------------------------------------
-// Edit these values for each new account, then re-run this script.
+// Pass the account details on the command line (previously they were
+// edited into this file):
+//   node scripts/createDrrmAccount.js --name "Juan dela Cruz" --email juan@lgu.gov.ph --role drrm_editor --area "Calapan City"
+// For the multi-tenant roles (lgu_admin, business_admin, super_admin, ...)
+// use `npm run create-account` (scripts/createAccount.ts) instead.
 // ---------------------------------------------------------------------
-createDrrmAccount({
-  name: "John John Bidon",
-  email: "john.john.bidon@minsu.edu.ph",
-  role: "admin",
-  assignedArea: "MinSU",
-})
+function arg(name) {
+  const i = process.argv.indexOf(`--${name}`);
+  return i >= 0 ? process.argv[i + 1] : undefined;
+}
+
+const account = {
+  name: arg("name"),
+  email: arg("email"),
+  role: arg("role") ?? "drrm_editor",
+  assignedArea: arg("area"),
+  orgId: arg("org"),
+  psgcCode: arg("psgc"),
+};
+
+if (!account.name || !account.email || !account.assignedArea || !account.orgId || !/^\d{10}$/.test(account.psgcCode ?? "")) {
+  console.error(
+    '\nUsage: node scripts/createDrrmAccount.js --name "Full Name" --email user@example.com --role drrm_editor|admin --area "Area" --org org_id --psgc 1705205000\n'
+  );
+  process.exit(1);
+}
+
+createDrrmAccount(account)
   .then(() => process.exit(0))
   .catch((err) => {
     console.error("\nFailed to create account:", err.message);

@@ -1,0 +1,6 @@
+[
+  { "psgcCode": "1700000000", "name": "MIMAROPA Region", "level": "region" },
+  { "psgcCode": "1705200000", "name": "Oriental Mindoro", "level": "province" },
+  { "psgcCode": "1705205000", "name": "City of Calapan", "level": "city" },
+  { "psgcCode": "1705205001", "name": "Balingayan", "level": "barangay" }
+]

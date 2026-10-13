@@ -1,0 +1,38 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "psgcCode": "1705200000",
+        "level": "province"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[120.8, 13.0], [121.5, 13.0], [121.5, 13.8], [120.8, 13.8], [120.8, 13.0]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "psgcCode": "1705205000",
+        "level": "city"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[121.0, 13.2], [121.3, 13.2], [121.3, 13.55], [121.0, 13.55], [121.0, 13.2]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "psgcCode": "1705205001",
+        "level": "barangay"
+      },
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [[[[121.1, 13.3], [121.25, 13.3], [121.25, 13.45], [121.1, 13.45], [121.1, 13.3]]]]
+      }
+    }
+  ]
+}
