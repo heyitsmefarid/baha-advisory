@@ -9,8 +9,8 @@
  *      project root. This file is already in .gitignore — never commit it.
  *   2. npm install firebase-admin   (at the project root, not functions/)
  *
- * Usage: edit the account object at the bottom, then:
- *   node scripts/createDrrmAccount.js
+ * Usage:
+ *   node scripts/createDrrmAccount.js --name "Full Name" --email user@example.com --role drrm_editor --area "Calapan City"
  *
  * Run it once per new DRRM editor/admin. It:
  *   - creates the Firebase Auth user with a random temp password
@@ -18,7 +18,7 @@
  *     be set — the client SDK cannot set its own claims)
  *   - writes the directory doc to users/{uid} so it shows up in the
  *     admin Users page
- *   - sends a password-reset email so the person sets their own password
+ *   - prints a password-reset link to send to the person so they set their own password
  */
 
 import path from "path";
@@ -84,14 +84,32 @@ async function createDrrmAccount({ name, email, role, assignedArea }) {
 }
 
 // ---------------------------------------------------------------------
-// Edit these values for each new account, then re-run this script.
+// Pass the account details on the command line (previously they were
+// edited into this file):
+//   node scripts/createDrrmAccount.js --name "Juan dela Cruz" --email juan@lgu.gov.ph --role drrm_editor --area "Calapan City"
+// For the multi-tenant roles (lgu_admin, business_admin, super_admin, ...)
+// use `npm run create-account` (scripts/createAccount.ts) instead.
 // ---------------------------------------------------------------------
-createDrrmAccount({
-  name: "John John Bidon",
-  email: "john.john.bidon@minsu.edu.ph",
-  role: "admin",
-  assignedArea: "MinSU",
-})
+function arg(name) {
+  const i = process.argv.indexOf(`--${name}`);
+  return i >= 0 ? process.argv[i + 1] : undefined;
+}
+
+const account = {
+  name: arg("name"),
+  email: arg("email"),
+  role: arg("role") ?? "drrm_editor",
+  assignedArea: arg("area"),
+};
+
+if (!account.name || !account.email || !account.assignedArea) {
+  console.error(
+    '\nUsage: node scripts/createDrrmAccount.js --name "Full Name" --email user@example.com --role drrm_editor|admin --area "Area"\n'
+  );
+  process.exit(1);
+}
+
+createDrrmAccount(account)
   .then(() => process.exit(0))
   .catch((err) => {
     console.error("\nFailed to create account:", err.message);

@@ -5,8 +5,20 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "dev:emulators": "firebase emulators:start --project demo-bahadvisory --only auth,firestore --import ./.emulator-data --export-on-exit ./.emulator-data",
+    "build": "tsc -p . && tsc -p tsconfig.server.json && vite build",
+    "typecheck": "tsc -p . && tsc -p tsconfig.server.json",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:emulator": "firebase emulators:exec --project demo-bahadvisory-test --only auth,firestore \"vitest run -c vitest.emulator.config.ts\"",
+    "test:all": "npm run test && npm run test:emulator",
+    "seed": "tsx scripts/seed.ts",
+    "create-account": "tsx scripts/createAccount.ts",
+    "export-firestore": "tsx scripts/exportFirestore.ts",
+    "import-firestore": "tsx scripts/importFirestore.ts",
+    "test:emulator:attached": "vitest run -c vitest.emulator.config.ts",
+    "test:e2e": "node tests/e2e/demo-flow.e2e.mjs",
+    "test:e2e:offline": "node tests/e2e/offline-pwa.e2e.mjs"
   },
   "dependencies": {
     "@types/leaflet": "^1.9.12",
@@ -21,10 +33,15 @@
     "react-router-dom": "^6.24.0"
   },
   "devDependencies": {
+    "@firebase/rules-unit-testing": "^3.0.4",
+    "@types/node": "^22.20.5",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
+    "playwright-core": "^1.48.2",
+    "tsx": "^4.23.15",
     "typescript": "^5.5.2",
-    "vite": "^5.3.1"
+    "vite": "^5.3.1",
+    "vitest": "^2.1.9"
   }
 }

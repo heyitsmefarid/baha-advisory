@@ -27,6 +27,78 @@
   --shadow: 0 8px 24px rgba(12, 35, 64, 0.1);
   --font-display: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Added for the SaaS platform — same palette family, extra steps. */
+  --surface-2: #f6f9fc;
+  --ink-faint: #7d90a6;
+  --tide-soft: rgba(14, 116, 144, 0.1);
+  --safe-soft: rgba(31, 157, 85, 0.1);
+  --caution-soft: rgba(224, 138, 30, 0.12);
+  --danger-soft: rgba(214, 69, 69, 0.1);
+  --closed-soft: rgba(122, 31, 43, 0.12);
+  --sim: #6b4fbb;
+  --sim-soft: rgba(107, 79, 187, 0.12);
+  --sos: #c62828;
+  --overlay: rgba(12, 35, 64, 0.45);
+  --radius-sm: 6px;
+  --radius-lg: 14px;
+  --tap: 44px;
+}
+
+/* Night operations — deep tide navy rather than black, so the brand's
+   water palette carries into dark mode. Hazard colors are lifted a step
+   for contrast but keep their meaning. */
+:root[data-theme="dark"] {
+  --mist: #071a2e;
+  --surface: #0d2440;
+  --surface-2: #112b4a;
+  --ink: #e6eef7;
+  --ink-soft: #9fb3c9;
+  --ink-faint: #6f87a2;
+  --tide: #2bb3d1;
+  --tide-deep: #06213f;
+  --line: #1f3d60;
+  --safe: #34c172;
+  --caution: #f0a23b;
+  --danger: #ef6464;
+  --closed: #c4505f;
+  --tide-soft: rgba(43, 179, 209, 0.14);
+  --safe-soft: rgba(52, 193, 114, 0.14);
+  --caution-soft: rgba(240, 162, 59, 0.16);
+  --danger-soft: rgba(239, 100, 100, 0.16);
+  --closed-soft: rgba(196, 80, 95, 0.2);
+  --sim: #a891ec;
+  --sim-soft: rgba(168, 145, 236, 0.16);
+  --sos: #ef4444;
+  --overlay: rgba(2, 10, 20, 0.6);
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --mist: #071a2e;
+    --surface: #0d2440;
+    --surface-2: #112b4a;
+    --ink: #e6eef7;
+    --ink-soft: #9fb3c9;
+    --ink-faint: #6f87a2;
+    --tide: #2bb3d1;
+    --tide-deep: #06213f;
+    --line: #1f3d60;
+    --safe: #34c172;
+    --caution: #f0a23b;
+    --danger: #ef6464;
+    --closed: #c4505f;
+    --tide-soft: rgba(43, 179, 209, 0.14);
+    --safe-soft: rgba(52, 193, 114, 0.14);
+    --caution-soft: rgba(240, 162, 59, 0.16);
+    --danger-soft: rgba(239, 100, 100, 0.16);
+    --closed-soft: rgba(196, 80, 95, 0.2);
+    --sim: #a891ec;
+    --sim-soft: rgba(168, 145, 236, 0.16);
+    --sos: #ef4444;
+    --overlay: rgba(2, 10, 20, 0.6);
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  }
 }
 
 * { box-sizing: border-box; }

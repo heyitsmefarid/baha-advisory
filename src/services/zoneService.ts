@@ -98,7 +98,6 @@ export async function deleteZone(
   editorUid: string,
   editorName: string
 ) {
-  await deleteDoc(doc(db, ZONES_COLLECTION, zoneId));
   await logZoneChange({
     zoneId,
     zoneName,
@@ -107,4 +106,5 @@ export async function deleteZone(
     editorName,
     action: "deleted",
   });
+  await deleteDoc(doc(db, ZONES_COLLECTION, zoneId));
 }

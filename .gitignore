@@ -6,3 +6,12 @@ dist
 .DS_Store
 serviceAccountKey.json
 *.zip
+# Emulator export data
+.emulator-data/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+*.log
+
+# E2E screenshots
+tests/e2e/output/

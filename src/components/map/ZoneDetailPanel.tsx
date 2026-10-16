@@ -8,6 +8,7 @@ import {
   VehicleKey,
 } from "../../types";
 import { formatWaterLevel, getHeroAccent, getWaterLevelBand } from "../../utils/passability";
+import { Freshness } from "../ui";
 
 interface Props {
   zone: FloodZone | null;
@@ -156,8 +157,14 @@ export default function ZoneDetailPanel({ zone, onClose }: Props) {
           </div>
         )}
 
+        {zone.simulated && (
+          <p className="zone-panel__sim">Simulated demonstration data — not a real flood report.</p>
+        )}
+        {zone.source === "community_report" && (
+          <p className="zone-panel__updated">Created from a community report verified by DRRM.</p>
+        )}
         <p className="zone-panel__updated">
-          Updated by {zone.updatedByName ?? "DRRM"}
+          Updated by {zone.updatedByName ?? "DRRM"} · <Freshness at={zone.updatedAt} prefix="" />
         </p>
       </div>
     </div>
