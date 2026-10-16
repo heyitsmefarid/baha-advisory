@@ -2,6 +2,38 @@
   command = "npm run build"
   publish = "dist"
 
+[build.environment]
+  NODE_VERSION = "22"
+
+# Backend: server/ runs as Netlify Functions (free tier) — no Firebase
+# Blaze plan / Cloud Functions needed. api.mts handles /api/*, daily.mts is
+# a scheduled function for billing maintenance.
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+  external_node_modules = ["firebase-admin"]
+
+# The service worker must always be revalidated so app updates roll out.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(self), camera=(self), microphone=()"
+    Content-Security-Policy = "frame-ancestors 'none'; object-src 'none'; base-uri 'self'"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+
+# SPA fallback (API routes are claimed by the function's config.path first).
 [[redirects]]
   from = "/*"
   to = "/index.html"

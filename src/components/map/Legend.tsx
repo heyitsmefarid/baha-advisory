@@ -15,7 +15,8 @@ const VEHICLE_ICONS: Record<string, string> = {
 };
 
 export default function Legend() {
-  const [open, setOpen] = useState(true);
+  // Collapsed by default on phones so it doesn't cover the map controls.
+  const [open, setOpen] = useState(() => typeof window === "undefined" || window.innerWidth > 640);
   const [waterLevelOpen, setWaterLevelOpen] = useState(false);
 
   return (

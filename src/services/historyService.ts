@@ -16,6 +16,7 @@ export async function logZoneChange(entry: {
   editorUid: string;
   editorName: string;
   action: ZoneHistoryEntry["action"];
+  entityType?: "flood_zone" | "road_condition";
 }) {
   await addDoc(collection(db, "zoneHistory", entry.zoneId, "updates"), {
     zoneName: entry.zoneName,
@@ -24,5 +25,6 @@ export async function logZoneChange(entry: {
     editorName: entry.editorName,
     action: entry.action,
     timestamp: serverTimestamp(),
+    ...(entry.entityType ? { entityType: entry.entityType } : {}),
   });
 }
